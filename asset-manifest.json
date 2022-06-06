@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/NewGymApp/static/css/main.073c9b0a.css",
+    "main.js": "/NewGymApp/static/js/main.71534b1d.js",
+    "static/js/787.0f90566d.chunk.js": "/NewGymApp/static/js/787.0f90566d.chunk.js",
+    "service-worker.js": "/NewGymApp/service-worker.js",
+    "static/media/logo.svg": "/NewGymApp/static/media/logo.103b5fa18196d5665a7e12318285c916.svg",
+    "index.html": "/NewGymApp/index.html",
+    "main.073c9b0a.css.map": "/NewGymApp/static/css/main.073c9b0a.css.map",
+    "main.71534b1d.js.map": "/NewGymApp/static/js/main.71534b1d.js.map",
+    "787.0f90566d.chunk.js.map": "/NewGymApp/static/js/787.0f90566d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.71534b1d.js"
+  ]
+}
