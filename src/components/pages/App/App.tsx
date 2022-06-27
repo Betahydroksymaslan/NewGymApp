@@ -8,6 +8,7 @@ import Login from "components/pages/Login/Login";
 import {getLoadingState} from 'slices/apiCallSlice';
 import Loader from "components/atoms/Loader/Loader";
 
+
 function App() {
   const user = useAppSelector((state) => state.user.user);
   const isLoading = useAppSelector(getLoadingState)

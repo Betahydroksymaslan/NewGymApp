@@ -13,4 +13,14 @@ export const GlobalStyle = createGlobalStyle`
         background: /* ${({ theme }) => theme.colors.backgroundGradient} */;
     }
 
+    .Toastify__toast-container {
+        margin-top: 10px;
+        transform: translateX(5%)
+    }
+
+    .Toastify__toast {
+        width: 90%;
+        border-radius: 8px;
+    }
+
 `;
