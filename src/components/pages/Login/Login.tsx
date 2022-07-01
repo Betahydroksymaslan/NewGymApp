@@ -10,26 +10,33 @@ import {
 import FormField from "components/molecules/FormField/FormField";
 import Button from "components/atoms/Button/Button";
 import SocialButton from "components/atoms/SocialButton/SocialButton";
+import StyledLink from "components/atoms/StyledLink/StyledLink";
 import { useForm, SubmitHandler } from "react-hook-form";
-import {authActions} from 'slices/authSlice';
-import {useAppDispatch, useAppSelector} from 'store/hooks';
-import {getLoadingState} from 'slices/apiCallSlice';
+import { authActions } from "slices/authSlice";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { getLoadingState } from "slices/apiCallSlice";
+import { SIGNUP } from "constants/routes";
+import { useNavigate } from "react-router-dom";
 
 type InputsTypes = { login: string; password: string };
 
 const Login = () => {
-  const dispatch = useAppDispatch()
-  const isLoading  = useAppSelector(getLoadingState);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(getLoadingState);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<InputsTypes>();
+
   const onSubmit: SubmitHandler<InputsTypes> = (data) => {
     const userData = {
       email: data.login,
-      password: data.password
-    }
+      password: data.password,
+      callback: navigate,
+    };
+
     dispatch(authActions.login(userData));
   };
 
@@ -61,16 +68,17 @@ const Login = () => {
       <InlineWrapper>
         <SocialButton
           isGoogle={true}
+          onClick={() => dispatch(authActions.loginWithGoogle({callback: navigate}))}
           src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
           alt="google icon"
         >
           Google
         </SocialButton>
-        <SocialButton>Facebook</SocialButton>
+        <SocialButton onClick={() => dispatch(authActions.loginWithFacebook({callback: navigate}))}>Facebook</SocialButton>
       </InlineWrapper>
       <StyledSpan>
         Nie masz jeszcze konta?{" "}
-        <Button btnType="tertiary">Zarejestruj się</Button>
+        <StyledLink to={SIGNUP}>Zarejestruj się</StyledLink>
       </StyledSpan>
     </Wrapper>
   );

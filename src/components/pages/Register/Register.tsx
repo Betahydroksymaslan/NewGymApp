@@ -11,23 +11,32 @@ import FormField from "components/molecules/FormField/FormField";
 import Button from "components/atoms/Button/Button";
 import SocialButton from "components/atoms/SocialButton/SocialButton";
 import { useForm, SubmitHandler } from "react-hook-form";
-import {useAppDispatch} from 'store/hooks';
-import {signUp} from 'services/authService';
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { authActions } from "slices/authSlice";
+import { getLoadingState } from "slices/apiCallSlice";
+import StyledLink from "components/atoms/StyledLink/StyledLink";
+import { SIGNIN } from "constants/routes";
+import { useNavigate } from "react-router-dom";
 
 type InputsTypes = { login: string; password: string };
 
-
 const Login = () => {
-  
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(getLoadingState);
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<InputsTypes>();
 
   const onSubmit: SubmitHandler<InputsTypes> = (data) => {
-    signUp(data.login, data.password)
+    const registerData = {
+      email: data.login,
+      password: data.password,
+      callback: navigate,
+    };
+    dispatch(authActions.register(registerData));
   };
 
   return (
@@ -36,7 +45,7 @@ const Login = () => {
       <SubHeader>Hej, podaj swoje dane żeby się zarejestrować</SubHeader>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <FormField
-          {...register("login", { required: 'To pole jest wymagane' })}
+          {...register("login", { required: "To pole jest wymagane" })}
           id="login"
           name="login"
           label="Nazwa użytkownika"
@@ -44,7 +53,7 @@ const Login = () => {
           errorMessage={errors?.login?.message}
         />
         <FormField
-          {...register("password", { required: 'To pole jest wymagane' })}
+          {...register("password", { required: "To pole jest wymagane" })}
           id="password"
           type="password"
           name="password"
@@ -52,7 +61,7 @@ const Login = () => {
           isError={!!errors.password}
           errorMessage={errors?.password?.message}
         />
-        <Button>Zarejestruj się</Button>
+        <Button disabled={isLoading}>Zarejestruj się</Button>
       </StyledForm>
       <StyledSpan useLines>Albo zaloguj się z</StyledSpan>
       <InlineWrapper>
@@ -66,9 +75,7 @@ const Login = () => {
         <SocialButton>Facebook</SocialButton>
       </InlineWrapper>
       <StyledSpan>
-        Masz już konto?
-        {' '}
-        <Button btnType="tertiary">Zaloguj się</Button>
+        Masz już konto? <StyledLink to={SIGNIN}>Zaloguj się</StyledLink>
       </StyledSpan>
     </Wrapper>
   );

@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Montserrat', sans-serif;
         color: ${({ theme }) => theme.colors.fontDark};
         height: 100vh;
-        background: /* ${({ theme }) => theme.colors.backgroundGradient} */;
+        background: ${({ theme }) => theme.colors.backgroundGradient};
     }
 
     .Toastify__toast-container {

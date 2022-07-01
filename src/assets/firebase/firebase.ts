@@ -7,6 +7,9 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  GoogleAuthProvider ,
+  signInWithPopup,
+  FacebookAuthProvider 
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -23,6 +26,9 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+const facebookProvider = new FacebookAuthProvider();
 
 export {
   auth,
@@ -31,6 +37,10 @@ export {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  googleProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+  facebookProvider
 };
 
 export default app;
