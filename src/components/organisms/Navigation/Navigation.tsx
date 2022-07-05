@@ -3,7 +3,7 @@ import { ReactComponent as MenuIcon } from "assets/icons/menuIcon.svg";
 import { ReactComponent as NotesIcon } from "assets/icons/notesIcon.svg";
 import { ReactComponent as UserIcon } from "assets/icons/userIcon.svg";
 import { ReactComponent as StatsIcon } from "assets/icons/statsIcon.svg";
-import { HOME } from "constants/routes";
+import { HOME, ACCOUNT } from "constants/routes";
 
 interface IconsType {
   icon: JSX.Element;
@@ -12,20 +12,19 @@ interface IconsType {
   id? : string;
 }
 
-let activeClassName = 'isNavActive'
 
 const Navigation = () => {
   const icons: IconsType[] = [
     { icon: <MenuIcon />, name: "Menu", path: HOME },
     { icon: <NotesIcon />, name: "treningi", path: `${HOME}/trainings`, id: 'heart' },
     { icon: <StatsIcon />, name: "Statystyki", path: `${HOME}/stats` },
-    { icon: <UserIcon />, name: "Konto", path: `${HOME}/user` },
+    { icon: <UserIcon />, name: "Konto", path: ACCOUNT },
   ];
   const renderIcons = icons.map((icon) => (
     <NavItem
       to={icon.path}
       id={icon.id}
-      
+      key={icon.name}
       end
     >
       {icon.icon}

@@ -2,10 +2,15 @@ import styled, { keyframes } from "styled-components";
 
 type ButtonTypes = {
   btnType: string;
+  rounded?: boolean;
+  withArrow?: boolean;
+  size?: "s" | "m" | "l";
 };
 
 export const StyledButton = styled.button<ButtonTypes>`
-  display: ${({ btnType }) => (btnType === "tertiary" ? "inline" : "block")};
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${({ btnType, theme }) => {
     if (btnType === "primary") return theme.colors.primary;
     if (btnType === "secondary") return theme.colors.white;
@@ -19,15 +24,17 @@ export const StyledButton = styled.button<ButtonTypes>`
     if (btnType === "primary") return theme.colors.white;
     return theme.colors.primary;
   }};
-  font-size: ${({ theme }) => theme.fontSize.m};
-  padding: ${({ btnType }) => {
+  font-size: ${({ theme, size }) => {
+    if (size === "s") return theme.fontSize.m;
+    return theme.fontSize.m;
+  }};
+  padding: ${({ btnType, size }) => {
     if (btnType === "tertiary") return "0";
+    if (size === "s") return "8px 15px";
     if (btnType === "primary") return "17px 32px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
     return "15px 30px;";
   }};
-  border-radius: ${({ btnType }) => {
-    if (btnType !== "tertiary") return "5px";
-  }};
+  border-radius: ${({ rounded }) => (rounded ? "40px" : "5px")};
   text-decoration: ${({ btnType, theme }) =>
     btnType === "tertiary" && `underline 2px ${theme.colors.primary}`};
   box-shadow: ${({ theme, btnType }) =>
@@ -35,9 +42,11 @@ export const StyledButton = styled.button<ButtonTypes>`
   position: relative;
   overflow: hidden;
   z-index: 2;
+  white-space: nowrap;
+  flex-shrink: 0;
 
   &:disabled {
-    opacity: .6;
+    opacity: 0.6;
   }
 `;
 
@@ -68,4 +77,13 @@ export const RippleSpan = styled.span<ButtonTypes>`
   z-index: -1;
   transform: translate(-50%, -50%);
   animation: 1s ease 1 forwards ${rippleEffect};
+`;
+
+export const Arrow = styled.div`
+  height: 50%;
+  aspect-ratio: 1/1;
+  border-top: 3px solid ${({ theme }) => theme.colors.white};
+  border-right: 3px solid ${({ theme }) => theme.colors.white};
+  transform: rotate(45deg);
+  margin-left: 10px;
 `;

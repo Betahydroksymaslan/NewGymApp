@@ -10,7 +10,7 @@ export const NavWrapper = styled.nav`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
   border-radius: 25px;
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
@@ -25,6 +25,7 @@ const heart = "heart";
 export const NavItem = styled(NavLink)`
   width: 50px;
   height: 50px;
+  -webkit-tap-highlight-color: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;

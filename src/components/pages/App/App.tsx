@@ -8,11 +8,12 @@ import {
   useLocation,
 } from "react-router-dom";
 import PrivateRoute from "helpers/PrivateRoute";
-import { HOME, SIGNIN, SIGNUP } from "constants/routes";
+import { HOME, SIGNIN, SIGNUP, ACCOUNT } from "constants/routes";
 import Login from "components/pages/Login/Login";
 import Register from "components/pages/Register/Register";
 import Home from "components/pages/Home/Home";
 import Navigation from "components/organisms/Navigation/Navigation";
+import Account from 'components/pages/Account/Account';
 import { getUser } from "slices/authSlice";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route path={HOME} element={<Home />} />
+          <Route path={ACCOUNT} element={<Account />} />
         </Route>
         <Route path={SIGNIN} element={<Login />} />
         <Route path={SIGNUP} element={<Register />} />

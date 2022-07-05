@@ -17,10 +17,11 @@ declare module "styled-components" {
     };
 
     fontSize: {
-        l: string,
-        m: string,
-        s: string,
-      },
+      xl: string;
+      l: string;
+      m: string;
+      s: string;
+    };
 
     /* fontSize: {
       headers: string;
@@ -35,7 +36,7 @@ declare module "styled-components" {
     boxShadow: {
       mainShadow: string;
       inputShadow: string;
-    } 
+    };
 
     media: {
       phone: string;

@@ -7,9 +7,11 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-  GoogleAuthProvider ,
+  GoogleAuthProvider,
   signInWithPopup,
-  FacebookAuthProvider 
+  FacebookAuthProvider,
+  updateEmail,
+  updatePassword,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -27,7 +29,7 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({ prompt: 'select_account' });
+googleProvider.setCustomParameters({ prompt: "select_account" });
 const facebookProvider = new FacebookAuthProvider();
 
 export {
@@ -40,7 +42,9 @@ export {
   googleProvider,
   GoogleAuthProvider,
   signInWithPopup,
-  facebookProvider
+  facebookProvider,
+  updateEmail,
+  updatePassword,
 };
 
 export default app;

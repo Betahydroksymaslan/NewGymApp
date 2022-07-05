@@ -15,7 +15,8 @@ export const theme: DefaultTheme = {
     warning: "#E1D888",
   },
   fontSize: {
-    l: '24px',
+    xl: '25px',
+    l: '22px',
     m: '18px',
     s: '14px',
   },

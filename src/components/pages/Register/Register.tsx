@@ -18,7 +18,7 @@ import StyledLink from "components/atoms/StyledLink/StyledLink";
 import { SIGNIN } from "constants/routes";
 import { useNavigate } from "react-router-dom";
 
-type InputsTypes = { login: string; password: string };
+type InputsTypes = { login: string; password: string, name: string };
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ const Login = () => {
     const registerData = {
       email: data.login,
       password: data.password,
+      name: data.name,
       callback: navigate,
     };
     dispatch(authActions.register(registerData));
@@ -45,12 +46,22 @@ const Login = () => {
       <SubHeader>Hej, podaj swoje dane żeby się zarejestrować</SubHeader>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <FormField
-          {...register("login", { required: "To pole jest wymagane" })}
+          {...register("login", { required: "To pole jest wymagane", pattern: {
+            value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, message: 'Niepoprawny adres email'
+          } })}
           id="login"
           name="login"
-          label="Nazwa użytkownika"
+          label="Adres email"
           isError={!!errors.login}
           errorMessage={errors?.login?.message}
+        />
+        <FormField
+          {...register("name", { required: "To pole jest wymagane" })}
+          id="name"
+          name="name"
+          label="Twoje imię"
+          isError={!!errors.name}
+          errorMessage={errors?.name?.message}
         />
         <FormField
           {...register("password", { required: "To pole jest wymagane" })}

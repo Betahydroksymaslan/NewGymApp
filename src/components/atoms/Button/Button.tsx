@@ -1,13 +1,25 @@
 import { useState, useEffect, MouseEvent } from "react";
-import { StyledButton, RippleSpan } from "./Button.style";
+import { StyledButton, RippleSpan, Arrow } from "./Button.style";
 
 type ButtonTypes = {
   children: string;
   btnType?: "primary" | "secondary" | "tertiary";
   disabled?: boolean;
+  rounded?: boolean;
+  withArrow?: boolean;
+  callback?: any;
+  size?: 's' | 'm' | 'l';
 };
 
-const Button = ({ children, btnType = "primary", disabled }: ButtonTypes) => {
+const Button = ({
+  children,
+  btnType = "primary",
+  disabled,
+  rounded,
+  withArrow,
+  callback,
+  size = 'l',
+}: ButtonTypes) => {
   const [coords, setCoords] = useState({ x: -1, y: -1 });
   const [isRippling, setIsRippling] = useState(false);
 
@@ -22,17 +34,26 @@ const Button = ({ children, btnType = "primary", disabled }: ButtonTypes) => {
     if (!isRippling) setCoords({ x: -1, y: -1 });
   }, [isRippling]);
 
-  const handleRippleEffect = (e: MouseEvent<HTMLElement>): void => {
+  const handleOnClickEffect = (e: MouseEvent<HTMLElement>): void => {
     const rect = (e.target as HTMLElement).getBoundingClientRect();
     setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    callback && callback();
   };
 
   return (
-    <StyledButton btnType={btnType} disabled={disabled} onClick={handleRippleEffect}>
+    <StyledButton
+      btnType={btnType}
+      rounded={rounded}
+      disabled={disabled}
+      onClick={handleOnClickEffect}
+      withArrow={withArrow}
+      size={size}
+    >
       {children}
+      {withArrow && <Arrow />}
       {isRippling && (
         <RippleSpan
-        btnType={btnType}
+          btnType={btnType}
           style={{
             left: coords.x,
             top: coords.y,

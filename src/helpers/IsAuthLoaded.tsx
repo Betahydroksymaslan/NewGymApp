@@ -13,16 +13,15 @@ const IsAuthLoaded: AuthIsLoadedType = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if(isUserLoggedIn) return
+    if (isUserLoggedIn) return;
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const userData = { email: user.email as string, uid: user.uid };
-        dispatch(authActions.loginSuccess(userData));
+        dispatch(authActions.loginSuccess(user));
       }
       setIsLoading(false);
     });
-  }, []);
+  }, [isUserLoggedIn]);
 
   if (isLoading) return <Loader />;
   return children;
