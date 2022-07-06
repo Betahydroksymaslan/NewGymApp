@@ -1,9 +1,10 @@
 {
   "files": {
     "main.css": "/NewGymApp/static/css/main.83216d16.css",
-    "main.js": "/NewGymApp/static/js/main.073d866e.js",
+    "main.js": "/NewGymApp/static/js/main.488e3c85.js",
     "static/js/787.0f90566d.chunk.js": "/NewGymApp/static/js/787.0f90566d.chunk.js",
     "service-worker.js": "/NewGymApp/service-worker.js",
+    "static/media/manWorkout.svg": "/NewGymApp/static/media/manWorkout.c4196c4dd03ee8a04f30e501e4924e9d.svg",
     "static/media/maleAvatarIcon.svg": "/NewGymApp/static/media/maleAvatarIcon.bd792cb4967084425243759ebecbdc5d.svg",
     "static/media/femaleAvatarIcon.svg": "/NewGymApp/static/media/femaleAvatarIcon.cf88ea6e090522218c34e047d52e62dd.svg",
     "static/media/menuIcon.svg": "/NewGymApp/static/media/menuIcon.4b347b890590812efbcd630b5df24e47.svg",
@@ -12,11 +13,11 @@
     "static/media/userIcon.svg": "/NewGymApp/static/media/userIcon.ecb4626ce6ba95ac04dc8aeef7433da7.svg",
     "index.html": "/NewGymApp/index.html",
     "main.83216d16.css.map": "/NewGymApp/static/css/main.83216d16.css.map",
-    "main.073d866e.js.map": "/NewGymApp/static/js/main.073d866e.js.map",
+    "main.488e3c85.js.map": "/NewGymApp/static/js/main.488e3c85.js.map",
     "787.0f90566d.chunk.js.map": "/NewGymApp/static/js/787.0f90566d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83216d16.css",
-    "static/js/main.073d866e.js"
+    "static/js/main.488e3c85.js"
   ]
 }
