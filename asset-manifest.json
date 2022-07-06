@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/NewGymApp/static/css/main.83216d16.css",
-    "main.js": "/NewGymApp/static/js/main.2125db8a.js",
+    "main.js": "/NewGymApp/static/js/main.ab8e8e47.js",
     "static/js/787.0f90566d.chunk.js": "/NewGymApp/static/js/787.0f90566d.chunk.js",
     "service-worker.js": "/NewGymApp/service-worker.js",
     "static/media/manWorkout.svg": "/NewGymApp/static/media/manWorkout.c4196c4dd03ee8a04f30e501e4924e9d.svg",
@@ -13,11 +13,11 @@
     "static/media/userIcon.svg": "/NewGymApp/static/media/userIcon.ecb4626ce6ba95ac04dc8aeef7433da7.svg",
     "index.html": "/NewGymApp/index.html",
     "main.83216d16.css.map": "/NewGymApp/static/css/main.83216d16.css.map",
-    "main.2125db8a.js.map": "/NewGymApp/static/js/main.2125db8a.js.map",
+    "main.ab8e8e47.js.map": "/NewGymApp/static/js/main.ab8e8e47.js.map",
     "787.0f90566d.chunk.js.map": "/NewGymApp/static/js/787.0f90566d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83216d16.css",
-    "static/js/main.2125db8a.js"
+    "static/js/main.ab8e8e47.js"
   ]
 }
