@@ -9,6 +9,7 @@ type ButtonTypes = {
   withArrow?: boolean;
   callback?: any;
   size?: 's' | 'm' | 'l';
+  wide?: boolean;
 };
 
 const Button = ({
@@ -19,6 +20,7 @@ const Button = ({
   withArrow,
   callback,
   size = 'l',
+  wide,
 }: ButtonTypes) => {
   const [coords, setCoords] = useState({ x: -1, y: -1 });
   const [isRippling, setIsRippling] = useState(false);
@@ -48,6 +50,7 @@ const Button = ({
       onClick={handleOnClickEffect}
       withArrow={withArrow}
       size={size}
+      wide={wide}
     >
       {children}
       {withArrow && <Arrow />}

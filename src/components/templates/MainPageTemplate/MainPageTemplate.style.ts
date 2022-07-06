@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const Template = styled.section`
   width: 100%;
   height: 100vh;
-  overflow: scroll;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
+  padding: 40px 0 100px;
 `;

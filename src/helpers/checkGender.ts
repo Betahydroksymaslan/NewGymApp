@@ -3,3 +3,9 @@ export const checkGender = (string: string): "male" | "female" => {
 
   return name[0][name[0].length - 1] === "a" ? "female" : "male";
 };
+
+export const getUserName = (string: string) => {
+  const name = string.split(" ");
+
+  return name[0]
+}

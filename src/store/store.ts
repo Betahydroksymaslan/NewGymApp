@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "slices/authSlice";
 import apiCallReducer from "slices/apiCallSlice";
+import trainingsReducer from "slices/trainingsSlice";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "sideeffects/rootSaga";
 
@@ -10,6 +11,7 @@ export const store = configureStore({
   reducer: {
     user: authReducer,
     apiCall: apiCallReducer,
+    trainings: trainingsReducer,
   },
   middleware: [sagaMiddleware],
 });

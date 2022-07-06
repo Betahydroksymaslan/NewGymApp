@@ -5,9 +5,11 @@ type ButtonTypes = {
   rounded?: boolean;
   withArrow?: boolean;
   size?: "s" | "m" | "l";
+  wide?: boolean;
 };
 
 export const StyledButton = styled.button<ButtonTypes>`
+  width: ${({ wide }) => (wide ? "100%" : "auto")};
   display: flex;
   align-items: center;
   justify-content: center;

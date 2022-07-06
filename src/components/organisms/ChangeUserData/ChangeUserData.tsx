@@ -121,7 +121,7 @@ const ChangeUserData = ({ handleClose }: ChangeUserDataType) => {
         <Button size="s">Zmień</Button>
       </SmallArea>
 
-      <Button callback={handleClose}>Zamknij</Button>
+      <Button callback={handleClose} wide>Zamknij</Button>
     </Wrapper>
   );
 };

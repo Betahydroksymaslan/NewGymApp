@@ -4,7 +4,15 @@ import { normalize } from "styled-normalize";
 export const GlobalStyle = createGlobalStyle`
     ${normalize}
 
-    html{ color: ${({ theme }) => theme.colors.fontDark};}
+    
+    html {
+        box-sizing: border-box;
+        color: ${({ theme }) => theme.colors.fontDark};
+    }
+    
+    *, *::after, *::before {
+        box-sizing: inherit;
+    }
 
     body {
         font-family: 'Montserrat', sans-serif;

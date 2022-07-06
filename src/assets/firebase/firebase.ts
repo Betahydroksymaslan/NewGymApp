@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set} from "firebase/database";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -45,6 +45,8 @@ export {
   facebookProvider,
   updateEmail,
   updatePassword,
+  db,
+  ref, set,
 };
 
 export default app;

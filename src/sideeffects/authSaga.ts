@@ -18,6 +18,7 @@ import {
 import { HOME } from "constants/routes";
 /* import { GoogleAuthProvider } from "assets/firebase/firebase"; This gives you a Google Access Token. You can use it to access the Google API */
 import { updateProfile } from "assets/firebase/firebase";
+import { setDatabase } from "api/dbApi";
 
 
 
@@ -72,6 +73,7 @@ export function* loginWithFacebook(action: PayloadAction<CallbackPayload>) {
 }
 
 export function* register(action: PayloadAction<LoginTypes>) {
+  
   try {
     yield put(toggleSpinner(true));
     const { user } = yield call(
@@ -80,6 +82,15 @@ export function* register(action: PayloadAction<LoginTypes>) {
       action.payload.password
     );
     yield updateProfile(user, { displayName: action.payload.name });
+
+    const ref = `users/${user.uid}/userData`
+    const dbUserData = {
+      uid: user.uid as string,
+      name: user.displayName as string,
+      email: user.email as string,
+    }
+
+    yield setDatabase(ref, dbUserData)
     yield put(authActions.loginSuccess(user));
     yield action.payload.callback(HOME);
     yield toast.success("Pomyślnie zarejestrowano!");
