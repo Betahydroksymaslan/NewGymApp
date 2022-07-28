@@ -1,25 +1,36 @@
 {
   "files": {
     "main.css": "/NewGymApp/static/css/main.83216d16.css",
-    "main.js": "/NewGymApp/static/js/main.b75a9118.js",
+    "main.js": "/NewGymApp/static/js/main.8ed467bf.js",
     "static/js/787.0f90566d.chunk.js": "/NewGymApp/static/js/787.0f90566d.chunk.js",
+    "static/media/womanRideBike.svg": "/NewGymApp/static/media/womanRideBike.4a78f89173242b4bde342bf67b249308.svg",
     "service-worker.js": "/NewGymApp/service-worker.js",
-    "static/media/manWorkout.svg": "/NewGymApp/static/media/manWorkout.c4196c4dd03ee8a04f30e501e4924e9d.svg",
-    "static/media/maleAvatarIcon.svg": "/NewGymApp/static/media/maleAvatarIcon.bd792cb4967084425243759ebecbdc5d.svg",
-    "static/media/femaleAvatarIcon.svg": "/NewGymApp/static/media/femaleAvatarIcon.cf88ea6e090522218c34e047d52e62dd.svg",
-    "static/media/repsImage.svg": "/NewGymApp/static/media/repsImage.d001b659df756ff5b3268f4f440825bc.svg",
-    "static/media/weightImage.svg": "/NewGymApp/static/media/weightImage.4005354f58074be10b8743bdcfad10fd.svg",
-    "static/media/menuIcon.svg": "/NewGymApp/static/media/menuIcon.4b347b890590812efbcd630b5df24e47.svg",
-    "static/media/notesIcon.svg": "/NewGymApp/static/media/notesIcon.8872d159c31f08a9095ee082d0c024a8.svg",
-    "static/media/statsIcon.svg": "/NewGymApp/static/media/statsIcon.99a62f8e97fd192dfb44f6fea8cfb1f6.svg",
-    "static/media/userIcon.svg": "/NewGymApp/static/media/userIcon.ecb4626ce6ba95ac04dc8aeef7433da7.svg",
+    "static/media/threeGirlsDoingExercises.svg": "/NewGymApp/static/media/threeGirlsDoingExercises.25eade296ebd37e53b8f046b376cdbab.svg",
+    "static/media/manWorkout.svg": "/NewGymApp/static/media/manWorkout.0664f5faa482ef146615a12ccb33f848.svg",
+    "static/media/womanDoingExercise.svg": "/NewGymApp/static/media/womanDoingExercise.46852956dca20fdd8c54564bcb0130dc.svg",
+    "static/media/maleAvatarIcon.svg": "/NewGymApp/static/media/maleAvatarIcon.25909e54619b95b05ff94cc4a4ab8539.svg",
+    "static/media/femaleAvatarIcon.svg": "/NewGymApp/static/media/femaleAvatarIcon.b143e4b74db6ccfb9b3b7470624ba451.svg",
+    "static/media/manDoingExercise.svg": "/NewGymApp/static/media/manDoingExercise.530ae8ef63ee08e06b9ccdb69abf0b2e.svg",
+    "static/media/repsImage.svg": "/NewGymApp/static/media/repsImage.bfc1c743433fa77c7a7a3ae07728cb69.svg",
+    "static/media/weightImage.svg": "/NewGymApp/static/media/weightImage.415f8e7ceaea2b82b40fc399955c73dd.svg",
+    "static/media/exerciseIcon.svg": "/NewGymApp/static/media/exerciseIcon.de799888e8bdc3f500e06e0b46c7cbcd.svg",
+    "static/media/bgc_big_2.svg": "/NewGymApp/static/media/bgc_big_2.9104d44e079f1ce1ba2fe932ca51c623.svg",
+    "static/media/menuIcon.svg": "/NewGymApp/static/media/menuIcon.40ed7f57aa59bebc75c198d38c329dd6.svg",
+    "static/media/clockIcon.svg": "/NewGymApp/static/media/clockIcon.b95bd87da71dfa4a0cda7df3a7e5dfc4.svg",
+    "static/media/bgc_1.svg": "/NewGymApp/static/media/bgc_1.bd59820d107d49d049d4574b1c75aa73.svg",
+    "static/media/bgc_big_1.svg": "/NewGymApp/static/media/bgc_big_1.83dcb2da392fb0f22ce7dbb900620dee.svg",
+    "static/media/bgc_3.svg": "/NewGymApp/static/media/bgc_3.08992222e8275d6d33f0d53e58b18565.svg",
+    "static/media/notesIcon.svg": "/NewGymApp/static/media/notesIcon.e8c43b90fbd23ce03629acde9cc99e07.svg",
     "index.html": "/NewGymApp/index.html",
+    "static/media/bgc_2.svg": "/NewGymApp/static/media/bgc_2.e365ae540b5e8c8ef900d552bafe29f3.svg",
+    "static/media/userIcon.svg": "/NewGymApp/static/media/userIcon.39695cfabce40abca47888c13a11e6d2.svg",
+    "static/media/statsIcon.svg": "/NewGymApp/static/media/statsIcon.adc5e1d4c9a9e799617c29033db7f0fe.svg",
     "main.83216d16.css.map": "/NewGymApp/static/css/main.83216d16.css.map",
-    "main.b75a9118.js.map": "/NewGymApp/static/js/main.b75a9118.js.map",
+    "main.8ed467bf.js.map": "/NewGymApp/static/js/main.8ed467bf.js.map",
     "787.0f90566d.chunk.js.map": "/NewGymApp/static/js/787.0f90566d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83216d16.css",
-    "static/js/main.b75a9118.js"
+    "static/js/main.8ed467bf.js"
   ]
 }
