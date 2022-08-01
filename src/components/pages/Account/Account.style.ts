@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledPageArea = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
-  width: 80%;
+  width: 90%;
   padding: 20px;
   display: flex;
   flex-direction: column;

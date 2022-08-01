@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import { forwardRef, ForwardedRef } from "react";
 import { Wrapper } from "./CreateTrainingBox.style";
 import ProgressCard from "components/molecules/ProgressCard/ProgressCard";
+import { ModalsNamesTypes } from "components/pages/Trainings/Trainings";
+import { TrainingPlan } from "models/trainingsModel";
+
+type CreateTrainingBoxType = {
+  openModals: (val: ModalsNamesTypes) => void;
+  targetTraining: TrainingPlan | undefined;
+};
 
 interface StepsDataType {
-    order: number;
-    tittle: string;
-    body: string;
+  order: number;
+  tittle: string;
+  body: string;
+  ref?: ForwardedRef<HTMLDivElement>;
 }
 
 const stepsData: StepsDataType[] = [
@@ -17,28 +25,43 @@ const stepsData: StepsDataType[] = [
   {
     order: 2,
     tittle: "Podaj specyfikę",
-    body: "Dobierz odpowiednie parametry treningu, takie jak ilość dni treningowych czy rodzaj treningu",
+    body: "Ustal ilość dni treningoowych w tygodniu i nazwij je",
   },
   {
     order: 3,
     tittle: "Dodaj ćwiczenie",
-    body: "Dodaj swoje pierwsze ćwiczenie. Później będziesz mógł do tego wrócić i dodawać kolejne ćwiczenia",
+    body: "Dodaj swoje pierwsze ćwiczenie. Później będziesz mógł do tego wrócić i dodawać kolejne",
   },
 ];
 
-const CreateTrainingBox = () => {
-  const [step, setStep] = useState(3);
-  const setNextStep = () => setStep(prevState => prevState +1)
+const CreateTrainingBox = forwardRef<HTMLDivElement, CreateTrainingBoxType>(
+  ({ openModals, targetTraining }, ref) => {
+    const renderCards = stepsData.map((card, index) => {
+      const openSpecifyModal = () => {
+        if (index === 0) return openModals("firstModal");
+        if (index === 1) return openModals("secondModal");
+        if (index === 2) return openModals("thirdModal");
+      };
 
-  const renderCards = stepsData.map(card => (
-    <ProgressCard order={card.order} tittle={card.tittle} body={card.body} step={step} />
-  ))
+      return (
+        <ProgressCard
+          callback={openSpecifyModal}
+          key={card.order}
+          order={card.order}
+          tittle={card.tittle}
+          body={card.body}
+          step={targetTraining ? targetTraining.step : 0}
+        />
+      );
+    });
 
-  return (
-    <Wrapper step={step}>
-      {renderCards}
-    </Wrapper>
-  );
-};
+    return (
+      <Wrapper ref={ref} step={targetTraining ? targetTraining.step : 0}>
+        <span>{targetTraining && targetTraining.planName}</span>
+        {renderCards}
+      </Wrapper>
+    );
+  }
+);
 
 export default CreateTrainingBox;

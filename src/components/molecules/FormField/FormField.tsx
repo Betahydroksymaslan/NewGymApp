@@ -1,33 +1,47 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { FormFieldWrapper, StyledLabel } from "./FormField.style";
 import Input from "components/atoms/Input/Input";
-import ErrorMessage from 'components/atoms/ErrorMessage/ErrorMessage';
+import ErrorMessage from "components/atoms/ErrorMessage/ErrorMessage";
+import { InputTypes } from "components/atoms/Input/Input";
 
-type FormFieldTypes = {
-  label: string;
-  id: string;
-  name?: string;
-  type?: string;
-  placeholder?: string;
-  isError?: boolean;
+interface FormFieldTypes extends InputTypes {
+  label?: string;
   errorMessage?: string;
-};
+}
 
 const FormField = forwardRef<HTMLInputElement, FormFieldTypes>(
-  ({ label, id, name, type, placeholder, isError, errorMessage, ...rest }: FormFieldTypes, ref) => {
+  (
+    {
+      label,
+      id,
+      name,
+      type,
+      placeholder,
+      isError,
+      control,
+      short,
+      variant,
+      errorMessage,
+      ...rest
+    }: FormFieldTypes,
+    ref
+  ) => {
     return (
       <FormFieldWrapper>
         <StyledLabel htmlFor={id}>{label}</StyledLabel>
         <Input
           ref={ref}
+          control={control}
           placeholder={placeholder}
+          variant={variant}
+          short={short}
           type={type}
           id={id}
           name={name}
           isError={isError}
           {...rest}
         />
-        {isError && <ErrorMessage>{errorMessage}</ErrorMessage>}
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </FormFieldWrapper>
     );
   }

@@ -14,6 +14,10 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: inherit;
     }
 
+    input {
+        color: ${({ theme }) => theme.colors.fontDark};
+    }
+
     body {
         font-family: 'Montserrat', sans-serif;
         color: ${({ theme }) => theme.colors.fontDark};

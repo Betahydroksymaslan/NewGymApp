@@ -5,7 +5,7 @@ export const theme: DefaultTheme = {
     primary: "#8458ff",
     secondary: "#e5ddff",
     fontDark: "#3f3f3f",
-    fontGray: "#b9bec3",
+    fontGray: "#e6e6f1",
     darkBlue: '#4f98c9',
     lightGreen: '#effbf7',
     backgroundGradient: "linear-gradient(320deg, #e8f0f9 0%, #f4eeff 100%)",
@@ -18,6 +18,7 @@ export const theme: DefaultTheme = {
     warning: "#E1D888",
   },
   fontSize: {
+    xxl: '28px',
     xl: '25px',
     l: '22px',
     m: '18px',

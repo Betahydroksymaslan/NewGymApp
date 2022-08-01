@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import Loader from "components/atoms/Loader/Loader";
-import { auth, onAuthStateChanged } from "assets/firebase/firebase";
+import {
+  auth,
+  onAuthStateChanged,
+  db,
+  ref,
+  onValue,
+} from "assets/firebase/firebase";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { authActions } from "slices/authSlice";
+import { trainingActions } from "slices/trainingsSlice";
 import { getUser } from "slices/authSlice";
 
 type AuthIsLoadedType = ({ children }: { children: any }) => any;
@@ -15,12 +22,26 @@ const IsAuthLoaded: AuthIsLoadedType = ({ children }) => {
   useEffect(() => {
     if (isUserLoggedIn) return;
 
-    onAuthStateChanged(auth, (user) => {
+    let unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(authActions.loginSuccess(user));
+
+        const userRef = `users/${user.uid}/trainingPlans`;
+        const reference = ref(db, userRef);
+        onValue(reference, (snapshot) => {
+          const data = snapshot.val();
+          const array = [];
+
+          for (let id in data) {
+            array.push(data[id]);
+          }
+          dispatch(trainingActions.getTrainings(array));
+        });
       }
       setIsLoading(false);
     });
+
+    return () => unsubscribe();
   }, [isUserLoggedIn]);
 
   if (isLoading) return <Loader />;

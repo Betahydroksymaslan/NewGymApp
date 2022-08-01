@@ -8,8 +8,9 @@ type ButtonTypes = {
   rounded?: boolean;
   withArrow?: boolean;
   callback?: any;
-  size?: 's' | 'm' | 'l';
+  size?: "s" | "m" | "l";
   wide?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 };
 
 const Button = ({
@@ -19,8 +20,9 @@ const Button = ({
   rounded,
   withArrow,
   callback,
-  size = 'l',
+  size = "l",
   wide,
+  type,
 }: ButtonTypes) => {
   const [coords, setCoords] = useState({ x: -1, y: -1 });
   const [isRippling, setIsRippling] = useState(false);
@@ -51,6 +53,7 @@ const Button = ({
       withArrow={withArrow}
       size={size}
       wide={wide}
+      type={type}
     >
       {children}
       {withArrow && <Arrow />}

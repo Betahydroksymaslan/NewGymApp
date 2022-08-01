@@ -13,6 +13,7 @@ type ProgressCardType = {
   body: string;
   order: number;
   step: number;
+  callback: () => void;
 };
 
 const countState = (step: number, order: number) => {
@@ -21,9 +22,21 @@ const countState = (step: number, order: number) => {
   return "locked";
 };
 
-const ProgressCard = ({ tittle, body, order, step }: ProgressCardType) => {
+const ProgressCard = ({
+  tittle,
+  body,
+  order,
+  step,
+  callback,
+}: ProgressCardType) => {
+  const callPropsFunction = () => {
+    if (countState(step, order) === "start") {
+      callback();
+    }
+  };
+
   return (
-    <CardWrapper state={countState(step, order)}>
+    <CardWrapper state={countState(step, order)} onClick={callPropsFunction}>
       <Tittle state={countState(step, order)}>{tittle}</Tittle>
       <Text state={countState(step, order)}>{body}</Text>
       <ProgressIndicator state={countState(step, order)}>

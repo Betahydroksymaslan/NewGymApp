@@ -19,7 +19,8 @@ export const StyledButton = styled.button<ButtonTypes>`
     return "transparent";
   }};
   border: ${({ btnType, theme }) => {
-    if (btnType === "secondary") return `2px solid ${theme.colors.primary}`;
+    if (btnType === "secondary" || btnType === "primary")
+      return `2px solid ${theme.colors.primary}`;
     return "none";
   }};
   color: ${({ btnType, theme }) => {
@@ -33,6 +34,7 @@ export const StyledButton = styled.button<ButtonTypes>`
   padding: ${({ btnType, size }) => {
     if (btnType === "tertiary") return "0";
     if (size === "s") return "8px 15px";
+    if (size === "m") return "12px 20px";
     if (btnType === "primary") return "17px 32px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
     return "15px 30px;";
   }};

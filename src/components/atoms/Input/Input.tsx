@@ -1,29 +1,51 @@
 import { forwardRef, ForwardedRef } from "react";
 import { StyledInput, ErrorSymbol, InputWrapper } from "./Input.style";
+import { ControlDayNamesType } from "components/organisms/NameTrainingDays/NameTrainingDays";
 
-type InputTypes = {
+export interface InputTypes {
   type?: string;
   placeholder?: string;
+  variant?: "primary" | "secondary";
   isError?: boolean;
   id: string;
   name?: string;
+  control?: ControlDayNamesType;
+  short?: boolean;
   ref?: ForwardedRef<HTMLInputElement>;
+  suffix?: string;
 };
 
 const Input = forwardRef<HTMLInputElement, InputTypes>(
-  ({ type = "text", placeholder, isError = false, id, name, ...rest }, ref) => {
+  (
+    {
+      type = "text",
+      placeholder,
+      short,
+      control,
+      isError = false,
+      id,
+      variant = "primary",
+      name,
+      suffix,
+      ...rest
+    },
+    ref
+  ) => {
     return (
-      <InputWrapper>
+      <InputWrapper suffix={suffix}>
         <StyledInput
           ref={ref}
           id={id}
           name={name}
+          control={control}
+          short={short}
+          variant={variant}
           type={type}
           placeholder={placeholder}
           isError={isError}
           {...rest}
         />
-        {isError && <ErrorSymbol>!</ErrorSymbol>}
+        {isError && !short && <ErrorSymbol>!</ErrorSymbol>}
       </InputWrapper>
     );
   }

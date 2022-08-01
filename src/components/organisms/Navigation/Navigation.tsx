@@ -25,7 +25,7 @@ const Navigation = () => {
       to={icon.path}
       id={icon.id}
       key={icon.name}
-      end
+      end={icon.name === "Menu"}
     >
       {icon.icon}
       <span>{icon.name}</span>
