@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   display: grid;
   place-items: center;
   background-color: ${({ theme }) => theme.colors.lightGray};
+  position: relative;
 `;
 
 export const Dot = styled.div`
@@ -37,3 +38,13 @@ export const Dot = styled.div`
     bottom: 10px;
   }
 `;
+
+export const List = styled.ol`
+    height: 100px;
+    width: 100px;
+    background-color: red;
+    position: absolute;
+    top: 100%;
+    right: 25%;
+    z-index: 1000;
+`
