@@ -68,7 +68,7 @@ export const DetailsWrapper = styled.div`
 
 export const Exercise = styled.li`
   display: grid;
-  grid-template: 25px 25px / 50px 1fr;
+  grid-template: 25px 25px / 50px 1fr 50px;
   column-gap: 30px;
   align-items: center;
   margin-top: 20px;
@@ -76,7 +76,7 @@ export const Exercise = styled.li`
 
 export const ListOrder = styled.span`
   grid-row: 1 / -1;
-  grid-coumn: 1;
+  grid-column: 1;
   justify-self: center;
   font-size: 30px;
   color: #f0ba73;
@@ -85,13 +85,13 @@ export const ListOrder = styled.span`
 export const ListName = styled.span`
   font-weight: 600;
   grid-row: 2;
-  grid-coumn: 2;
+  grid-column: 2;
 `;
 
 export const ListTime = styled.span`
   color: ${({ theme }) => theme.colors.fontGray};
   grid-row: 1;
-  grid-coumn: 2;
+  grid-column: 2;
 `;
 
 export const AddNewTrainingButton = styled.button`

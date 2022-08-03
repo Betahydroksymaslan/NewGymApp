@@ -25,7 +25,12 @@ import TrainingDay from "components/pages/TrainingDay/TrainingDay";
 function App() {
   const isLoading = useAppSelector(getLoadingState);
   const location = useLocation();
-  
+
+  function checkPath(input: string) {
+    let regex = /NewGymApp\/trainings\/[a-zA-Z]+/i;
+    return !regex.test(input);
+}
+
   return (
     <AppWrapper>
       <Routes>
@@ -39,7 +44,7 @@ function App() {
         <Route path={SIGNIN} element={<Login />} />
         <Route path={SIGNUP} element={<Register />} />
       </Routes>
-      {location.pathname !== SIGNIN && location.pathname !== SIGNUP && (
+      {location.pathname !== SIGNIN && location.pathname !== SIGNUP && checkPath(location.pathname) && (
         <Navigation />
       )}
 

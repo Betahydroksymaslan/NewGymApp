@@ -18,6 +18,7 @@ import { useAppSelector } from "store/hooks";
 import { getTrainings } from "slices/trainingsSlice";
 import Modal from "components/templates/Modal/Modal";
 import AddExercise from "components/organisms/AddExercise/AddExercise";
+import OptionsList from "components/molecules/OptionsList/OptionsList";
 
 const TrainingDay = () => {
   const { trainingDay, trainingName } = useParams();
@@ -37,6 +38,7 @@ const TrainingDay = () => {
       <ListOrder>{item.order < 10 ? `0${item.order}` : item.order}</ListOrder>
       <ListTime>15 min</ListTime>
       <ListName>{item.exerciseName}</ListName>
+      <OptionsList />
     </Exercise>
   ));
 
