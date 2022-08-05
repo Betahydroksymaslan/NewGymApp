@@ -20,8 +20,9 @@ export const Dot = styled.div`
   background-color: ${({ theme }) => theme.colors.fontDark};
   position: relative;
 
-  &::after, &::before {
-    content: '';
+  &::after,
+  &::before {
+    content: "";
     width: 100%;
     height: 100%;
     border-radius: 100%;
@@ -40,11 +41,17 @@ export const Dot = styled.div`
 `;
 
 export const List = styled.ol`
-    height: 100px;
-    width: 100px;
-    background-color: red;
-    position: absolute;
-    top: 100%;
-    right: 25%;
-    z-index: 1000;
-`
+  min-width: 100px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 100%;
+  right: 25%;
+  z-index: 1000;
+  list-style-type: none;
+  border-radius: 5px;
+`;
+
+export const Option = styled.li`
+  color: ${({ theme }) => theme.colors.white};
+`;

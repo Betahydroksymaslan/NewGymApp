@@ -1,5 +1,30 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import bgc_big_2 from "assets/images/bgc_big_2.svg";
+
+const bikeAnimation = keyframes`
+  to {
+    opacity: 1;
+    transform: translateX(-200px);
+  }
+`;
+
+export const Wrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const BikeWrapper = styled.div`
+  
+  & > svg {
+    opacity: 0;
+    width: 250px;
+    position: absolute;
+    animation: ${bikeAnimation} 0.3s 0.4s forwards ease-in-out;
+    bottom: 20px;
+    right: -244px;
+  }
+`;
 
 export const TopSection = styled.header`
   width: 100%;
@@ -8,13 +33,6 @@ export const TopSection = styled.header`
   background: url(${bgc_big_2});
   background-size: cover;
   padding: 70px 210px 0 30px;
-
-  & > svg {
-    width: 250px;
-    position: absolute;
-    bottom: 20px;
-    right: -40px;
-  }
 
   & > h1 {
     margin: 0 0 20px 0;
@@ -30,7 +48,7 @@ export const BottomSection = styled.section`
   border-top-left-radius: 55px;
   border-top-right-radius: 55px;
   transform: translateY(-55px);
-  padding: 45px 20px 120px;
+  padding: 45px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;

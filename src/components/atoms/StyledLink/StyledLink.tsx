@@ -6,8 +6,12 @@ type LinkTypes = {
   to: string;
 };
 
-const StyledLink = ({ children, to }: LinkTypes) => {
-  return <NewLink to={to}>{children}</NewLink>;
+const StyledLink = ({ children, to, ...rest }: LinkTypes) => {
+  return (
+    <NewLink to={to} {...rest}>
+      {children}
+    </NewLink>
+  );
 };
 
 export default StyledLink;

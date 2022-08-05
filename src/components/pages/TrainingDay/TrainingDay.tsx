@@ -8,7 +8,9 @@ import {
   ListName,
   ListOrder,
   ListTime,
-  AddNewTrainingButton
+  AddNewTrainingButton,
+  Wrapper,
+  BikeWrapper,
 } from "./TrainingDay.style";
 import { ReactComponent as WomanRideBike } from "assets/images/womanRideBike.svg";
 import { ReactComponent as ClockIcon } from "assets/icons/clockIcon.svg";
@@ -19,6 +21,7 @@ import { getTrainings } from "slices/trainingsSlice";
 import Modal from "components/templates/Modal/Modal";
 import AddExercise from "components/organisms/AddExercise/AddExercise";
 import OptionsList from "components/molecules/OptionsList/OptionsList";
+import { motion } from "framer-motion";
 
 const TrainingDay = () => {
   const { trainingDay, trainingName } = useParams();
@@ -38,12 +41,30 @@ const TrainingDay = () => {
       <ListOrder>{item.order < 10 ? `0${item.order}` : item.order}</ListOrder>
       <ListTime>15 min</ListTime>
       <ListName>{item.exerciseName}</ListName>
-      <OptionsList />
+      <OptionsList
+        options={[
+          {
+            text: "edytuj",
+            callback: () => {
+              console.log("yes");
+            },
+          },
+        ]}
+      />
     </Exercise>
   ));
 
   return (
-    <>
+    <Wrapper
+      as={motion.section}
+      initial={{ x: -window.innerWidth}}
+      animate={{ x: 0 }}
+      transition={{ type: "linear" }}
+      exit={{
+        x: window.innerWidth,
+        transition: { duration: 0.3 },
+      }}
+    >
       <TopSection>
         <GoBack>Treningi</GoBack>
         <h1>{trainingDay}</h1>
@@ -54,15 +75,18 @@ const TrainingDay = () => {
         <DetailsWrapper>
           <ClockIcon /> <span>120 min</span>
         </DetailsWrapper>
-
-        <WomanRideBike />
+        <BikeWrapper>
+          <WomanRideBike />
+        </BikeWrapper>
       </TopSection>
       <BottomSection>
         <ol>
           <h2>Ćwiczenia</h2>
-          { renderExercises }
+          {renderExercises}
         </ol>
-        <AddNewTrainingButton onClick={activateAddingNewExercise}>Dodaj nowe ćwiczenie +</AddNewTrainingButton>
+        <AddNewTrainingButton onClick={activateAddingNewExercise}>
+          Dodaj nowe ćwiczenie +
+        </AddNewTrainingButton>
       </BottomSection>
 
       <Modal
@@ -76,7 +100,7 @@ const TrainingDay = () => {
           closeModal={closeAddingNewExercise}
         />
       </Modal>
-    </>
+    </Wrapper>
   );
 };
 

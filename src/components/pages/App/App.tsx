@@ -21,6 +21,7 @@ import Account from "components/pages/Account/Account";
 import Trainings from "components/pages/Trainings/Trainings";
 import ChooseTrainingDay from "../ChooseTrainingDay/ChooseTrainingDay";
 import TrainingDay from "components/pages/TrainingDay/TrainingDay";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const isLoading = useAppSelector(getLoadingState);
@@ -29,24 +30,29 @@ function App() {
   function checkPath(input: string) {
     let regex = /NewGymApp\/trainings\/[a-zA-Z]+/i;
     return !regex.test(input);
-}
+  }
 
   return (
     <AppWrapper>
-      <Routes>
-        <Route element={<PrivateRoute />}>
-          <Route path={HOME} element={<Home />} />
-          <Route path={ACCOUNT} element={<Account />} />
-          <Route path={TRAININGS} element={<Trainings />} />
-          <Route path={TRAINING_DAYS} element={<ChooseTrainingDay />} />
-          <Route path={TRAINING_DAY} element={<TrainingDay />} />
-        </Route>
-        <Route path={SIGNIN} element={<Login />} />
-        <Route path={SIGNUP} element={<Register />} />
-      </Routes>
-      {location.pathname !== SIGNIN && location.pathname !== SIGNUP && checkPath(location.pathname) && (
-        <Navigation />
-      )}
+      <AnimatePresence /* exitBeforeEnter */>
+        <Routes key={location.pathname} location={location}>
+          <Route element={<PrivateRoute />}>
+            <Route path={HOME} element={<Home />} />
+            <Route path={ACCOUNT} element={<Account />} />
+            <Route path={TRAININGS} element={<Trainings />} />
+            <Route path={TRAINING_DAYS} element={<ChooseTrainingDay />} />
+            <Route path={TRAINING_DAY} element={<TrainingDay />} />
+          </Route>
+          <Route path={SIGNIN} element={<Login />} />
+          <Route path={SIGNUP} element={<Register />} />
+        </Routes>
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {location.pathname !== SIGNIN &&
+          location.pathname !== SIGNUP &&
+          checkPath(location.pathname) && <Navigation />}
+      </AnimatePresence>
 
       {isLoading && <Loader />}
     </AppWrapper>

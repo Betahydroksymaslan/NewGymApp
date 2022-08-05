@@ -22,6 +22,7 @@ import { ReactComponent as WomanDoingWorkout } from "assets/images/womanDoingExe
 import { ReactComponent as ThreeGirlsTraining } from "assets/images/threeGirlsDoingExercises.svg";
 import StyledLink from "components/atoms/StyledLink/StyledLink";
 import { TRAININGS } from "constants/routes";
+import { motion } from "framer-motion";
 
 export type ModalsNamesTypes = "firstModal" | "secondModal" | "thirdModal";
 
@@ -65,6 +66,21 @@ const Trainings = () => {
 
   /* !!!!!!!!!!!!!!!!!!! RENDER TRAINING PLANS !!!!!!!!!!!!!!!!!!! */
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.5
+      }
+    }
+  }
+  
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 }
+  }
+
   const renderTrainingPlans = trainings
     ?.filter((item) => item.step === 3)
     .map((item) => (
@@ -94,7 +110,12 @@ const Trainings = () => {
       </SvgWrapper>
       <StyledHeader>{headerString}</StyledHeader>
 
-      <TrainingPlansWrapper>
+      <TrainingPlansWrapper
+        as={motion.div}
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
         {renderTrainingPlans}
         {activeAddNewPlan ? (
           <CreateTrainingBox
@@ -102,7 +123,7 @@ const Trainings = () => {
             openModals={openModal}
           />
         ) : (
-          <AddNewTrainingPlanButton onClick={addNewTrainingPlan}>
+          <AddNewTrainingPlanButton as={motion.div} variants={item} onClick={addNewTrainingPlan}>
             <ThreeGirlsTraining />
             <h1>Dodaj nowy trening</h1>
           </AddNewTrainingPlanButton>
