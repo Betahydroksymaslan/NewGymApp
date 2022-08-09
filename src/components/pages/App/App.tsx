@@ -34,7 +34,7 @@ function App() {
 
   return (
     <AppWrapper>
-      <AnimatePresence /* exitBeforeEnter */>
+      <AnimatePresence exitBeforeEnter>
         <Routes key={location.pathname} location={location}>
           <Route element={<PrivateRoute />}>
             <Route path={HOME} element={<Home />} />

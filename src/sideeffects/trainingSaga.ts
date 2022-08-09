@@ -5,12 +5,14 @@ import {
   TrainingDaysPayload,
   TrainingPlanNamePayload,
   TrainingBodyPayload,
+  DefaultValuesToUpdatePayload,
+  DeleteLocationPayload,
 } from "models/trainingsModel";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { toggleSpinner } from "slices/apiCallSlice";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "helpers/getErrorMessageWithTryCatch";
-import { setDatabase, updateDatabase, pushDatabase } from "api/dbApi";
+import { setDatabase, updateDatabase, pushDatabase, removeLocation } from "api/dbApi";
 import { User } from "firebase/auth";
 
 export function* getTrainings(action: PayloadAction<TrainingsPayload>) {
@@ -81,9 +83,55 @@ export function* setTrainingBody(action: PayloadAction<TrainingBodyPayload>) {
   }
 }
 
+export function* updateExercise(
+  action: PayloadAction<DefaultValuesToUpdatePayload>
+) {
+  try {
+    yield put(toggleSpinner(true));
+    const user: User = yield select((store) => store.user.user);
+    const exerciseRef = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.dayName}/exercises/${action.payload.exerciseName}`;
+    const updateData = {
+      [`${exerciseRef}/defaultProgress`]: action.payload.defaultProgress,
+      [`${exerciseRef}/exerciseName`]: action.payload.exerciseName,
+      [`${exerciseRef}/numberOfSeries`]: action.payload.numberOfSeries,
+      [`${exerciseRef}/repsOrWeight`]: action.payload.repsOrWeight,
+      [`${exerciseRef}/repsQuantityFrom`]: action.payload.repsQuantityFrom,
+      [`${exerciseRef}/repsQuantityTo`]: action.payload.repsQuantityTo,
+      [`${exerciseRef}/startWeightOrReps`]: action.payload.startWeightOrReps,
+    };
+    yield call(updateDatabase, { ...updateData });
+
+    yield put(trainingActions.updateExerciseSuccess());
+    yield toast.success("Zaktualizowano ćwiczenie!");
+  } catch (error) {
+    yield put(trainingActions.updateExerciseFailure());
+    yield toast.error(getErrorMessage(error));
+  } finally {
+    yield put(toggleSpinner(false));
+  }
+}
+
+export function* deleteLocation(action: PayloadAction<DeleteLocationPayload>) {
+  try {
+    yield put(toggleSpinner(true));
+    const user: User = yield select((store) => store.user.user);
+    const exerciseRef = `users/${user.uid}/trainingPlans/${action.payload.path}`;
+    yield call(removeLocation, exerciseRef)
+    yield put(trainingActions.deleteLocationSuccess());
+    yield toast.success("Usunięto ćwiczenie!");
+  } catch (error) {
+    yield put(trainingActions.deleteLocationFailure());
+    yield toast.error(getErrorMessage(error));
+  } finally {
+    yield put(toggleSpinner(false));
+  }
+}
+
 export default function* trainingSaga() {
   yield takeEvery(trainingActions.setPlanName.type, setPlanName);
   yield takeEvery(trainingActions.getTrainings.type, getTrainings);
   yield takeEvery(trainingActions.setTrainingDaysName.type, setTrainingDays);
   yield takeEvery(trainingActions.setTrainingBody.type, setTrainingBody);
+  yield takeEvery(trainingActions.updateExercise.type, updateExercise);
+  yield takeEvery(trainingActions.deleteLocation.type, deleteLocation);
 }

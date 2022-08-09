@@ -13,6 +13,7 @@ import { ReactComponent as ClockIcon } from "assets/icons/clockIcon.svg";
 import { ReactComponent as ExerciseIcon } from "assets/icons/exerciseIcon.svg";
 import { TRAININGS } from "constants/routes";
 import { motion } from "framer-motion";
+import { slidePageAnimation } from "assets/animations/pageAnimation";
 
 const ChooseTrainingDay = () => {
   let { trainingName } = useParams();
@@ -39,10 +40,10 @@ const ChooseTrainingDay = () => {
   return (
     <Wrapper
       as={motion.div}
-      initial={{ x: -window.innerWidth}}
-      animate={{ x: 0 }}
-      transition={{ type: "linear" }}
-      exit={{ x: window.innerWidth, transition: { duration: 0.3 } }}
+      variants={slidePageAnimation}
+      initial="hidden"
+      animate="slideIn"
+      exit="slideOut"
     >
       <GoBack>Plany</GoBack>
       <StyledSection>{renderTrainingDays}</StyledSection>

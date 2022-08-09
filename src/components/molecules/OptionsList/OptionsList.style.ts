@@ -50,8 +50,12 @@ export const List = styled.ol`
   z-index: 1000;
   list-style-type: none;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;
 
 export const Option = styled.li`
   color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fontSize.m};
 `;

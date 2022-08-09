@@ -7,7 +7,12 @@ import {
 } from "./AddExercise.style";
 import Button from "components/atoms/Button/Button";
 import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
-import { TrainingPlan, TrainingBodyPayload } from "models/trainingsModel";
+import {
+  TrainingPlan,
+  TrainingBodyPayload,
+  DefaultValuesToUpdate,
+  DefaultValuesToUpdatePayload,
+} from "models/trainingsModel";
 import FormField from "components/molecules/FormField/FormField";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ReactComponent as WeightImage } from "assets/images/weightImage.svg";
@@ -39,6 +44,8 @@ type AddExerciseType = {
   training?: TrainingPlan | undefined;
   planName: string;
   goToNextStep?: string;
+  type?: "add" | "update";
+  defaultValuesToUpdate?: DefaultValuesToUpdate | undefined;
 };
 
 const AddExercise = ({
@@ -46,6 +53,8 @@ const AddExercise = ({
   training,
   planName,
   goToNextStep = "",
+  type = "add",
+  defaultValuesToUpdate,
 }: AddExerciseType) => {
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
@@ -56,19 +65,19 @@ const AddExercise = ({
     watch,
     formState: { errors },
   } = useForm<InputsTypes>({
-    defaultValues: {
-      repsOrWeight: "weight",
-      defaultProgress: "2.5",
-      startWeightOrReps: 0,
-    },
+    defaultValues:
+      type === "add"
+        ? {
+            repsOrWeight: "weight",
+            defaultProgress: "2.5",
+            startWeightOrReps: 0,
+          }
+        : defaultValuesToUpdate,
   });
 
   const [isTrainingDayChoosen, setIsTrainingDayChoosen] =
     useState(goToNextStep);
   const chooseTrainingDay = (day: string) => setIsTrainingDayChoosen(day);
-
-  const [customProgressValue, setCustomProgressValue] = useState(false);
-  const showCustomProgressValueInput = () => setCustomProgressValue(true);
 
   const isWeightProgress = watch("repsOrWeight");
 
@@ -90,11 +99,31 @@ const AddExercise = ({
     { id: "progress_2", group: "defaultProgress", value: 2 },
     { id: "progress_2.5", group: "defaultProgress", value: 2.5 },
   ];
+
   const defaultValueOfProgressRepsData: DefaultValueOfProgressDataType = [
     { id: "progress_rep_1", group: "defaultProgress", value: 1 },
     { id: "progress_rep_2", group: "defaultProgress", value: 2 },
     { id: "progress_rep_3", group: "defaultProgress", value: 3 },
   ];
+
+  /* CHECK IF DEFAULT PROGRESS IS CUSTOM OR NOT */
+
+  const initialCustomProgressValue =
+
+    (defaultValuesToUpdate?.repsOrWeight === "weight" &&
+      defaultValueOfProgressData.every(
+        (item) => item.value !== Number(defaultValuesToUpdate.defaultProgress)
+      )) ||
+    (defaultValuesToUpdate?.repsOrWeight === "reps" &&
+      defaultValueOfProgressRepsData.every(
+        (item) => item.value !== Number(defaultValuesToUpdate.defaultProgress)
+      ));
+
+  const [customProgressValue, setCustomProgressValue] = useState(
+    initialCustomProgressValue
+  );
+  const showCustomProgressValueInput = () => setCustomProgressValue(true);
+
   const renderDefaultValueOfProgressBoxes =
     isWeightProgress === "weight"
       ? defaultValueOfProgressData.map((item) => (
@@ -286,7 +315,25 @@ const AddExercise = ({
       planDay: isTrainingDayChoosen,
       order: (currentTraining as number) + 1,
     };
-    dispatch(trainingActions.setTrainingBody(submitData));
+
+    const dataToUpdate: DefaultValuesToUpdatePayload = {
+      defaultProgress: Number(data.defaultProgress),
+      exerciseName: data.exerciseName,
+      numberOfSeries: data.numberOfSeries,
+      repsOrWeight: data.repsOrWeight,
+      repsQuantityFrom: data.repsQuantityFrom,
+      repsQuantityTo: data.repsQuantityTo,
+      startWeightOrReps: data.startWeightOrReps,
+      planName: planName,
+      dayName: isTrainingDayChoosen,
+    };
+
+    if (defaultValuesToUpdate) {
+      dispatch(trainingActions.updateExercise(dataToUpdate));
+    } else {
+      dispatch(trainingActions.setTrainingBody(submitData));
+    }
+
     closeModal("thirdModal");
   };
 
@@ -303,7 +350,13 @@ const AddExercise = ({
         exerciseForm
       )}
       <InlineWrapper>
-        {isTrainingDayChoosen && <Button size="m">Dodaj</Button>}
+        {isTrainingDayChoosen && (
+          <Button size="m">
+            {type === "update" || defaultValuesToUpdate
+              ? "Aktualizuj"
+              : "Dodaj"}
+          </Button>
+        )}
         <Button
           type="button"
           btnType="secondary"
