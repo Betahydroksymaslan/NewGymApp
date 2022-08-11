@@ -53,6 +53,7 @@ export interface DefaultValuesToUpdate {
   repsQuantityFrom: number;
   repsQuantityTo: number;
   startWeightOrReps: number;
+  order: number;
 }
 
 export interface DefaultValuesToUpdatePayload {
@@ -65,6 +66,7 @@ export interface DefaultValuesToUpdatePayload {
   startWeightOrReps: number;
   planName: string | undefined;
   dayName: string;
+  order: number;
 }
 
 export type DeleteLocationPayload = {

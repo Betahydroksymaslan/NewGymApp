@@ -21,10 +21,10 @@ const ConfirmationDialog = ({
       <h1>{header}</h1>
       <p>{body}</p>
       <InlineWrapper>
-        <Button callback={callback} size="m">
+        <Button rounded callback={callback} size="m">
           Zrób to!
         </Button>
-        <Button callback={handleClose} size="m" btnType="secondary">
+        <Button rounded callback={handleClose} size="m" btnType="secondary">
           Wróć
         </Button>
       </InlineWrapper>

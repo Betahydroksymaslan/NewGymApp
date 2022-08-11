@@ -23,6 +23,7 @@ export const StyledSection = styled.section`
   padding: 30px 0 100px;
   gap: 20px;
   overflow-y: scroll;
+  position: relative;
 
   & > a:nth-child(2n + 0) h2 {
     border-color: #6966bb;
@@ -43,7 +44,7 @@ export const TrainingDay = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 15px;
   box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   &:active {
     transform: scale(0.95);
@@ -80,5 +81,32 @@ export const DetailsWrapper = styled.div`
     path {
       fill: ${({ theme }) => theme.colors.fontDark};
     }
+  }
+`;
+
+export const EditWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+`;
+
+export const ButtonWrapper = styled.div`
+  position: fixed;
+  bottom: 25px;
+`;
+export const DeleteButton = styled.button`
+  border: none;
+  background-color: ${({ theme }) => theme.colors.errorLight};
+  color: ${({ theme }) => theme.colors.error};
+  padding: 7px 20px;
+  font-size: ${({ theme }) => theme.fontSize.m};
+  border-radius: 55px;
+  box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
+  display: flex;
+  gap: 15px;
+  align-items: center;
+
+  & > svg {
+    font-size: ${({ theme }) => theme.fontSize.xl};
   }
 `;

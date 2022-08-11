@@ -12,7 +12,12 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { toggleSpinner } from "slices/apiCallSlice";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "helpers/getErrorMessageWithTryCatch";
-import { setDatabase, updateDatabase, pushDatabase, removeLocation } from "api/dbApi";
+import {
+  setDatabase,
+  updateDatabase,
+  pushDatabase,
+  removeLocation,
+} from "api/dbApi";
 import { User } from "firebase/auth";
 
 export function* getTrainings(action: PayloadAction<TrainingsPayload>) {
@@ -98,6 +103,7 @@ export function* updateExercise(
       [`${exerciseRef}/repsQuantityFrom`]: action.payload.repsQuantityFrom,
       [`${exerciseRef}/repsQuantityTo`]: action.payload.repsQuantityTo,
       [`${exerciseRef}/startWeightOrReps`]: action.payload.startWeightOrReps,
+      [`${exerciseRef}/order`]: action.payload.order,
     };
     yield call(updateDatabase, { ...updateData });
 
@@ -116,7 +122,7 @@ export function* deleteLocation(action: PayloadAction<DeleteLocationPayload>) {
     yield put(toggleSpinner(true));
     const user: User = yield select((store) => store.user.user);
     const exerciseRef = `users/${user.uid}/trainingPlans/${action.payload.path}`;
-    yield call(removeLocation, exerciseRef)
+    yield call(removeLocation, exerciseRef);
     yield put(trainingActions.deleteLocationSuccess());
     yield toast.success("Usunięto ćwiczenie!");
   } catch (error) {

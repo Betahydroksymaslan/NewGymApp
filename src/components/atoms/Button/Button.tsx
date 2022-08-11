@@ -10,7 +10,7 @@ type ButtonTypes = {
   callback?: any;
   size?: "s" | "m" | "l";
   wide?: boolean;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
 };
 
 const Button = ({

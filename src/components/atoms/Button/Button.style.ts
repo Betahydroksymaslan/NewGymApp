@@ -13,14 +13,13 @@ export const StyledButton = styled.button<ButtonTypes>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ btnType, theme }) => {
-    if (btnType === "primary") return theme.colors.primary;
-    if (btnType === "secondary") return theme.colors.white;
+  background: ${({ btnType, theme }) => {
+    if (btnType === "primary") return theme.colors.primaryGradient;
+    if (btnType === "secondary") return theme.colors.primaryGradientBorder;
     return "transparent";
   }};
-  border: ${({ btnType, theme }) => {
-    if (btnType === "secondary" || btnType === "primary")
-      return `2px solid ${theme.colors.primary}`;
+  border: ${({ btnType }) => {
+    if (btnType === "secondary") return `2px solid transparent`;
     return "none";
   }};
   color: ${({ btnType, theme }) => {
@@ -33,8 +32,10 @@ export const StyledButton = styled.button<ButtonTypes>`
   }};
   padding: ${({ btnType, size }) => {
     if (btnType === "tertiary") return "0";
-    if (size === "s") return "8px 15px";
-    if (size === "m") return "12px 20px";
+    if (size === "s" && btnType === "primary") return "10px 17px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
+    if (size === "s" && btnType === "secondary") return "8px 15px";
+    if (size === "m" && btnType === "primary") return "14px 22px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
+    if (size === "m" && btnType === "secondary") return "12px 20px";
     if (btnType === "primary") return "17px 32px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
     return "15px 30px;";
   }};
@@ -42,7 +43,7 @@ export const StyledButton = styled.button<ButtonTypes>`
   text-decoration: ${({ btnType, theme }) =>
     btnType === "tertiary" && `underline 2px ${theme.colors.primary}`};
   box-shadow: ${({ theme, btnType }) =>
-    btnType !== "tertiary" && theme.boxShadow.mainShadow};
+    btnType !== "tertiary" && theme.boxShadow.blueShadow};
   position: relative;
   overflow: hidden;
   z-index: 2;

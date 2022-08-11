@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   TopSection,
   BottomSection,
@@ -11,6 +11,8 @@ import {
   AddNewTrainingButton,
   Wrapper,
   BikeWrapper,
+  StartTrainingWrapper,
+  StartTrainingButton,
 } from "./TrainingDay.style";
 import { trainingActions } from "slices/trainingsSlice";
 import { ReactComponent as WomanRideBike } from "assets/images/womanRideBike.svg";
@@ -26,85 +28,90 @@ import { motion } from "framer-motion";
 import { slidePageAnimation } from "assets/animations/pageAnimation";
 import { DefaultValuesToUpdate } from "models/trainingsModel";
 import ConfirmationDialog from "components/organisms/ConfirmationDialog/ConfirmationDialog";
+import { FiEdit } from "react-icons/fi";
+import { MdDeleteOutline } from "react-icons/md";
+import { TbListDetails } from "react-icons/tb";
+import { TRAININGS } from "constants/routes";
+
+type ModalsNames =
+  | "isAddingNewExerciseVisible"
+  | "confirmDeleteExercise"
+  | "confirmStartTraining";
 
 const TrainingDay = () => {
+  const navigate = useNavigate();
   const { trainingDay, trainingName } = useParams();
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
   const training = trainings
     ?.find((item) => item.planName === trainingName)
     ?.trainingDays.find((item) => item.dayName === trainingDay);
-  console.log(training);
 
   const [defaultValuesToUpdate, setDefaultValuesToUpdate] = useState<
     DefaultValuesToUpdate | undefined
   >();
-  const [isAddingNewExerciseVisible, setIsAddingNewExerciseVisible] =
-    useState(false);
-  const activateAddingNewExercise = () => setIsAddingNewExerciseVisible(true);
-  const closeAddingNewExercise = () => {
-    setDefaultValuesToUpdate(undefined);
-    setIsAddingNewExerciseVisible(false);
+
+  const [modals, setModals] = useState({
+    isAddingNewExerciseVisible: false,
+    confirmDeleteExercise: false,
+    confirmStartTraining: false,
+  });
+  const openModal = (modal: ModalsNames) =>
+    setModals({ ...modals, [modal]: true });
+  const closeModal = (modal: ModalsNames, callback?: () => void) => {
+    setModals({ ...modals, [modal]: false });
+    callback && callback();
   };
 
-  const [isConfirmBoxVisible, setIsConfirmBoxVisible] = useState(false);
-  const openConfirmationBox = () => setIsConfirmBoxVisible(true);
-  const closeConfirmationBox = () => {
-    setIsConfirmBoxVisible(false);
-    setDefaultValuesToUpdate(undefined);
-  };
+  const renderExercises = training?.exercises?.map((item) => {
+    const defaultValuesData = {
+      defaultProgress: item.defaultProgress.toString(),
+      exerciseName: item.exerciseName,
+      numberOfSeries: item.numberOfSeries,
+      repsOrWeight: item.repsOrWeight,
+      repsQuantityFrom: item.repsQuantityFrom,
+      repsQuantityTo: item.repsQuantityTo,
+      startWeightOrReps: item.startWeightOrReps,
+      order: item.order,
+    };
 
-  const renderExercises = training?.exercises?.map((item) => (
-    <Exercise key={item.trainingId}>
-      <ListOrder>{item.order < 10 ? `0${item.order}` : item.order}</ListOrder>
-      <ListTime>15 min</ListTime>
-      <ListName>{item.exerciseName}</ListName>
-      <OptionsList
-        options={[
-          { text: "szczegóły", callback: () => {} },
-          {
-            text: "edytuj",
-            callback: () => {
-              setDefaultValuesToUpdate({
-                defaultProgress: item.defaultProgress.toString(),
-                exerciseName: item.exerciseName,
-                numberOfSeries: item.numberOfSeries,
-                repsOrWeight: item.repsOrWeight,
-                repsQuantityFrom: item.repsQuantityFrom,
-                repsQuantityTo: item.repsQuantityTo,
-                startWeightOrReps: item.startWeightOrReps,
-              });
-              activateAddingNewExercise();
+    return (
+      <Exercise key={item.trainingId}>
+        <ListOrder>{item.order < 10 ? `0${item.order}` : item.order}</ListOrder>
+        <ListTime>15 min</ListTime>
+        <ListName>{item.exerciseName}</ListName>
+        <OptionsList
+          options={[
+            { icon: <TbListDetails />, text: "Szczegóły", callback: () => {} },
+            {
+              icon: <FiEdit />,
+              text: "Edytuj",
+              callback: () => {
+                setDefaultValuesToUpdate(defaultValuesData);
+                openModal("isAddingNewExerciseVisible");
+              },
             },
-          },
-          {
-            text: "usuń",
-            callback: () => {
-              setDefaultValuesToUpdate({
-                defaultProgress: item.defaultProgress.toString(),
-                exerciseName: item.exerciseName,
-                numberOfSeries: item.numberOfSeries,
-                repsOrWeight: item.repsOrWeight,
-                repsQuantityFrom: item.repsQuantityFrom,
-                repsQuantityTo: item.repsQuantityTo,
-                startWeightOrReps: item.startWeightOrReps,
-              });
-              openConfirmationBox();
+            {
+              icon: <MdDeleteOutline />,
+              text: "Usuń",
+              callback: () => {
+                setDefaultValuesToUpdate(defaultValuesData);
+                openModal("confirmDeleteExercise");
+              },
             },
-          },
-        ]}
-      />
-    </Exercise>
-  ));
-  
+          ]}
+        />
+      </Exercise>
+    );
+  });
+
   const removeExercise = () => {
     const payload = {
       path: `${trainingName}/trainingDays/${trainingDay}/exercises/${defaultValuesToUpdate?.exerciseName}`,
     };
-    console.log(payload.path)
     dispatch(trainingActions.deleteLocation(payload));
     setDefaultValuesToUpdate(undefined);
-    closeConfirmationBox();
+    closeModal("confirmDeleteExercise");
   };
 
   return (
@@ -130,18 +137,25 @@ const TrainingDay = () => {
         </BikeWrapper>
       </TopSection>
       <BottomSection>
-        <ol>
-          <h2>Ćwiczenia</h2>
-          {renderExercises}
-        </ol>
-        <AddNewTrainingButton onClick={activateAddingNewExercise}>
+        <ol>{renderExercises}</ol>
+        <AddNewTrainingButton
+          onClick={() => openModal("isAddingNewExerciseVisible")}
+        >
           Dodaj nowe ćwiczenie +
         </AddNewTrainingButton>
       </BottomSection>
 
+      <StartTrainingWrapper>
+        <StartTrainingButton onClick={() => openModal("confirmStartTraining")}>
+          Rozpocznij trening!
+        </StartTrainingButton>
+      </StartTrainingWrapper>
+
+      {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MODALS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+
       <Modal
-        isOpen={isAddingNewExerciseVisible}
-        handleClose={closeAddingNewExercise}
+        isOpen={modals.isAddingNewExerciseVisible}
+        handleClose={() => closeModal("isAddingNewExerciseVisible")}
         shouldCloseOnOverlayClick={false}
       >
         <AddExercise
@@ -149,15 +163,53 @@ const TrainingDay = () => {
           defaultValuesToUpdate={defaultValuesToUpdate}
           goToNextStep={trainingDay}
           planName={trainingName as string}
-          closeModal={closeAddingNewExercise}
+          closeModal={() =>
+            closeModal("isAddingNewExerciseVisible", () =>
+              setDefaultValuesToUpdate(undefined)
+            )
+          }
         />
       </Modal>
 
-      <Modal isOpen={isConfirmBoxVisible} handleClose={closeConfirmationBox}>
+      <Modal
+        isOpen={modals.confirmDeleteExercise}
+        handleClose={() =>
+          closeModal("confirmDeleteExercise", () =>
+            setDefaultValuesToUpdate(undefined)
+          )
+        }
+      >
         <ConfirmationDialog
-          handleClose={closeConfirmationBox}
+          handleClose={() =>
+            closeModal("confirmDeleteExercise", () =>
+              setDefaultValuesToUpdate(undefined)
+            )
+          }
           callback={removeExercise}
           body={`Ćwiczenie ${defaultValuesToUpdate?.exerciseName} zostanie trwale usunięte, nie będzie możliwości cofnięcia tej akcji`}
+        />
+      </Modal>
+
+      <Modal
+        isOpen={modals.confirmStartTraining}
+        handleClose={() =>
+          closeModal("confirmStartTraining", () =>
+            setDefaultValuesToUpdate(undefined)
+          )
+        }
+      >
+        <ConfirmationDialog
+          handleClose={() =>
+            closeModal("confirmStartTraining", () =>
+              setDefaultValuesToUpdate(undefined)
+            )
+          }
+          callback={() =>
+            navigate(
+              `${TRAININGS}/${trainingName}/${trainingDay}/new_training_session`
+            )
+          }
+          body="Rozpoczynając trening zostaje też naliczany czas. Jeśli chcesz tylko zapoznać się ze ze szczegółami treningu wybierz opcję - szczegóły"
         />
       </Modal>
     </Wrapper>

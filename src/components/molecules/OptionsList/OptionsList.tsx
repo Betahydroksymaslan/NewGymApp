@@ -7,10 +7,24 @@ type OptionsListType = {
   options: {
     callback: () => void;
     text: string;
+    icon: JSX.Element;
   }[];
+  circular?: boolean;
+  dotsTheme?: "white" | "black";
+  customPosition?: {
+    left?: number;
+    right?: number;
+    bottom?: number;
+    top?: number;
+  };
 };
 
-const OptionsList = ({ options }: OptionsListType) => {
+const OptionsList = ({
+  options,
+  circular = false,
+  dotsTheme = "black",
+  customPosition,
+}: OptionsListType) => {
   const [isOpen, setIsOpen] = useState(false);
   const openList = () => setIsOpen((prevState) => !prevState);
   const closeList = () => setIsOpen(false);
@@ -24,26 +38,33 @@ const OptionsList = ({ options }: OptionsListType) => {
 
   const renderOptions = options.map((option) => (
     <Option key={option.text} onClick={option.callback}>
+      {option.icon}
       {option.text}
     </Option>
   ));
 
   return (
-    <Wrapper ref={listRef} onClick={openList}>
-      <Dot />
-      <AnimatePresence>
-        {isOpen && (
-          <List
-            as={motion.ol}
-            animate={{ opacity: 0.9, scale: 1 }}
-            initial={{ opacity: 0, scale: 0 }}
-            exit={{ opacity: 0, scale: 0 }}
-            layout
-          >
-            {renderOptions}
-          </List>
-        )}
-      </AnimatePresence>
+    <Wrapper
+      ref={listRef}
+      customPosition={customPosition}
+      circular={circular}
+      onClick={openList}
+    >
+      <Dot dotsTheme={dotsTheme}>
+        <AnimatePresence>
+          {isOpen && (
+            <List
+              as={motion.ol}
+              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0 }}
+              exit={{ opacity: 0, scale: 0 }}
+              layout
+            >
+              {renderOptions}
+            </List>
+          )}
+        </AnimatePresence>
+      </Dot>
     </Wrapper>
   );
 };

@@ -1,18 +1,15 @@
-import React from 'react';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
-import { authActions } from 'slices/authSlice';
-import { getUser } from 'slices/authSlice';
+import React from "react";
+import { useAppSelector } from "store/hooks";
+import { getUser } from "slices/authSlice";
+import MainPageTemplate from "components/templates/MainPageTemplate/MainPageTemplate";
 
 const Home = () => {
-    const dispatch = useAppDispatch()
-    const user = useAppSelector(getUser);
-    return (
-        <div>
-            <button onClick={() => dispatch(authActions.logout())}>wyloguj</button>
-            <span>{user?.email}</span>
-        </div>
-    );
+  const user = useAppSelector(getUser);
+  return (
+    <MainPageTemplate>
+      <span>{user?.email}</span>
+    </MainPageTemplate>
+  );
 };
-
 
 export default Home;

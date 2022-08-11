@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   padding: 25px 15px;
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.white};
   border-radius: 10px;
 
   & > h1 {

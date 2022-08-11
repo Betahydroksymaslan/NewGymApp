@@ -3,6 +3,9 @@ import "styled-components";
 declare module "styled-components" {
   export interface DefaultTheme {
     colors: {
+      primaryGradient: string;
+      primaryGradientBorder: string;
+      primaryLightBgc: string;
       primary: string;
       secondary: string;
       backgroundGradient: string;
@@ -38,6 +41,7 @@ declare module "styled-components" {
     }*/
 
     boxShadow: {
+      blueShadow: string;
       mainShadow: string;
       inputShadow: string;
     };

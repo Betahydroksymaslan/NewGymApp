@@ -31,11 +31,9 @@ export const Form = styled(StyledForm)`
     margin-bottom: 30px;
   }
 
-  & > div:nth-child(11) {
+  & > div:nth-child(13) {
     margin-bottom: 30px;
   }
-
-  
 `;
 
 export const TrainingDaysWrapper = styled.div`

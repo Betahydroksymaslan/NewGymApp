@@ -30,6 +30,7 @@ type InputsTypes = {
   numberOfSeries: number;
   defaultProgress: string;
   startWeightOrReps: number;
+  order: number;
 };
 
 type DefaultValueOfProgressDataType = {
@@ -59,6 +60,15 @@ const AddExercise = ({
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
 
+  const [isTrainingDayChoosen, setIsTrainingDayChoosen] =
+    useState(goToNextStep);
+  const chooseTrainingDay = (day: string) => setIsTrainingDayChoosen(day);
+
+  const currentTraining = trainings
+    ?.find((item) => item.planName === planName)
+    ?.trainingDays.find((item) => item.dayName === isTrainingDayChoosen)
+    ?.exercises?.length;
+
   const {
     register,
     handleSubmit,
@@ -71,13 +81,11 @@ const AddExercise = ({
             repsOrWeight: "weight",
             defaultProgress: "2.5",
             startWeightOrReps: 0,
+            order: (currentTraining as number) + 1,
           }
         : defaultValuesToUpdate,
   });
 
-  const [isTrainingDayChoosen, setIsTrainingDayChoosen] =
-    useState(goToNextStep);
-  const chooseTrainingDay = (day: string) => setIsTrainingDayChoosen(day);
 
   const isWeightProgress = watch("repsOrWeight");
 
@@ -109,7 +117,6 @@ const AddExercise = ({
   /* CHECK IF DEFAULT PROGRESS IS CUSTOM OR NOT */
 
   const initialCustomProgressValue =
-
     (defaultValuesToUpdate?.repsOrWeight === "weight" &&
       defaultValueOfProgressData.every(
         (item) => item.value !== Number(defaultValuesToUpdate.defaultProgress)
@@ -292,13 +299,27 @@ const AddExercise = ({
           })}
         />
       </InlineWrapper>
+
+      {/* !!!!!!!!!!!!!!!!!!!!!!!!!! EXERCISE ORDER !!!!!!!!!!!!!!!!!!!!!!!!!! */}
+
+      <Tittle>Ustal kolejność ćwiczenia w planie</Tittle>
+      <InlineWrapper>
+        <FormField
+          short
+          id="order"
+          type="number"
+          variant="secondary"
+          isError={!!errors?.order}
+          errorMessage={errors?.order?.message}
+          {...register("order", {
+            required: "To pole jest wymagane",
+            valueAsNumber: true,
+            min: 1,
+          })}
+        />
+      </InlineWrapper>
     </>
   );
-
-  const currentTraining = trainings
-    ?.find((item) => item.planName === planName)
-    ?.trainingDays.find((item) => item.dayName === isTrainingDayChoosen)
-    ?.exercises?.length;
 
   const onSubmit: SubmitHandler<InputsTypes> = (data) => {
     const submitData: TrainingBodyPayload = {
@@ -313,7 +334,7 @@ const AddExercise = ({
       virtualProgress: data.startWeightOrReps,
       planName: planName,
       planDay: isTrainingDayChoosen,
-      order: (currentTraining as number) + 1,
+      order: data.order,
     };
 
     const dataToUpdate: DefaultValuesToUpdatePayload = {
@@ -326,6 +347,7 @@ const AddExercise = ({
       startWeightOrReps: data.startWeightOrReps,
       planName: planName,
       dayName: isTrainingDayChoosen,
+      order: data.order,
     };
 
     if (defaultValuesToUpdate) {

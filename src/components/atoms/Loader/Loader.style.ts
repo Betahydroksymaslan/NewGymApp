@@ -30,7 +30,7 @@ export const Ball = styled.div`
     width: 15px;
     height: 15px;
     border-radius: 100%;
-    background-color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.primaryGradient};
     animation: ${bounce} .5s alternate infinite;
 
     &:nth-child(2) {

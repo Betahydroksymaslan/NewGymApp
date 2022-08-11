@@ -8,14 +8,21 @@ const bikeAnimation = keyframes`
   }
 `;
 
+const startButtonAnimation = keyframes`
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 `;
 
 export const BikeWrapper = styled.div`
-  
   & > svg {
     opacity: 0;
     width: 250px;
@@ -44,11 +51,11 @@ export const TopSection = styled.header`
 export const BottomSection = styled.section`
   width: 100%;
   height: 65vh;
-  background-color: #fdfdfd;
+  background-color: #f9f9f9;
   border-top-left-radius: 55px;
   border-top-right-radius: 55px;
   transform: translateY(-55px);
-  padding: 45px 20px;
+  padding: 20px 20px 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,12 +66,6 @@ export const BottomSection = styled.section`
     margin: 0 0 30px;
     padding: 0;
     list-style-type: none;
-
-    & > h2 {
-      font-size: ${({ theme }) => theme.fontSize.m};
-      font-weight: 600;
-      margin: 0;
-    }
   }
 `;
 
@@ -119,6 +120,51 @@ export const AddNewTrainingButton = styled.button`
   font-size: ${({ theme }) => theme.fontSize.m};
   border: 2px solid #f0ba73;
   box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
+  transition: transform 0.2s ease-in-out;
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+export const StartTrainingWrapper = styled.div`
+  padding: 20px 20px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.white};
+  position: fixed;
+  bottom: 0;
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 15px 30px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(100%);
+  animation: ${startButtonAnimation} 0.2s 0.2s forwards ease-in-out;
+
+  & > button {
+    flex-shrink: 1;
+  }
+`;
+
+export const StartTrainingButton = styled.button`
+  border: none;
+  background: rgb(231, 134, 95);
+  font-size: ${({ theme }) => theme.fontSize.m};
+  background: linear-gradient(
+    40deg,
+    rgba(231, 134, 95, 1) 0%,
+    rgba(238, 215, 109, 1) 47%,
+    rgba(240, 176, 114, 1) 100%
+  );
+  width: 100%;
+  padding: 20px 0;
+  box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
+  border-radius: 100px;
+  color: ${({ theme }) => theme.colors.white};
+  font-weight: 600;
   transition: transform 0.2s ease-in-out;
 
   &:active {
