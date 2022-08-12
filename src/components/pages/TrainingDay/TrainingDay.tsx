@@ -73,6 +73,7 @@ const TrainingDay = () => {
       repsQuantityTo: item.repsQuantityTo,
       startWeightOrReps: item.startWeightOrReps,
       order: item.order,
+      trainingId: item.trainingId,
     };
 
     return (
@@ -107,7 +108,7 @@ const TrainingDay = () => {
 
   const removeExercise = () => {
     const payload = {
-      path: `${trainingName}/trainingDays/${trainingDay}/exercises/${defaultValuesToUpdate?.exerciseName}`,
+      path: `${trainingName}/trainingDays/${trainingDay}/exercises/${defaultValuesToUpdate?.trainingId}`,
     };
     dispatch(trainingActions.deleteLocation(payload));
     setDefaultValuesToUpdate(undefined);

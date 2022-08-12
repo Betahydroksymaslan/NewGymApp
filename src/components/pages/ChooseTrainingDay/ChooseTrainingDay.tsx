@@ -39,7 +39,7 @@ const ChooseTrainingDay = () => {
 
   const renderTrainingDays = currentTraining?.trainingDays.map((item) => {
     const deleteItem = () => {
-      const payload = { path: `${trainingName}/trainingDays/${item.dayName}` };
+      const payload = { path: `${trainingName}/trainingDays/${item.dayId}` };
       dispatch(trainingActions.deleteLocation(payload));
     };
 

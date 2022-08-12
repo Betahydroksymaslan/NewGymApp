@@ -56,7 +56,7 @@ export function* setTrainingDays(action: PayloadAction<TrainingDaysPayload>) {
     for (const item of action.payload.daysData) {
       yield call(
         setDatabase,
-        `users/${user.uid}/trainingPlans/${action.payload.planNamePath}/trainingDays/${item.dayName}`,
+        `users/${user.uid}/trainingPlans/${action.payload.planNamePath}/trainingDays/${item.dayId}`,
         item
       );
     }
@@ -74,7 +74,7 @@ export function* setTrainingBody(action: PayloadAction<TrainingBodyPayload>) {
   try {
     yield put(toggleSpinner(true));
     const user: User = yield select((store) => store.user.user);
-    const ref = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.planDay}/exercises/${action.payload.exerciseName}`;
+    const ref = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.trainingId}/exercises/${action.payload.trainingId}`;
     yield call(setDatabase, ref, action.payload);
     const planRef = `users/${user.uid}/trainingPlans/${action.payload.planName}/step`;
     yield call(updateDatabase, { [planRef]: 3 });
@@ -94,7 +94,7 @@ export function* updateExercise(
   try {
     yield put(toggleSpinner(true));
     const user: User = yield select((store) => store.user.user);
-    const exerciseRef = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.dayName}/exercises/${action.payload.exerciseName}`;
+    const exerciseRef = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.dayName}/exercises/${action.payload.trainingId}`;
     const updateData = {
       [`${exerciseRef}/defaultProgress`]: action.payload.defaultProgress,
       [`${exerciseRef}/exerciseName`]: action.payload.exerciseName,

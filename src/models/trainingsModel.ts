@@ -15,6 +15,7 @@ export type TrainingBodyPayload = {
 
 export interface TrainingDays {
   dayName: string;
+  dayId: string;
   exercises: TrainingBodyPayload[];
 }
 
@@ -34,7 +35,7 @@ export interface Trainings {
 export type TrainingsPayload = TrainingPlan[];
 
 export type TrainingDaysPayload = {
-  daysData: { dayName: string }[];
+  daysData: { dayName: string, dayId: string }[];
   step: number;
   planNamePath: string;
 };
@@ -54,6 +55,7 @@ export interface DefaultValuesToUpdate {
   repsQuantityTo: number;
   startWeightOrReps: number;
   order: number;
+  trainingId: string;
 }
 
 export interface DefaultValuesToUpdatePayload {
@@ -67,6 +69,7 @@ export interface DefaultValuesToUpdatePayload {
   planName: string | undefined;
   dayName: string;
   order: number;
+  trainingId: string;
 }
 
 export type DeleteLocationPayload = {

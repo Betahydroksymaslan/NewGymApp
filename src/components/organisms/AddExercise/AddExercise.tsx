@@ -61,8 +61,9 @@ const AddExercise = ({
   const trainings = useAppSelector(getTrainings);
 
   const [isTrainingDayChoosen, setIsTrainingDayChoosen] =
-    useState(goToNextStep);
-  const chooseTrainingDay = (day: string) => setIsTrainingDayChoosen(day);
+    useState<string | {dayName: string, dayId: string}>(goToNextStep);
+  const chooseTrainingDay = (dayName:string, dayId: string) => setIsTrainingDayChoosen({dayName: dayName, dayId: dayId});
+console.log(isTrainingDayChoosen)
 
   const currentTraining = trainings
     ?.find((item) => item.planName === planName)
@@ -92,7 +93,7 @@ const AddExercise = ({
   const renderTrainingDays = training?.trainingDays.map((item) => (
     <Button
       key={item.dayName}
-      callback={() => chooseTrainingDay(item.dayName)}
+      callback={() => chooseTrainingDay(item.dayName, item.dayId)}
       size="m"
       type="button"
       btnType="secondary"
@@ -333,7 +334,7 @@ const AddExercise = ({
       trainingId: uuid(),
       virtualProgress: data.startWeightOrReps,
       planName: planName,
-      planDay: isTrainingDayChoosen,
+      planDay: isTrainingDayChoosen.dayName as string,
       order: data.order,
     };
 
@@ -346,8 +347,9 @@ const AddExercise = ({
       repsQuantityTo: data.repsQuantityTo,
       startWeightOrReps: data.startWeightOrReps,
       planName: planName,
-      dayName: isTrainingDayChoosen,
+      dayName: isTrainingDayChoosen.dayName as string,
       order: data.order,
+      trainingId: defaultValuesToUpdate?.trainingId as string,
     };
 
     if (defaultValuesToUpdate) {

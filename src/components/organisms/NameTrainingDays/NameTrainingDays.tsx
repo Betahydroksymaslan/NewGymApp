@@ -11,6 +11,7 @@ import {
   Control,
 } from "react-hook-form";
 import { trainingActions } from "slices/trainingsSlice";
+import { v4 as uuid } from "uuid";
 
 type InputsTypes = {
   days: { dayName: string }[];
@@ -48,6 +49,7 @@ const NameTrainingDays = ({ closeModal, planName }: NameTrainingDaysTypes) => {
       ...data.days.map((item) => {
         return {
           dayName: item.dayName,
+          dayId: uuid(),
         };
       }),
     ];
