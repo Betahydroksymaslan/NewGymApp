@@ -7,6 +7,7 @@ import {
   TrainingBodyPayload,
   DefaultValuesToUpdatePayload,
   DeleteLocationPayload,
+  AddNewTrainingDayPayload,
 } from "models/trainingsModel";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { toggleSpinner } from "slices/apiCallSlice";
@@ -74,7 +75,7 @@ export function* setTrainingBody(action: PayloadAction<TrainingBodyPayload>) {
   try {
     yield put(toggleSpinner(true));
     const user: User = yield select((store) => store.user.user);
-    const ref = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.trainingId}/exercises/${action.payload.trainingId}`;
+    const ref = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.dayId}/exercises/${action.payload.trainingId}`;
     yield call(setDatabase, ref, action.payload);
     const planRef = `users/${user.uid}/trainingPlans/${action.payload.planName}/step`;
     yield call(updateDatabase, { [planRef]: 3 });
@@ -94,7 +95,7 @@ export function* updateExercise(
   try {
     yield put(toggleSpinner(true));
     const user: User = yield select((store) => store.user.user);
-    const exerciseRef = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.dayName}/exercises/${action.payload.trainingId}`;
+    const exerciseRef = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.dayId}/exercises/${action.payload.trainingId}`;
     const updateData = {
       [`${exerciseRef}/defaultProgress`]: action.payload.defaultProgress,
       [`${exerciseRef}/exerciseName`]: action.payload.exerciseName,
@@ -133,6 +134,27 @@ export function* deleteLocation(action: PayloadAction<DeleteLocationPayload>) {
   }
 }
 
+export function* addNewTrainingDay(
+  action: PayloadAction<AddNewTrainingDayPayload>
+) {
+  try {
+    yield put(toggleSpinner(true));
+    const user: User = yield select((store) => store.user.user);
+    const ref = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.dayId}`;
+    yield call(setDatabase, ref, {
+      dayName: action.payload.dayName,
+      dayId: action.payload.dayId,
+    });
+    yield put(trainingActions.setTrainingBodySuccess());
+    yield toast.success("Dodano nowy dzień!");
+  } catch (error) {
+    yield toast.error(getErrorMessage(error));
+    yield put(trainingActions.setTrainingBodyFailure());
+  } finally {
+    yield put(toggleSpinner(false));
+  }
+}
+
 export default function* trainingSaga() {
   yield takeEvery(trainingActions.setPlanName.type, setPlanName);
   yield takeEvery(trainingActions.getTrainings.type, getTrainings);
@@ -140,4 +162,5 @@ export default function* trainingSaga() {
   yield takeEvery(trainingActions.setTrainingBody.type, setTrainingBody);
   yield takeEvery(trainingActions.updateExercise.type, updateExercise);
   yield takeEvery(trainingActions.deleteLocation.type, deleteLocation);
+  yield takeEvery(trainingActions.addNewTrainingDay.type, addNewTrainingDay);
 }

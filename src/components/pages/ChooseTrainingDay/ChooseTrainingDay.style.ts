@@ -88,25 +88,49 @@ export const EditWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 15px 0;
+  display: flex;
+  justify-content: space-evenly;
 `;
 
-export const ButtonWrapper = styled.div`
-  position: fixed;
+export const ButtonWrapper = styled.div<{ positionType?: string }>`
+  position: ${({ positionType }) => positionType || "fixed"};
   bottom: 25px;
+  z-index: 1000;
 `;
+
 export const DeleteButton = styled.button`
   border: none;
   background-color: ${({ theme }) => theme.colors.errorLight};
   color: ${({ theme }) => theme.colors.error};
   padding: 7px 20px;
-  font-size: ${({ theme }) => theme.fontSize.m};
+  font-size: ${({ theme }) => theme.fontSize.s};
   border-radius: 55px;
   box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
   display: flex;
-  gap: 15px;
+  gap: 5px;
   align-items: center;
 
   & > svg {
     font-size: ${({ theme }) => theme.fontSize.xl};
+  }
+`;
+
+export const EditDayNameButton = styled(DeleteButton)`
+  background-color: ${({ theme }) => theme.colors.infoLight};
+  color: ${({ theme }) => theme.colors.infoDark};
+`;
+
+export const StyledForm = styled.form`
+  background-color: ${({ theme }) => theme.colors.white};
+  padding: 20px;
+  width: 90vw;
+  border-radius: 15px;
+
+  & > h2 {
+    text-align: center;
+  }
+
+  & > div:nth-child(3) {
+    margin-top: 30px;
   }
 `;

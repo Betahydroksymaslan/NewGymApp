@@ -44,7 +44,7 @@ type AddExerciseType = {
   closeModal: ((val: "thirdModal") => void) | (() => void);
   training?: TrainingPlan | undefined;
   planName: string;
-  goToNextStep?: string;
+  goToNextStep?: null | { dayName: string; dayId: string };
   type?: "add" | "update";
   defaultValuesToUpdate?: DefaultValuesToUpdate | undefined;
 };
@@ -53,21 +53,26 @@ const AddExercise = ({
   closeModal,
   training,
   planName,
-  goToNextStep = "",
+  goToNextStep = null,
   type = "add",
   defaultValuesToUpdate,
 }: AddExerciseType) => {
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
 
-  const [isTrainingDayChoosen, setIsTrainingDayChoosen] =
-    useState<string | {dayName: string, dayId: string}>(goToNextStep);
-  const chooseTrainingDay = (dayName:string, dayId: string) => setIsTrainingDayChoosen({dayName: dayName, dayId: dayId});
-console.log(isTrainingDayChoosen)
+  const [isTrainingDayChoosen, setIsTrainingDayChoosen] = useState<null | {
+    dayName: string;
+    dayId: string;
+  }>(goToNextStep);
+
+  const chooseTrainingDay = (dayName: string, dayId: string) =>
+    setIsTrainingDayChoosen({ dayName: dayName, dayId: dayId });
+
+  console.log(isTrainingDayChoosen);
 
   const currentTraining = trainings
     ?.find((item) => item.planName === planName)
-    ?.trainingDays.find((item) => item.dayName === isTrainingDayChoosen)
+    ?.trainingDays.find((item) => item.dayName === isTrainingDayChoosen?.dayName)
     ?.exercises?.length;
 
   const {
@@ -82,11 +87,10 @@ console.log(isTrainingDayChoosen)
             repsOrWeight: "weight",
             defaultProgress: "2.5",
             startWeightOrReps: 0,
-            order: (currentTraining as number) + 1,
+            order: currentTraining ? (currentTraining as number) + 1 : 1,
           }
         : defaultValuesToUpdate,
   });
-
 
   const isWeightProgress = watch("repsOrWeight");
 
@@ -332,9 +336,10 @@ console.log(isTrainingDayChoosen)
       repsQuantityTo: data.repsQuantityTo,
       startWeightOrReps: data.startWeightOrReps,
       trainingId: uuid(),
+      dayId: isTrainingDayChoosen?.dayId as string,
       virtualProgress: data.startWeightOrReps,
       planName: planName,
-      planDay: isTrainingDayChoosen.dayName as string,
+      planDay: isTrainingDayChoosen?.dayName as string,
       order: data.order,
     };
 
@@ -347,7 +352,8 @@ console.log(isTrainingDayChoosen)
       repsQuantityTo: data.repsQuantityTo,
       startWeightOrReps: data.startWeightOrReps,
       planName: planName,
-      dayName: isTrainingDayChoosen.dayName as string,
+      dayName: isTrainingDayChoosen?.dayName as string,
+      dayId: isTrainingDayChoosen?.dayId as string,
       order: data.order,
       trainingId: defaultValuesToUpdate?.trainingId as string,
     };

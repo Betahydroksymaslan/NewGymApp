@@ -21,6 +21,8 @@ export const theme: DefaultTheme = {
     error: "#df4856",
     errorLight: "#fef1f2",
     warning: "#E1D888",
+    infoLight: "#e5f6fd",
+    infoDark: "#014361",
   },
   fontSize: {
     xxl: "28px",

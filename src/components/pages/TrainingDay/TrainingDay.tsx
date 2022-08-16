@@ -74,6 +74,7 @@ const TrainingDay = () => {
       startWeightOrReps: item.startWeightOrReps,
       order: item.order,
       trainingId: item.trainingId,
+      dayId: item.dayId,
     };
 
     return (
@@ -108,7 +109,7 @@ const TrainingDay = () => {
 
   const removeExercise = () => {
     const payload = {
-      path: `${trainingName}/trainingDays/${trainingDay}/exercises/${defaultValuesToUpdate?.trainingId}`,
+      path: `${trainingName}/trainingDays/${training?.dayId}/exercises/${defaultValuesToUpdate?.trainingId}`,
     };
     dispatch(trainingActions.deleteLocation(payload));
     setDefaultValuesToUpdate(undefined);
@@ -162,7 +163,7 @@ const TrainingDay = () => {
         <AddExercise
           type={defaultValuesToUpdate ? "update" : "add"}
           defaultValuesToUpdate={defaultValuesToUpdate}
-          goToNextStep={trainingDay}
+          goToNextStep={{dayName: trainingDay as string, dayId: training?.dayId as string}}
           planName={trainingName as string}
           closeModal={() =>
             closeModal("isAddingNewExerciseVisible", () =>

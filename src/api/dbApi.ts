@@ -12,9 +12,8 @@ export const updateDatabase = <T>( updates: {[key: string]: T}) => {
 };
 
 export const pushDatabase = <T>(refer: string, data: T) => {
-  return push(ref(db, refer), {
-    ...data
-  })
+  return push(ref(db, refer), {...data}
+  )
 }
 
 export const removeLocation = (refer: string) => {

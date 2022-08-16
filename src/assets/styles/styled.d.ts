@@ -20,6 +20,8 @@ declare module "styled-components" {
       error: string;
       errorLight: string;
       warning: string;
+      infoDark: string;
+      infoLight: string;
     };
 
     fontSize: {

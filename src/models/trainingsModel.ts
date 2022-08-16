@@ -10,6 +10,7 @@ export type TrainingBodyPayload = {
   virtualProgress: number;
   planName: string | undefined;
   planDay: string;
+  dayId: string;
   order: number;
 };
 
@@ -56,6 +57,7 @@ export interface DefaultValuesToUpdate {
   startWeightOrReps: number;
   order: number;
   trainingId: string;
+  dayId: string;
 }
 
 export interface DefaultValuesToUpdatePayload {
@@ -70,8 +72,15 @@ export interface DefaultValuesToUpdatePayload {
   dayName: string;
   order: number;
   trainingId: string;
+  dayId: string;
 }
 
 export type DeleteLocationPayload = {
   path: string;
 };
+
+export type AddNewTrainingDayPayload = {
+  dayName: string;
+  dayId: string;
+  planName: string;
+}
