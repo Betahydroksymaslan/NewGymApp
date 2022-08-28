@@ -27,41 +27,24 @@ export const Wrapper = styled.div<OptionsType>`
   right: ${({ customPosition }) =>
     customPosition?.right && `${customPosition?.right}px`};
   justify-self: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  display: grid;
-  place-items: center;
-  background-color: ${({ theme, circular }) =>
-    circular ? theme.colors.lightGray : "transparent"};
+  width: 45px;
+  height: 45px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  box-shadow: ${({ theme, circular }) => circular && theme.boxShadow.inputShadow};
+  background-color: ${({ circular }) => (circular ? "#f7f8f8" : "transparent")};
 `;
 
 export const Dot = styled.div<DotsTypes>`
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 100%;
   background-color: ${({ theme, dotsTheme }) =>
     dotsTheme === "black" ? theme.colors.fontDark : theme.colors.white};
   position: relative;
-
-  &::after,
-  &::before {
-    content: "";
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-    background-color: inherit;
-    position: absolute;
-    left: 0;
-  }
-
-  &::before {
-    top: 10px;
-  }
-
-  &::after {
-    bottom: 10px;
-  }
 `;
 
 export const List = styled.ol`
@@ -70,7 +53,7 @@ export const List = styled.ol`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
   position: absolute;
-  top: 100%;
+  top: 150%;
   right: 25%;
   z-index: 1000;
   list-style-type: none;

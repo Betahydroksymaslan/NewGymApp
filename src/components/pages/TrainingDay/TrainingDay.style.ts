@@ -166,6 +166,10 @@ export const StartTrainingButton = styled.button`
   color: ${({ theme }) => theme.colors.white};
   font-weight: 600;
   transition: transform 0.2s ease-in-out;
+  
+  &:disabled {
+    opacity: 0.4;
+  }
 
   &:active {
     transform: scale(0.95);

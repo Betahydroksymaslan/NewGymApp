@@ -10,6 +10,7 @@ import {
   DefaultValuesToUpdatePayload,
   DeleteLocationPayload,
   AddNewTrainingDayPayload,
+  UpdateDayNamePayload
 } from "models/trainingsModel";
 
 const initialState: Trainings = {
@@ -75,6 +76,12 @@ const trainingsSlice = createSlice({
     addNewTrainingDayFailure: () => {
       console.log("something went wrong");
     },
+    updateDayNameSuccess: () => {
+      console.log("good");
+    },
+    updateDayNameFailure: () => {
+      console.log("something went wrong");
+    },
   },
 });
 
@@ -118,6 +125,9 @@ const trainingActions = {
   ),
   addNewTrainingDaySuccess: createAction("trainings/addNewTrainingDaySuccess"),
   addNewTrainingDayFailure: createAction("trainings/addNewTrainingDayFailure"),
+  updateDayName: createAction<UpdateDayNamePayload>("trainings/updateDayName"),
+  updateDayNameSuccess: createAction("trainings/updateDayNameSuccess"),
+  updateDayNameFailure: createAction("trainings/updateDayNameFailure"),
 };
 
 export { trainingActions };

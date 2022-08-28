@@ -65,6 +65,7 @@ const OptionsList = ({
           )}
         </AnimatePresence>
       </Dot>
+      <Dot dotsTheme={dotsTheme}></Dot>
     </Wrapper>
   );
 };

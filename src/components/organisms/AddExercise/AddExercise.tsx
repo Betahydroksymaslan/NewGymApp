@@ -336,6 +336,7 @@ const AddExercise = ({
       repsQuantityTo: data.repsQuantityTo,
       startWeightOrReps: data.startWeightOrReps,
       trainingId: uuid(),
+      actualRep: data.repsQuantityFrom,
       dayId: isTrainingDayChoosen?.dayId as string,
       virtualProgress: data.startWeightOrReps,
       planName: planName,

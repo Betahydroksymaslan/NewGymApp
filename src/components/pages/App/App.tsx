@@ -13,6 +13,7 @@ import {
   TRAINING_DAYS,
   TRAINING_DAY,
   TRAINING_SESSION,
+  STATS,
 } from "constants/routes";
 import Login from "components/pages/Login/Login";
 import Register from "components/pages/Register/Register";
@@ -23,6 +24,7 @@ import Trainings from "components/pages/Trainings/Trainings";
 import ChooseTrainingDay from "../ChooseTrainingDay/ChooseTrainingDay";
 import TrainingDay from "components/pages/TrainingDay/TrainingDay";
 import TrainingSession from "components/pages/TrainingSession/TrainingSession";
+import Stats from "components/pages/Stats/Stats";
 import { AnimatePresence } from "framer-motion";
 
 function App() {
@@ -42,6 +44,7 @@ function App() {
             <Route path={HOME} element={<Home />} />
             <Route path={ACCOUNT} element={<Account />} />
             <Route path={TRAININGS} element={<Trainings />} />
+            <Route path={STATS} element={<Stats />} />
             <Route path={TRAINING_DAYS} element={<ChooseTrainingDay />} />
             <Route path={TRAINING_DAY} element={<TrainingDay />} />
             <Route path={TRAINING_SESSION} element={<TrainingSession />} />

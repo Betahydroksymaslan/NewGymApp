@@ -38,6 +38,8 @@ type InputsTypes = {
   dayName: string;
 };
 
+type InputDayNameType = { updatedDayName: string };
+
 const ChooseTrainingDay = () => {
   let { trainingName } = useParams();
   const dispatch = useAppDispatch();
@@ -46,7 +48,9 @@ const ChooseTrainingDay = () => {
     (item) => item.planName === trainingName
   );
 
-  const [choosenDay, setChoosenDay] = useState(null);
+  const [choosenDay, setChoosenDay] = useState<
+    undefined | { dayId: string; dayName: string }
+  >(undefined);
 
   const {
     register,
@@ -54,12 +58,20 @@ const ChooseTrainingDay = () => {
     formState: { errors },
   } = useForm<InputsTypes>();
 
+  const {
+    register: registerDayName,
+    handleSubmit: handleSubmitDayName,
+    formState: { errors: errorsDayName },
+  } = useForm<InputDayNameType>({
+    defaultValues: { updatedDayName: choosenDay?.dayName },
+  });
+
   const [modals, setModals] = useState({
     isEdit: false,
     addNewDayModal: false,
     editDayName: false,
   });
-
+  console.log(choosenDay);
   const openModal = (name: ModalsType) =>
     setModals({ ...modals, [name]: true });
   const closeModal = (name: ModalsType) =>
@@ -96,11 +108,18 @@ const ChooseTrainingDay = () => {
                 <AiTwotoneDelete />
                 usuń
               </DeleteButton>
+
               <EditDayNameButton
                 as={motion.button}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                onClick={() => openModal("editDayName")}
+                onClick={() => {
+                  setChoosenDay({
+                    dayId: item.dayId as string,
+                    dayName: item.dayName as string,
+                  });
+                  openModal("editDayName");
+                }}
               >
                 <AiTwotoneEdit />
                 zmień nazwę
@@ -112,7 +131,7 @@ const ChooseTrainingDay = () => {
     );
   });
 
-  const changeDayName = (data: { dayName: string }) => {
+  const addNewDayName = (data: { dayName: string }) => {
     const payload = {
       dayName: data.dayName,
       planName: trainingName as string,
@@ -120,6 +139,16 @@ const ChooseTrainingDay = () => {
     };
     dispatch(trainingActions.addNewTrainingDay(payload));
     closeModal("addNewDayModal");
+  };
+
+  const changeDayName = (data: { updatedDayName: string }) => {
+    const payload = {
+      dayName: data.updatedDayName,
+      planName: trainingName as string,
+      dayId: choosenDay?.dayId as string,
+    };
+    dispatch(trainingActions.updateDayName(payload));
+    closeModal("editDayName");
   };
 
   return (
@@ -138,8 +167,9 @@ const ChooseTrainingDay = () => {
             callback: () => openModal("isEdit"),
           },
         ]}
-        customPosition={{ top: 10, right: 10 }}
-        dotsTheme="white"
+        customPosition={{ top: 15, right: 15 }}
+        circular
+        dotsTheme="black"
       />
       <GoBack>Plany</GoBack>
       <StyledSection>
@@ -190,7 +220,7 @@ const ChooseTrainingDay = () => {
         isOpen={modals.addNewDayModal}
         handleClose={() => closeModal("addNewDayModal")}
       >
-        <StyledForm onSubmit={handleSubmit(changeDayName)}>
+        <StyledForm onSubmit={handleSubmit(addNewDayName)}>
           <h2>Nazwij trening</h2>
           <FormField
             variant="secondary"
@@ -218,16 +248,18 @@ const ChooseTrainingDay = () => {
 
       <Modal
         isOpen={modals.editDayName}
-        handleClose={() => closeModal("addNewDayModal")}
+        handleClose={() => closeModal("editDayName")}
       >
-        <StyledForm onSubmit={handleSubmit(changeDayName)}>
+        <StyledForm onSubmit={handleSubmitDayName(changeDayName)}>
           <h2>Wybierz nową nazwę</h2>
           <FormField
             variant="secondary"
             id="dayName"
-            {...register("dayName", { required: "to pole jest wymgane" })}
-            isError={!!errors.dayName}
-            errorMessage={errors?.dayName?.message}
+            {...registerDayName("updatedDayName", {
+              required: "to pole jest wymgane",
+            })}
+            isError={!!errorsDayName.updatedDayName}
+            errorMessage={errorsDayName?.updatedDayName?.message}
           />
           <InlineWrapper>
             <Button rounded size="m">

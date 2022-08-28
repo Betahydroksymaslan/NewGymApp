@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { authActions } from "slices/authSlice";
 import { trainingActions } from "slices/trainingsSlice";
 import { getUser } from "slices/authSlice";
+import { trainingSessionsActions } from "slices/trainingSessionSlice";
 
 type AuthIsLoadedType = ({ children }: { children: any }) => any;
 
@@ -37,7 +38,16 @@ const IsAuthLoaded: AuthIsLoadedType = ({ children }) => {
           }
           dispatch(trainingActions.getTrainings(array));
         });
+
+        const sessionsRef = `users/${user.uid}/trainingSessions`;
+        const referenceSession = ref(db, sessionsRef);
+        onValue(referenceSession, (snapshot) => {
+          const data = snapshot.val();
+
+          dispatch(trainingSessionsActions.getSessions(data));
+        });
       }
+
       setIsLoading(false);
     });
 

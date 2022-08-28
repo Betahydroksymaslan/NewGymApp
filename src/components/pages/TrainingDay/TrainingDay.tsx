@@ -32,13 +32,26 @@ import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import { TRAININGS } from "constants/routes";
+import { trainingSessionsActions } from "slices/trainingSessionSlice";
+import { v4 as uuid } from "uuid";
+import { TrainingSessionPayload } from "models/trainingSessionsModel";
+import { getTime } from "date-fns";
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 type ModalsNames =
   | "isAddingNewExerciseVisible"
   | "confirmDeleteExercise"
-  | "confirmStartTraining";
+  | "confirmStartTraining"
+  | "isSessionActive";
 
 const TrainingDay = () => {
+  const [isSessionActive, setIsSessionActive] = useLocalStorage(
+    "activeTrainingSession",
+    {
+      isActive: false,
+      path: "none",
+    }
+  );
   const navigate = useNavigate();
   const { trainingDay, trainingName } = useParams();
   const dispatch = useAppDispatch();
@@ -55,6 +68,7 @@ const TrainingDay = () => {
     isAddingNewExerciseVisible: false,
     confirmDeleteExercise: false,
     confirmStartTraining: false,
+    isSessionActive: false,
   });
   const openModal = (modal: ModalsNames) =>
     setModals({ ...modals, [modal]: true });
@@ -116,6 +130,43 @@ const TrainingDay = () => {
     closeModal("confirmDeleteExercise");
   };
 
+  const startTrainingSession = () => {
+    if (!training) return;
+    const sessionId = uuid();
+    const date = new Date();
+    const exercisesPayload = training?.exercises.map((item) => {
+      return {
+        exerciseName: item.exerciseName,
+        exerciseId: item.trainingId,
+        weightFrom: item.startWeightOrReps,
+        repsFrom: item.actualRep,
+      };
+    });
+
+    const data: TrainingSessionPayload = {
+      sessionData: {
+        trainingSessionId: sessionId,
+        dayId: training?.dayId,
+        dayName: training?.dayName,
+        trainingName: trainingName as string,
+        startTrainingDate: getTime(date),
+      },
+
+      exercises: exercisesPayload,
+    };
+
+    const localStorageData = {
+      isActive: true,
+      path: `${TRAININGS}/${trainingName}/${trainingDay}/${sessionId}`,
+    };
+
+    dispatch(trainingSessionsActions.addNewTrainingSession(data));
+    setIsSessionActive(localStorageData);
+    navigate(
+      `${TRAININGS}/${trainingName}/${trainingDay}/${sessionId}`
+    );
+  };
+
   return (
     <Wrapper
       as={motion.section}
@@ -148,7 +199,14 @@ const TrainingDay = () => {
       </BottomSection>
 
       <StartTrainingWrapper>
-        <StartTrainingButton onClick={() => openModal("confirmStartTraining")}>
+        <StartTrainingButton
+          disabled={!training?.exercises.length}
+          onClick={() =>
+            isSessionActive.isActive
+              ? openModal("isSessionActive")
+              : openModal("confirmStartTraining")
+          }
+        >
           Rozpocznij trening!
         </StartTrainingButton>
       </StartTrainingWrapper>
@@ -163,7 +221,10 @@ const TrainingDay = () => {
         <AddExercise
           type={defaultValuesToUpdate ? "update" : "add"}
           defaultValuesToUpdate={defaultValuesToUpdate}
-          goToNextStep={{dayName: trainingDay as string, dayId: training?.dayId as string}}
+          goToNextStep={{
+            dayName: trainingDay as string,
+            dayId: training?.dayId as string,
+          }}
           planName={trainingName as string}
           closeModal={() =>
             closeModal("isAddingNewExerciseVisible", () =>
@@ -206,12 +267,20 @@ const TrainingDay = () => {
               setDefaultValuesToUpdate(undefined)
             )
           }
-          callback={() =>
-            navigate(
-              `${TRAININGS}/${trainingName}/${trainingDay}/new_training_session`
-            )
-          }
+          callback={startTrainingSession}
           body="Rozpoczynając trening zostaje też naliczany czas. Jeśli chcesz tylko zapoznać się ze ze szczegółami treningu wybierz opcję - szczegóły"
+        />
+      </Modal>
+
+      <Modal
+        isOpen={modals.isSessionActive}
+        handleClose={() => closeModal("isSessionActive")}
+      >
+        <ConfirmationDialog
+          header="Masz już trwający trening"
+          body="Został już rozpoczęty trening, czy chcesz go kontynuować?"
+          handleClose={() => closeModal("isSessionActive")}
+          callback={() => navigate(isSessionActive.path)}
         />
       </Modal>
     </Wrapper>

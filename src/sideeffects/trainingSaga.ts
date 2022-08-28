@@ -8,6 +8,7 @@ import {
   DefaultValuesToUpdatePayload,
   DeleteLocationPayload,
   AddNewTrainingDayPayload,
+  UpdateDayNamePayload
 } from "models/trainingsModel";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { toggleSpinner } from "slices/apiCallSlice";
@@ -155,6 +156,28 @@ export function* addNewTrainingDay(
   }
 }
 
+export function* updateDayName(
+  action: PayloadAction<UpdateDayNamePayload>
+) {
+  try {
+    yield put(toggleSpinner(true));
+    const user: User = yield select((store) => store.user.user);
+    const trainingDayRef = `users/${user.uid}/trainingPlans/${action.payload.planName}/trainingDays/${action.payload.dayId}`;
+    const updateData = {
+      [`${trainingDayRef}/dayName`]: action.payload.dayName,
+    };
+    yield call(updateDatabase, { ...updateData });
+
+    yield put(trainingActions.updateDayNameSuccess());
+    yield toast.success("Zmieniono nazwę!");
+  } catch (error) {
+    yield put(trainingActions.updateDayNameFailure());
+    yield toast.error(getErrorMessage(error));
+  } finally {
+    yield put(toggleSpinner(false));
+  }
+}
+
 export default function* trainingSaga() {
   yield takeEvery(trainingActions.setPlanName.type, setPlanName);
   yield takeEvery(trainingActions.getTrainings.type, getTrainings);
@@ -163,4 +186,5 @@ export default function* trainingSaga() {
   yield takeEvery(trainingActions.updateExercise.type, updateExercise);
   yield takeEvery(trainingActions.deleteLocation.type, deleteLocation);
   yield takeEvery(trainingActions.addNewTrainingDay.type, addNewTrainingDay);
+  yield takeEvery(trainingActions.updateDayName.type, updateDayName);
 }

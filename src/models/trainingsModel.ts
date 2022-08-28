@@ -6,6 +6,7 @@ export type TrainingBodyPayload = {
   repsQuantityFrom: number;
   repsQuantityTo: number;
   startWeightOrReps: number;
+  actualRep: number;
   trainingId: string;
   virtualProgress: number;
   planName: string | undefined;
@@ -80,6 +81,11 @@ export type DeleteLocationPayload = {
 };
 
 export type AddNewTrainingDayPayload = {
+  dayName: string;
+  dayId: string;
+  planName: string;
+}
+export type UpdateDayNamePayload = {
   dayName: string;
   dayId: string;
   planName: string;
