@@ -76,6 +76,7 @@ export const ExerciseWrapper = styled.section`
   border-top-right-radius: 40px;
   z-index: 2;
   overflow-x: hidden;
+  overflow-y: scroll;
 
   & > h2 {
     margin-top: 10px;
@@ -92,6 +93,23 @@ export const ActualScore = styled.span<{
   &::after {
     content: "${({ suffix }) => (suffix === "weight" ? "kg" : "p")}";
     font-size: 30px;
+  }
+`;
+
+export const UpdateMainScoreButton = styled.button`
+  margin: 20px 0;
+  background-color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fontSize.xl};
+  color: ${({ theme }) => theme.colors.primary};
+  width: 70px;
+  height: 70px;
+  border-radius: 15px;
+  border: 2px solid ${({ theme }) => theme.colors.primary};
+  transition: transform 0.2s ease-in-out;
+  box-shadow: ${({theme}) => theme.boxShadow.blueShadow};
+
+  &:active {
+    transform: scale(0.95);
   }
 `;
 

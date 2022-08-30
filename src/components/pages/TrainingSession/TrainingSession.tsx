@@ -10,8 +10,10 @@ import {
   RepsButton,
   RepsButtonsWrapper,
   EndSessionBoard,
+  UpdateMainScoreButton,
 } from "./TrainingSession.style";
 import { useParams } from "react-router-dom";
+import { increment } from "firebase/database";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { trainingSessionsActions } from "slices/trainingSessionSlice";
 import { getTrainings } from "slices/trainingsSlice";
@@ -30,8 +32,13 @@ import ConfirmationDialog from "components/organisms/ConfirmationDialog/Confirma
 import Modal from "components/templates/Modal/Modal";
 import { HOME } from "constants/routes";
 import { getTime } from "date-fns";
+import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
+import IncreaseDecreaseDialog from "components/organisms/IncreaseDecreaseDialog/IncreaseDecreaseDialog";
 
-type ModalsTypes = "confirmEndSession" | "endOfTrainingBoard";
+type ModalsTypes =
+  | "confirmEndSession"
+  | "endOfTrainingBoard"
+  | "updateMainScoreByCustomValue";
 
 const TrainingSession = () => {
   const { trainingDay, trainingName, sessionId } = useParams();
@@ -44,7 +51,7 @@ const TrainingSession = () => {
 
   let navigate = useNavigate();
   const goPreviousPage = () => navigate(-1);
-
+  console.log(training);
   const [isSessionActive, setIsSessionActive] = useLocalStorage(
     "activeTrainingSession",
     {
@@ -78,6 +85,7 @@ const TrainingSession = () => {
   const [modals, setModals] = useState({
     confirmEndSession: false,
     endOfTrainingBoard: false,
+    updateMainScoreByCustomValue: false,
   });
 
   const openModal = (modalName: ModalsTypes) =>
@@ -103,10 +111,12 @@ const TrainingSession = () => {
     dispatch(trainingSessionsActions.updateSession(updates));
   };
 
-  const renderRepsButtons = Array.from(
+  const repsArray = Array.from(
     { length: buttonsNumber as number },
     (_, i) => i + (training?.exercises[value].repsQuantityFrom as number)
-  ).map((item) => (
+  );
+
+  const renderRepsButtons = repsArray.map((item) => (
     <RepsButton
       key={item}
       isActive={item <= (training?.exercises[value].actualRep as number)}
@@ -115,6 +125,23 @@ const TrainingSession = () => {
       {item}
     </RepsButton>
   ));
+
+  /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! UPDATE ACTUAL MAIN SCORE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+  const updateMainScoreByDefaultValue = () => {
+    if (!user || !training) return;
+
+    const ref = `users/${user.uid}/trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}`;
+
+    const updates = {
+      [`${ref}/startWeightOrReps`]: increment(
+        training.exercises[value].defaultProgress
+      ),
+      [`${ref}/actualRep`]: training.exercises[value].repsQuantityFrom,
+    };
+
+    dispatch(trainingSessionsActions.updateSession(updates));
+  };
 
   /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! END SESSION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
@@ -181,7 +208,7 @@ const TrainingSession = () => {
           as={motion.div}
           key={training?.exercises[value].exerciseName}
           initial={{ x: window.innerWidth, y: -50 }}
-          animate={{ x: 0, transition: { delay: 0.3 } }}
+          animate={{ x: 0 /* , transition: { delay: 0.3 }  */ }}
           exit={{ x: -window.innerWidth }}
         >
           <ManJumping />
@@ -190,7 +217,7 @@ const TrainingSession = () => {
           as={motion.div}
           key={training?.exercises[value].exerciseName}
           initial={{ x: -window.innerWidth }}
-          animate={{ x: 0, transition: { delay: 0.3 } }}
+          animate={{ x: 0 /* , transition: { delay: 0.3 }  */ }}
           exit={{ x: window.innerWidth }}
         />
       </AnimatePresence>
@@ -211,7 +238,24 @@ const TrainingSession = () => {
             {training?.exercises[value].startWeightOrReps}
           </ActualScore>
 
+          <InlineWrapper>
+            <UpdateMainScoreButton onClick={updateMainScoreByDefaultValue}>
+              +{training?.exercises[value].defaultProgress}
+            </UpdateMainScoreButton>
+            <UpdateMainScoreButton
+              onClick={() => openModal("updateMainScoreByCustomValue")}
+            >
+              +/-
+            </UpdateMainScoreButton>
+          </InlineWrapper>
+
           <RepsButtonsWrapper>{renderRepsButtons}</RepsButtonsWrapper>
+
+          <InlineWrapper>
+            <Button callback={previous}>Prev</Button>
+            <Button callback={next}>Next</Button>
+          </InlineWrapper>
+
           <Button callback={handleEndSession}>Zakończ trening</Button>
         </ExerciseWrapper>
       </AnimatePresence>
@@ -226,6 +270,16 @@ const TrainingSession = () => {
           body="Jesteś pewien, że chcesz zakończyć obecnie trwającą sesję treningową?"
           handleClose={() => closeModal("confirmEndSession")}
           callback={goToCloseSessionBoard}
+        />
+      </Modal>
+
+      <Modal
+        isOpen={modals.updateMainScoreByCustomValue}
+        handleClose={() => closeModal("updateMainScoreByCustomValue")}
+      >
+        <IncreaseDecreaseDialog
+          refPath={`users/${user?.uid}/trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}/startWeightOrReps`}
+          handleClose={() => closeModal("updateMainScoreByCustomValue")}
         />
       </Modal>
 

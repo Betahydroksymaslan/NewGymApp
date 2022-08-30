@@ -39,7 +39,7 @@ export const StyledButton = styled.button<ButtonTypes>`
     if (btnType === "primary") return "17px 32px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
     return "15px 30px;";
   }};
-  border-radius: ${({ rounded }) => (rounded ? "40px" : "5px")};
+  border-radius: ${({ rounded }) => (rounded ? "50px" : "12px")};
   text-decoration: ${({ btnType, theme }) =>
     btnType === "tertiary" && `underline 2px ${theme.colors.primary}`};
   box-shadow: ${({ theme, btnType }) =>

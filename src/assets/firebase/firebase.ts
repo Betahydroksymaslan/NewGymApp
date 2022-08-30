@@ -8,7 +8,8 @@ import {
   child,
   update,
   push,
-  remove
+  remove,
+  increment,
 } from "firebase/database";
 import {
   getAuth,
@@ -63,7 +64,8 @@ export {
   child,
   update,
   push,
-  remove
+  remove,
+  increment,
 };
 
 export default app;

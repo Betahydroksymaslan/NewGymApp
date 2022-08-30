@@ -42,4 +42,4 @@ export type TrainingSessionPayload = {
 
 export type SessionPayloadArrived = { [key: string]: any };
 
-export type UpdateSessionPayload = { [x: string]: number };
+export type UpdateSessionPayload = { [x: string]: number | object };
