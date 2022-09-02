@@ -58,6 +58,7 @@ export const MainImageWrapper = styled.div`
 
   & > svg {
     width: 100%;
+    min-height: 130%;
   }
 `;
 

@@ -30,9 +30,16 @@ import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
 import Modal from "components/templates/Modal/Modal";
 import { useForm } from "react-hook-form";
 import FormField from "components/molecules/FormField/FormField";
+import { getTrainingSessions } from "slices/trainingSessionSlice";
 import { v4 as uuid } from "uuid";
+import { calcAverageTime } from "helpers/calcTimeLength";
+import ConfirmationDialog from "components/organisms/ConfirmationDialog/ConfirmationDialog";
 
-type ModalsType = "isEdit" | "addNewDayModal" | "editDayName";
+type ModalsType =
+  | "isEdit"
+  | "addNewDayModal"
+  | "editDayName"
+  | "deleteTrainingDay";
 
 type InputsTypes = {
   dayName: string;
@@ -44,6 +51,7 @@ const ChooseTrainingDay = () => {
   let { trainingName } = useParams();
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
+  const sessions = useAppSelector(getTrainingSessions);
   const currentTraining = trainings?.find(
     (item) => item.planName === trainingName
   );
@@ -51,7 +59,7 @@ const ChooseTrainingDay = () => {
   const [choosenDay, setChoosenDay] = useState<
     undefined | { dayId: string; dayName: string }
   >(undefined);
-
+  console.log(choosenDay);
   const {
     register,
     handleSubmit,
@@ -70,18 +78,23 @@ const ChooseTrainingDay = () => {
     isEdit: false,
     addNewDayModal: false,
     editDayName: false,
+    deleteTrainingDay: false,
   });
-  console.log(choosenDay);
+
   const openModal = (name: ModalsType) =>
     setModals({ ...modals, [name]: true });
   const closeModal = (name: ModalsType) =>
     setModals({ ...modals, [name]: false });
 
   const renderTrainingDays = currentTraining?.trainingDays.map((item) => {
-    const deleteItem = () => {
-      const payload = { path: `${trainingName}/trainingDays/${item.dayId}` };
-      dispatch(trainingActions.deleteLocation(payload));
-    };
+    const filteredSessions = sessions?.filter(
+      (session) => session.endTrainingDate && session.dayName === item.dayName
+    );
+    const averageData = filteredSessions?.map((item) => ({
+      timeFrom: item.startTrainingDate,
+      timeTo: item.endTrainingDate,
+    }));
+    const averageTrainingTime = calcAverageTime(averageData);
 
     return (
       <StyledLink
@@ -95,12 +108,18 @@ const ChooseTrainingDay = () => {
           <h2>{item.dayName}</h2>
           <DetailsWrapper>
             <ExerciseIcon /> <span>{item.exercises.length} ćwiczeń</span>
-            <ClockIcon /> <span>120 min</span>
+            <ClockIcon /> <span>{`${averageTrainingTime} min`}</span>
           </DetailsWrapper>
           {modals.isEdit && (
             <EditWrapper>
               <DeleteButton
-                onClick={deleteItem}
+                onClick={() => {
+                  setChoosenDay({
+                    dayId: item.dayId as string,
+                    dayName: item.dayName as string,
+                  });
+                  openModal("deleteTrainingDay");
+                }}
                 as={motion.button}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -130,6 +149,14 @@ const ChooseTrainingDay = () => {
       </StyledLink>
     );
   });
+
+  const deleteTrainingDay = () => {
+    const payload = {
+      path: `${trainingName}/trainingDays/${choosenDay?.dayId}`,
+    };
+    dispatch(trainingActions.deleteLocation(payload));
+    closeModal("deleteTrainingDay");
+  };
 
   const addNewDayName = (data: { dayName: string }) => {
     const payload = {
@@ -216,6 +243,19 @@ const ChooseTrainingDay = () => {
         </AnimatePresence>
       </StyledSection>
 
+      {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MODALS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+
+      <Modal
+        isOpen={modals.deleteTrainingDay}
+        handleClose={() => closeModal("deleteTrainingDay")}
+      >
+        <ConfirmationDialog
+          handleClose={() => closeModal("deleteTrainingDay")}
+          body={`Jesteś pewien, że chcesz usunąć ${choosenDay?.dayName}?`}
+          callback={deleteTrainingDay}
+        />
+      </Modal>
+
       <Modal
         isOpen={modals.addNewDayModal}
         handleClose={() => closeModal("addNewDayModal")}
@@ -225,7 +265,16 @@ const ChooseTrainingDay = () => {
           <FormField
             variant="secondary"
             id="dayName"
-            {...register("dayName", { required: "to pole jest wymgane" })}
+            {...register("dayName", {
+              required: "to pole jest wymgane",
+              validate: (value) => {
+                return (
+                  [/[a-z]/, /[A-Z]/, /[0-9]/].every((pattern) =>
+                    pattern.test(value)
+                  ) || "nazwa może zawierać duże, małe litery i liczby"
+                );
+              },
+            })}
             isError={!!errors.dayName}
             errorMessage={errors?.dayName?.message}
           />
@@ -257,6 +306,13 @@ const ChooseTrainingDay = () => {
             id="dayName"
             {...registerDayName("updatedDayName", {
               required: "to pole jest wymgane",
+              validate: (value) => {
+                return (
+                  [/[a-z]/, /[A-Z]/, /[0-9]/].every((pattern) =>
+                    pattern.test(value)
+                  ) || "nazwa może zawierać duże, małe litery i liczby"
+                );
+              },
             })}
             isError={!!errorsDayName.updatedDayName}
             errorMessage={errorsDayName?.updatedDayName?.message}

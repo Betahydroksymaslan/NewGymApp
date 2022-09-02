@@ -1,7 +1,8 @@
 import React from "react";
-import { Wrapper } from "./ConfirmationDialog.style";
+import { Wrapper, ExitWrapper } from "./ConfirmationDialog.style";
 import Button from "components/atoms/Button/Button";
 import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
+import { ReactComponent as XIcon } from "assets/icons/XIcon.svg";
 
 type ConfirmationDialogType = {
   header?: string;
@@ -18,14 +19,18 @@ const ConfirmationDialog = ({
 }: ConfirmationDialogType) => {
   return (
     <Wrapper>
-      <h1>{header}</h1>
+      <InlineWrapper>
+        <ExitWrapper onClick={handleClose}>
+          <XIcon />
+        </ExitWrapper>
+
+        <h1>{header}</h1>
+      </InlineWrapper>
+
       <p>{body}</p>
       <InlineWrapper>
-        <Button rounded callback={callback} size="m">
+        <Button rounded callback={callback} wide size="m">
           Zrób to!
-        </Button>
-        <Button rounded callback={handleClose} size="m" btnType="secondary">
-          Wróć
         </Button>
       </InlineWrapper>
     </Wrapper>

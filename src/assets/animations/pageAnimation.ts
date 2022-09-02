@@ -3,6 +3,6 @@ export const slidePageAnimation = {
   slideIn: { x: 0, transition: { duration: 0.15, type: "linear" } },
   slideOut: {
     x: window.innerWidth,
-    transition: { duration: 0.15, type: "linear" },
+    transition: { duration: 0.15, type: "linear", delay: 0.1 },
   },
 };

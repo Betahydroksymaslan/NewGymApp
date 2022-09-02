@@ -6,7 +6,12 @@ export const theme: DefaultTheme = {
       "linear-gradient(270deg, rgba(146,163,253,1) 0%, rgba(157,206,255,1) 100%)",
     primaryGradientBorder:
       "linear-gradient(270deg, white 0%, white 100%) padding-box, linear-gradient(270deg, rgba(146,163,253,1) 0%, rgba(157,206,255,1) 100%) border-box",
-    primaryLightBgc: " linear-gradient(270deg, rgba(146,163,253,0.2) 0%, rgba(157,206,255,0.2) 100%), linear-gradient(270deg, white 0%, white 100%) ",
+    secondaryGradient:
+      "linear-gradient(270deg, rgba(197,139,242,1) 0%, rgba(238,164,206,1) 100%)",
+    secondaryGradientBorder:
+      "linear-gradient(270deg, white 0%, white 100%) padding-box, linear-gradient(270deg, rgba(197,139,242,1) 0%, rgba(238,164,206,1) 100%) border-box",
+    primaryLightBgc:
+      " linear-gradient(270deg, rgba(146,163,253,0.2) 0%, rgba(157,206,255,0.2) 100%), linear-gradient(270deg, white 0%, white 100%) ",
     primary: "rgba(146,163,253,1)",
     secondary: "#e5ddff",
     fontDark: "#3f3f3f",

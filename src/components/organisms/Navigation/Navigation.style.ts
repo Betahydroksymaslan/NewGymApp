@@ -8,7 +8,7 @@ export const NavWrapper = styled.nav`
   align-items: center;
   justify-content: space-evenly;
   background-color: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
+  box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
   border-radius: 25px;
   position: fixed;
   bottom: 20px;

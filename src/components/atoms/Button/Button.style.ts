@@ -16,6 +16,8 @@ export const StyledButton = styled.button<ButtonTypes>`
   background: ${({ btnType, theme }) => {
     if (btnType === "primary") return theme.colors.primaryGradient;
     if (btnType === "secondary") return theme.colors.primaryGradientBorder;
+    if (btnType === "primary--pink") return theme.colors.secondaryGradient;
+    if (btnType === "secondary--pink") return theme.colors.secondaryGradientBorder;
     return "transparent";
   }};
   border: ${({ btnType }) => {
@@ -23,20 +25,20 @@ export const StyledButton = styled.button<ButtonTypes>`
     return "none";
   }};
   color: ${({ btnType, theme }) => {
-    if (btnType === "primary") return theme.colors.white;
+    if (btnType === "primary" || btnType === "primary--pink") return theme.colors.white;
     return theme.colors.primary;
   }};
   font-size: ${({ theme, size }) => {
-    if (size === "s") return theme.fontSize.m;
+    if (size === "s") return theme.fontSize.s;
     return theme.fontSize.m;
   }};
   padding: ${({ btnType, size }) => {
     if (btnType === "tertiary") return "0";
-    if (size === "s" && btnType === "primary") return "10px 17px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
-    if (size === "s" && btnType === "secondary") return "8px 15px";
-    if (size === "m" && btnType === "primary") return "14px 22px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
-    if (size === "m" && btnType === "secondary") return "12px 20px";
-    if (btnType === "primary") return "17px 32px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
+    if (size === "s" && btnType === "primary" || btnType === "primary--pink") return "12px 19px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
+    if (size === "s" && btnType === "secondary" || btnType === "secondary--pink") return "10px 17px";
+    if (size === "m" && btnType === "primary" || btnType === "primary--pink") return "14px 22px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
+    if (size === "m" && btnType === "secondary" || btnType === "secondary--pink") return "12px 20px";
+    if (btnType === "primary" || btnType === "primary--pink") return "17px 32px"; //A FEW PIXELS ADDED AS AN EQUIVALENT FOR NO BORDER
     return "15px 30px;";
   }};
   border-radius: ${({ rounded }) => (rounded ? "50px" : "12px")};
@@ -84,11 +86,15 @@ export const RippleSpan = styled.span<ButtonTypes>`
   animation: 1s ease 1 forwards ${rippleEffect};
 `;
 
-export const Arrow = styled.div`
-  height: 50%;
+export const Arrow = styled.div<{size: "s" | "m" | "l"}>`
+  height: ${({size}) => {
+    if (size === "s") return '10px';
+    if (size === "m") return '11px';
+    return '13px'
+  }} /* 55% */;
   aspect-ratio: 1/1;
-  border-top: 3px solid ${({ theme }) => theme.colors.white};
-  border-right: 3px solid ${({ theme }) => theme.colors.white};
+  border-top: ${({theme: {colors}, size}) => size === 's' ? `2px solid ${colors.white}` : `3px solid ${colors.white}`};
+  border-right: ${({theme: {colors}, size}) => size === 's' ? `2px solid ${colors.white}` : `3px solid ${colors.white}`};
   transform: rotate(45deg);
   margin-left: 10px;
 `;

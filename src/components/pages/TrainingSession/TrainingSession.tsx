@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   ExerciseWrapper,
   PageWrapper,
@@ -22,6 +22,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { slidePageAnimation } from "assets/animations/pageAnimation";
 import { ReactComponent as ManJumping } from "assets/images/manJumping.svg";
 import { ReactComponent as WomanDoingSquats } from "assets/images/womanDoingSquats.svg";
+import { ReactComponent as ManDoingPullUp } from "assets/images/manDoingPullUp.svg";
+import { ReactComponent as ManRunning } from "assets/images/manRunning.svg";
 import { ReactComponent as EndOfTrainingImage } from "assets/images/endTrainingImage.svg";
 import OptionsList from "components/molecules/OptionsList/OptionsList";
 import { BiMessageAltAdd } from "react-icons/bi";
@@ -57,6 +59,8 @@ const TrainingSession = () => {
     {
       isActive: true,
       path: "none",
+      dayName: "",
+      trainingName: "",
     }
   );
   const [value, setValue] = useState(0);
@@ -79,6 +83,12 @@ const TrainingSession = () => {
       return prevState - 1;
     });
   };
+  const mainImages = [<ManJumping />, <ManRunning />, <ManDoingPullUp />];
+  const getRandom = useMemo(
+    () => Math.floor(Math.random() * (0 + mainImages.length) + 0),
+    [value]
+  );
+  const renderMainImage = mainImages[getRandom];
 
   /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MODALS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
@@ -146,7 +156,12 @@ const TrainingSession = () => {
   /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! END SESSION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
   const handleEndSession = () => {
-    setIsSessionActive({ isActive: false, path: "none" });
+    setIsSessionActive({
+      isActive: false,
+      path: "",
+      dayName: "",
+      trainingName: "",
+    });
     openModal("confirmEndSession");
   };
 
@@ -211,7 +226,7 @@ const TrainingSession = () => {
           animate={{ x: 0 /* , transition: { delay: 0.3 }  */ }}
           exit={{ x: -window.innerWidth }}
         >
-          <ManJumping />
+          {renderMainImage}
         </MainImageWrapper>
         <Circle
           as={motion.div}

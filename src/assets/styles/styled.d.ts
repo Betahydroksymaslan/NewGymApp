@@ -5,6 +5,8 @@ declare module "styled-components" {
     colors: {
       primaryGradient: string;
       primaryGradientBorder: string;
+      secondaryGradient: string;
+      secondaryGradientBorder: string;
       primaryLightBgc: string;
       primary: string;
       secondary: string;

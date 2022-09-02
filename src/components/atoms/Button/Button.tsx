@@ -3,7 +3,7 @@ import { StyledButton, RippleSpan, Arrow } from "./Button.style";
 
 type ButtonTypes = {
   children: string;
-  btnType?: "primary" | "secondary" | "tertiary";
+  btnType?: "primary" | "secondary" | "tertiary" | "primary--pink" | "secondary--pink";
   disabled?: boolean;
   rounded?: boolean;
   withArrow?: boolean;
@@ -56,7 +56,7 @@ const Button = ({
       type={type}
     >
       {children}
-      {withArrow && <Arrow />}
+      {withArrow && <Arrow size={size} />}
       {isRippling && (
         <RippleSpan
           btnType={btnType}

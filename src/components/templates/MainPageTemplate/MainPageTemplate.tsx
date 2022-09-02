@@ -5,9 +5,10 @@ import { slidePageAnimation } from "assets/animations/pageAnimation";
 
 type TemplateTypes = {
   children: ReactNode;
+  padding?: string;
 };
 
-const MainPageTemplate = ({ children }: TemplateTypes) => {
+const MainPageTemplate = ({ children, padding }: TemplateTypes) => {
   return (
     <Template
       as={motion.div}
@@ -15,6 +16,7 @@ const MainPageTemplate = ({ children }: TemplateTypes) => {
       initial="hidden"
       animate="slideIn"
       exit="slideOut"
+      padding={padding}
     >
       {children}
     </Template>

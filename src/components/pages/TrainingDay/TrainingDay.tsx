@@ -32,11 +32,15 @@ import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import { TRAININGS } from "constants/routes";
-import { trainingSessionsActions } from "slices/trainingSessionSlice";
+import {
+  getTrainingSessions,
+  trainingSessionsActions,
+} from "slices/trainingSessionSlice";
 import { v4 as uuid } from "uuid";
 import { TrainingSessionPayload } from "models/trainingSessionsModel";
 import { getTime } from "date-fns";
 import { useLocalStorage } from "hooks/useLocalStorage";
+import { calcAverageTime } from "helpers/calcTimeLength";
 
 type ModalsNames =
   | "isAddingNewExerciseVisible"
@@ -55,6 +59,16 @@ const TrainingDay = () => {
   const navigate = useNavigate();
   const { trainingDay, trainingName } = useParams();
   const dispatch = useAppDispatch();
+
+  const sessions = useAppSelector(getTrainingSessions)?.filter(
+    (item) => item.endTrainingDate && item.dayName === trainingDay
+  );
+  const averageData = sessions?.map((item) => ({
+    timeFrom: item.startTrainingDate,
+    timeTo: item.endTrainingDate,
+  }));
+  const averageTrainingTime = calcAverageTime(averageData);
+
   const trainings = useAppSelector(getTrainings);
   const training = trainings
     ?.find((item) => item.planName === trainingName)
@@ -158,13 +172,13 @@ const TrainingDay = () => {
     const localStorageData = {
       isActive: true,
       path: `${TRAININGS}/${trainingName}/${trainingDay}/${sessionId}`,
+      dayName: trainingDay,
+      trainingName: trainingName,
     };
 
     dispatch(trainingSessionsActions.addNewTrainingSession(data));
     setIsSessionActive(localStorageData);
-    navigate(
-      `${TRAININGS}/${trainingName}/${trainingDay}/${sessionId}`
-    );
+    navigate(`${TRAININGS}/${trainingName}/${trainingDay}/${sessionId}`);
   };
 
   return (
@@ -183,7 +197,7 @@ const TrainingDay = () => {
         </DetailsWrapper>
 
         <DetailsWrapper>
-          <ClockIcon /> <span>120 min</span>
+          <ClockIcon /> <span>{`${averageTrainingTime} min`}</span>
         </DetailsWrapper>
         <BikeWrapper>
           <WomanRideBike />
