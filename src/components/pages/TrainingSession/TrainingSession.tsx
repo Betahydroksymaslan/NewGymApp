@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ExerciseWrapper,
   PageWrapper,
@@ -11,6 +11,8 @@ import {
   RepsButtonsWrapper,
   EndSessionBoard,
   UpdateMainScoreButton,
+  TrainingName,
+  ArrowIconWrapper,
 } from "./TrainingSession.style";
 import { useParams } from "react-router-dom";
 import { increment } from "firebase/database";
@@ -25,6 +27,7 @@ import { ReactComponent as WomanDoingSquats } from "assets/images/womanDoingSqua
 import { ReactComponent as ManDoingPullUp } from "assets/images/manDoingPullUp.svg";
 import { ReactComponent as ManRunning } from "assets/images/manRunning.svg";
 import { ReactComponent as EndOfTrainingImage } from "assets/images/endTrainingImage.svg";
+import { ReactComponent as ArrowIcon } from "assets/icons/arrowIcon.svg";
 import OptionsList from "components/molecules/OptionsList/OptionsList";
 import { BiMessageAltAdd } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -237,6 +240,8 @@ const TrainingSession = () => {
         />
       </AnimatePresence>
 
+      {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! EXERCISE AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+
       <AnimatePresence exitBeforeEnter>
         <ExerciseWrapper
           as={motion.section}
@@ -248,7 +253,19 @@ const TrainingSession = () => {
             transition: { duration: 0.2, type: "linear" },
           }}
         >
-          <h2>{training?.exercises[value].exerciseName}</h2>
+          <InlineWrapper justifyContent="space-between">
+            <ArrowIconWrapper onClick={previous}>
+              <ArrowIcon />
+            </ArrowIconWrapper>
+
+            <TrainingName>
+              {training?.exercises[value].exerciseName}
+            </TrainingName>
+            <ArrowIconWrapper directionLeft onClick={next}>
+              <ArrowIcon />
+            </ArrowIconWrapper>
+          </InlineWrapper>
+
           <ActualScore suffix={training?.exercises[value].repsOrWeight}>
             {training?.exercises[value].startWeightOrReps}
           </ActualScore>
@@ -266,12 +283,9 @@ const TrainingSession = () => {
 
           <RepsButtonsWrapper>{renderRepsButtons}</RepsButtonsWrapper>
 
-          <InlineWrapper>
-            <Button callback={previous}>Prev</Button>
-            <Button callback={next}>Next</Button>
-          </InlineWrapper>
-
-          <Button callback={handleEndSession}>Zakończ trening</Button>
+          <Button callback={handleEndSession} wide>
+            Zakończ trening
+          </Button>
         </ExerciseWrapper>
       </AnimatePresence>
 

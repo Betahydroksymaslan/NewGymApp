@@ -2,7 +2,8 @@ import { millisecondsToMinutes } from "date-fns";
 
 export const calcTimeLength = (timeFrom: number, timeTo: number) => {
   const countedTime = timeTo - timeFrom; //subtract miliseconds to get time to convert to minutes
-  return millisecondsToMinutes(countedTime);
+  const convertedTime  = millisecondsToMinutes(countedTime) || 1
+  return convertedTime;
 };
 
 export const calcAverageTime = (
@@ -14,7 +15,7 @@ export const calcAverageTime = (
     (item) => (item.timeTo as number) - item.timeFrom
   );
   const sumTimes = countedTimes.reduce((a, b) => {return a + b}, 0) / countedTimes.length;
-  const countedMinutes = Math.floor(millisecondsToMinutes(sumTimes));
+  const countedMinutes = Math.round(millisecondsToMinutes(sumTimes));
   
   return Math.floor(countedMinutes);
 };

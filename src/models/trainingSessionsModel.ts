@@ -21,6 +21,16 @@ export type TrainingSessions = {
     | null;
 };
 
+export type TrainingSessionsHistory = {
+  trainingSessionId: string;
+  dayId: string;
+  dayName: string;
+  trainingName: string;
+  startTrainingDate: number;
+  endTrainingDate?: number;
+  exercises: TrainingSessionsExercise[];
+} | null;
+
 export interface TrainingSessionsExercisePayload {
   exerciseName: string;
   exerciseId: string;

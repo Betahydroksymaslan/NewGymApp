@@ -70,6 +70,7 @@ export const Option = styled.li`
   gap: 15px;
   padding: 5px;
   align-items: center;
+  white-space: nowrap;
 
   & > svg {
     font-size: ${({ theme }) => theme.fontSize.xl};

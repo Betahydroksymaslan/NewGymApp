@@ -55,6 +55,7 @@ export const MainImageWrapper = styled.div`
   grid-row: 2 / 5;
   grid-column: 1;
   z-index: 1;
+  position: relative;
 
   & > svg {
     width: 100%;
@@ -71,6 +72,7 @@ export const ExerciseWrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
   background-color: ${({ theme }) => theme.colors.white};
   grid-row: 5 / -1;
   border-top-left-radius: 40px;
@@ -79,10 +81,25 @@ export const ExerciseWrapper = styled.section`
   overflow-x: hidden;
   overflow-y: scroll;
 
-  & > h2 {
-    margin-top: 10px;
-    text-align: center;
-    font-weight: 400;
+  & > button:last-child {
+    margin-top: 20px;
+  }
+`;
+
+export const TrainingName = styled.h2`
+  text-align: center;
+  font-weight: 400;
+  margin: 0;
+`;
+
+export const ArrowIconWrapper = styled.div<{ directionLeft?: boolean }>`
+
+  svg {
+    height: 50px;
+    transform: ${({ directionLeft }) => directionLeft && "rotate(180deg)"};
+    path, line {
+      stroke-width: 12px;
+    }
   }
 `;
 
@@ -98,7 +115,6 @@ export const ActualScore = styled.span<{
 `;
 
 export const UpdateMainScoreButton = styled.button`
-  margin: 20px 0;
   background-color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fontSize.xl};
   color: ${({ theme }) => theme.colors.primary};
@@ -107,7 +123,7 @@ export const UpdateMainScoreButton = styled.button`
   border-radius: 15px;
   border: 2px solid ${({ theme }) => theme.colors.primary};
   transition: transform 0.2s ease-in-out;
-  box-shadow: ${({theme}) => theme.boxShadow.blueShadow};
+  box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
 
   &:active {
     transform: scale(0.95);
@@ -124,6 +140,7 @@ export const RepsButtonsWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   position: relative;
+  margin-top: 20px;
 
   &::after {
     height: 20px;
