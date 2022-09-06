@@ -9,7 +9,7 @@ import Button from "components/atoms/Button/Button";
 import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
 import {
   TrainingPlan,
-  TrainingBodyPayload,
+  TrainingBodyToAdd,
   DefaultValuesToUpdate,
   DefaultValuesToUpdatePayload,
 } from "models/trainingsModel";
@@ -259,6 +259,7 @@ const AddExercise = ({
             short
             type="number"
             variant="secondary"
+            step={isWeightProgress === "weight" ? "0.1" : "1"}
             suffix={isWeightProgress === "weight" ? "kg" : "p"}
             isError={!!errors?.defaultProgress}
             errorMessage={errors?.defaultProgress?.message}
@@ -294,6 +295,7 @@ const AddExercise = ({
           short
           type="number"
           variant="secondary"
+          step={isWeightProgress === "weight" ? "0.1" : "1"}
           suffix={isWeightProgress === "weight" ? "kg" : "p"}
           isError={!!errors?.startWeightOrReps}
           errorMessage={errors?.startWeightOrReps?.message}
@@ -327,7 +329,7 @@ const AddExercise = ({
   );
 
   const onSubmit: SubmitHandler<InputsTypes> = (data) => {
-    const submitData: TrainingBodyPayload = {
+    const submitData: TrainingBodyToAdd = {
       defaultProgress: Number(data.defaultProgress),
       exerciseName: data.exerciseName,
       numberOfSeries: data.numberOfSeries,

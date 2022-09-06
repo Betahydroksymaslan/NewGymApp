@@ -39,7 +39,7 @@ export const ExercisesWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 30px;
+  margin: 30px 0;
   width: 100%;
 `;
 

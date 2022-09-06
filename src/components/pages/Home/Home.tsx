@@ -1,4 +1,11 @@
-import { TrainingInProgress, TrainingNameSpan, StyledSpan } from "./Home.style";
+import {
+  TrainingInProgress,
+  TrainingNameSpan,
+  StyledSpan,
+  MainBox,
+  MainContentWrapper,
+  SideBox
+} from "./Home.style";
 import MainPageTemplate from "components/templates/MainPageTemplate/MainPageTemplate";
 import Button from "components/atoms/Button/Button";
 import { ReactComponent as MoonSleeping } from "assets/images/moonSleeping.svg";
@@ -21,7 +28,7 @@ const Home = () => {
   );
 
   return (
-    <MainPageTemplate>
+    <MainPageTemplate padding="40px 5% 100px">
       {isSessionActive.isActive && (
         <TrainingInProgress>
           <StyledSpan>{`${
@@ -32,13 +39,20 @@ const Home = () => {
           <TrainingNameSpan>{`${isSessionActive.dayName} (${isSessionActive.trainingName})`}</TrainingNameSpan>
           <MoonSleeping />
           <StyledLink to={isSessionActive.path}>
-            <Button withArrow rounded size="s" >
+            <Button withArrow rounded size="s">
               Kontynuuj
             </Button>
           </StyledLink>
         </TrainingInProgress>
       )}
-      
+
+      <MainContentWrapper>
+        <MainBox />
+        <SideBox />
+        <SideBox />
+        <SideBox />
+        <SideBox />
+      </MainContentWrapper>
     </MainPageTemplate>
   );
 };

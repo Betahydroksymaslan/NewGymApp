@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Wrapper,
   SessionHeader,
@@ -56,7 +55,9 @@ const SessionReport = ({ handleClose, choosenSession }: SessionReportTypes) => {
             item.weightTo as number
           )}
         >
-          <ExerciseScores suffix="kg">{item.weightFrom}</ExerciseScores>
+          <ExerciseScores suffix={item.weightOrReps === "weight" ? "kg" : "p"}>
+            {item.weightFrom}
+          </ExerciseScores>
           {item.weightFrom !== item.weightTo && (
             <>
               <Entity>&#10230;</Entity>

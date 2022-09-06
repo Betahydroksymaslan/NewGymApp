@@ -5,6 +5,8 @@ export interface TrainingSessionsExercise {
   weightTo?: number;
   repsFrom: number;
   repsTo?: number;
+  weightOrReps: "weight" | "reps";
+  notes?: {message: string, date: number, id: string}[]
 }
 
 export type TrainingSessions = {
@@ -36,6 +38,7 @@ export interface TrainingSessionsExercisePayload {
   exerciseId: string;
   weightFrom: number;
   repsFrom: number;
+  weightOrReps: "weight" | "reps";
 }
 
 export type TrainingSessionPayload = {
@@ -53,3 +56,12 @@ export type TrainingSessionPayload = {
 export type SessionPayloadArrived = { [key: string]: any };
 
 export type UpdateSessionPayload = { [x: string]: number | object };
+
+export type AddNotePayload = {
+  path: string;
+  message: {
+    message: string;
+    date: number;
+    id: string;
+  };
+}

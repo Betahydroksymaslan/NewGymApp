@@ -154,6 +154,7 @@ const TrainingDay = () => {
         exerciseId: item.trainingId,
         weightFrom: item.startWeightOrReps,
         repsFrom: item.actualRep,
+        weightOrReps: item.repsOrWeight,
       };
     });
 

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import {
   ExerciseWrapper,
   PageWrapper,
@@ -12,7 +12,9 @@ import {
   EndSessionBoard,
   UpdateMainScoreButton,
   TrainingName,
-  ArrowIconWrapper,
+  NextPrevBtton,
+  InlineGridWrapper,
+  RepsButtonBoxName,
 } from "./TrainingSession.style";
 import { useParams } from "react-router-dom";
 import { increment } from "firebase/database";
@@ -27,9 +29,7 @@ import { ReactComponent as WomanDoingSquats } from "assets/images/womanDoingSqua
 import { ReactComponent as ManDoingPullUp } from "assets/images/manDoingPullUp.svg";
 import { ReactComponent as ManRunning } from "assets/images/manRunning.svg";
 import { ReactComponent as EndOfTrainingImage } from "assets/images/endTrainingImage.svg";
-import { ReactComponent as ArrowIcon } from "assets/icons/arrowIcon.svg";
 import OptionsList from "components/molecules/OptionsList/OptionsList";
-import { BiMessageAltAdd } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Button from "components/atoms/Button/Button";
 import { useLocalStorage } from "hooks/useLocalStorage";
@@ -39,11 +39,14 @@ import { HOME } from "constants/routes";
 import { getTime } from "date-fns";
 import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
 import IncreaseDecreaseDialog from "components/organisms/IncreaseDecreaseDialog/IncreaseDecreaseDialog";
+import { AiOutlineComment } from "react-icons/ai";
+import AddNote from "components/organisms/AddNote/AddNote";
 
 type ModalsTypes =
   | "confirmEndSession"
   | "endOfTrainingBoard"
-  | "updateMainScoreByCustomValue";
+  | "updateMainScoreByCustomValue"
+  | "addNote";
 
 const TrainingSession = () => {
   const { trainingDay, trainingName, sessionId } = useParams();
@@ -56,7 +59,7 @@ const TrainingSession = () => {
 
   let navigate = useNavigate();
   const goPreviousPage = () => navigate(-1);
-  console.log(training);
+
   const [isSessionActive, setIsSessionActive] = useLocalStorage(
     "activeTrainingSession",
     {
@@ -86,6 +89,7 @@ const TrainingSession = () => {
       return prevState - 1;
     });
   };
+
   const mainImages = [<ManJumping />, <ManRunning />, <ManDoingPullUp />];
   const getRandom = useMemo(
     () => Math.floor(Math.random() * (0 + mainImages.length) + 0),
@@ -93,12 +97,44 @@ const TrainingSession = () => {
   );
   const renderMainImage = mainImages[getRandom];
 
+  /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! REPS SCROLLER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const moveRepsToLastCompleteItem = () => {
+    const numberOfActiveElements =
+      training?.exercises &&
+      training?.exercises[value].actualRep -
+        training?.exercises[value].repsQuantityFrom;
+    const elementsConvertedToPixels =
+      typeof numberOfActiveElements === "number" && numberOfActiveElements * 65;
+
+    const offset = elementsConvertedToPixels;
+
+    if (scrollerRef.current && typeof offset === "number") {
+      scrollerRef.current.scrollLeft += offset;
+    }
+  };
+
+  const moveRepsToStart = () => {
+    if (!scrollerRef.current) return;
+
+    scrollerRef.current.scrollLeft = 0;
+  };
+
+  const moveRepsByOneBox = () => {
+    if (!scrollerRef.current) return;
+
+    scrollerRef.current.scrollLeft += 65;
+  };
+
   /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MODALS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
   const [modals, setModals] = useState({
     confirmEndSession: false,
     endOfTrainingBoard: false,
     updateMainScoreByCustomValue: false,
+    addNote: false,
   });
 
   const openModal = (modalName: ModalsTypes) =>
@@ -122,6 +158,8 @@ const TrainingSession = () => {
     const updates = { [ref]: repsNumber };
 
     dispatch(trainingSessionsActions.updateSession(updates));
+
+    /* moveRepsByOneBox(); */
   };
 
   const repsArray = Array.from(
@@ -154,6 +192,8 @@ const TrainingSession = () => {
     };
 
     dispatch(trainingSessionsActions.updateSession(updates));
+
+    moveRepsToStart();
   };
 
   /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! END SESSION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
@@ -214,8 +254,8 @@ const TrainingSession = () => {
           options={[
             {
               text: "dodaj notatkę",
-              callback: () => {},
-              icon: <BiMessageAltAdd />,
+              callback: () => openModal("addNote"),
+              icon: <AiOutlineComment />,
             },
           ]}
         />
@@ -247,24 +287,36 @@ const TrainingSession = () => {
           as={motion.section}
           key={training?.exercises[value].exerciseName}
           initial={{ y: "120%" }}
-          animate={{ y: 0, transition: { duration: 0.2, type: "linear" } }}
+          animate={{
+            y: 0,
+            transition: {
+              duration: 0.2,
+              type: "linear",
+              onComplete: moveRepsToLastCompleteItem,
+            },
+          }}
           exit={{
             y: "120%",
             transition: { duration: 0.2, type: "linear" },
           }}
         >
-          <InlineWrapper justifyContent="space-between">
-            <ArrowIconWrapper onClick={previous}>
-              <ArrowIcon />
-            </ArrowIconWrapper>
+          <InlineGridWrapper>
+            <NextPrevBtton onClick={previous} disabled={value === 0}>
+              <div></div>
+            </NextPrevBtton>
 
             <TrainingName>
               {training?.exercises[value].exerciseName}
             </TrainingName>
-            <ArrowIconWrapper directionLeft onClick={next}>
-              <ArrowIcon />
-            </ArrowIconWrapper>
-          </InlineWrapper>
+
+            <NextPrevBtton
+              right
+              onClick={next}
+              disabled={value === (training?.exercises.length as number) - 1}
+            >
+              <div></div>
+            </NextPrevBtton>
+          </InlineGridWrapper>
 
           <ActualScore suffix={training?.exercises[value].repsOrWeight}>
             {training?.exercises[value].startWeightOrReps}
@@ -281,7 +333,11 @@ const TrainingSession = () => {
             </UpdateMainScoreButton>
           </InlineWrapper>
 
-          <RepsButtonsWrapper>{renderRepsButtons}</RepsButtonsWrapper>
+          <RepsButtonBoxName>
+            <RepsButtonsWrapper ref={scrollerRef}>
+              {renderRepsButtons}
+            </RepsButtonsWrapper>
+          </RepsButtonBoxName>
 
           <Button callback={handleEndSession} wide>
             Zakończ trening
@@ -290,6 +346,20 @@ const TrainingSession = () => {
       </AnimatePresence>
 
       {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MODALS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+
+      <AddNote
+        isOpen={modals.addNote}
+        pathPrimary={`trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}/notes`}
+        pathSecondary={`trainingSessions/${sessionId}/exercises/${training?.exercises[value].trainingId}/notes`}
+        checkbox={{
+          label: "dodaj wyłącznie dla tej sesji",
+          tooltip: {
+            message:
+              "Notatka zostanie dołączona wyłącznie dla obecnie trwającej sesji i będzie widoczna tylko w historii treningów",
+          },
+        }}
+        handleClose={() => closeModal("addNote")}
+      />
 
       <Modal
         isOpen={modals.confirmEndSession}

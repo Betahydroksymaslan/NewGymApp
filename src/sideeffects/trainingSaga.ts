@@ -8,7 +8,8 @@ import {
   DefaultValuesToUpdatePayload,
   DeleteLocationPayload,
   AddNewTrainingDayPayload,
-  UpdateDayNamePayload
+  UpdateDayNamePayload,
+  TrainingBodyToAdd
 } from "models/trainingsModel";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { toggleSpinner } from "slices/apiCallSlice";
@@ -72,7 +73,7 @@ export function* setTrainingDays(action: PayloadAction<TrainingDaysPayload>) {
   }
 }
 
-export function* setTrainingBody(action: PayloadAction<TrainingBodyPayload>) {
+export function* setTrainingBody(action: PayloadAction<TrainingBodyToAdd>) {
   try {
     yield put(toggleSpinner(true));
     const user: User = yield select((store) => store.user.user);

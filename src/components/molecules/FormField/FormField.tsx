@@ -22,6 +22,8 @@ const FormField = forwardRef<HTMLInputElement, FormFieldTypes>(
       short,
       variant,
       errorMessage,
+      step,
+      textarea,
       ...rest
     }: FormFieldTypes,
     ref
@@ -37,8 +39,10 @@ const FormField = forwardRef<HTMLInputElement, FormFieldTypes>(
           short={short}
           type={type}
           id={id}
+          step={step}
           name={name}
           isError={isError}
+          textarea={textarea}
           {...rest}
         />
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}

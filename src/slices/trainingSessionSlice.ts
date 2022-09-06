@@ -4,7 +4,8 @@ import {
   TrainingSessionPayload,
   TrainingSessions,
   SessionPayloadArrived,
-  UpdateSessionPayload
+  UpdateSessionPayload,
+  AddNotePayload,
 } from "models/trainingSessionsModel";
 
 const initialState: TrainingSessions = {
@@ -21,8 +22,15 @@ const trainingSessionSlice = createSlice({
     ) => {
       let payloadArray = [];
       let exerciseArray = [];
+      let notesArray = [];
       for (let id in payload) {
         for (let idd in payload[id].exercises) {
+          for (let iddd in payload[id].exercises[idd].notes) {
+            notesArray.push(payload[id].exercises[idd].notes[iddd]);
+          }
+
+          payload[id].exercises[idd].notes = notesArray;
+          notesArray = [];
           exerciseArray.push(payload[id].exercises[idd]);
         }
         payload[id].exercises = exerciseArray;
@@ -46,6 +54,12 @@ const trainingSessionSlice = createSlice({
     updateSessionFailure: () => {
       console.log("Someting went wrong");
     },
+    addNoteSuccess: () => {
+      console.log("good");
+    },
+    addNoteFailure: () => {
+      console.log("Someting went wrong");
+    },
   },
 });
 
@@ -67,13 +81,14 @@ const trainingSessionsActions = {
   addNewTrainingSessionFailure: createAction(
     "trainingSessions/addNewTrainingSessionFailure"
   ),
-  updateSession: createAction<UpdateSessionPayload>("trainingSessions/updateSession"),
-  updateSessionSuccess: createAction(
-    "trainingSessions/updateSessionSuccess"
+  updateSession: createAction<UpdateSessionPayload>(
+    "trainingSessions/updateSession"
   ),
-  updateSessionFailure: createAction(
-    "trainingSessions/updateSessionFailure"
-  ),
+  updateSessionSuccess: createAction("trainingSessions/updateSessionSuccess"),
+  updateSessionFailure: createAction("trainingSessions/updateSessionFailure"),
+  addNote: createAction<AddNotePayload>("trainingSessions/addNote"),
+  addNoteSuccess: createAction("trainingSessions/addNoteSuccess"),
+  addNoteFailure: createAction("trainingSessions/addNoteFailure"),
 };
 
 export { trainingSessionsActions };

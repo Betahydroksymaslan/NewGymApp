@@ -26,6 +26,7 @@ export const Back = styled.div`
   place-items: center;
   background-color: #f7f8f8;
   transition: transform 0.2s ease-in-out;
+  box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
 
   &:active {
     transform: scale(0.9);
@@ -86,20 +87,49 @@ export const ExerciseWrapper = styled.section`
   }
 `;
 
+export const InlineGridWrapper = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: 50px 1fr 50px;
+  align-items: center;
+  justify-items: center;
+`;
+
 export const TrainingName = styled.h2`
   text-align: center;
   font-weight: 400;
   margin: 0;
 `;
 
-export const ArrowIconWrapper = styled.div<{ directionLeft?: boolean }>`
+export const NextPrevBtton = styled.button<{ right?: boolean }>`
+  width: 45px;
+  height: 45px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  background: ${({ theme }) => theme.colors.primaryGradient};
+  transition: scale 0.2s ease-in-out;
+  transform: ${({ right }) => right && "rotate(180deg)"};
+  box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
+  justify-self: ${({ right }) => (right ? "end" : "start")};
+  border: none;
+  padding: 0;
 
-  svg {
-    height: 50px;
-    transform: ${({ directionLeft }) => directionLeft && "rotate(180deg)"};
-    path, line {
-      stroke-width: 12px;
-    }
+  &:active {
+    scale: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    scale: 1;
+  }
+
+  & > div {
+    width: 30%;
+    height: 30%;
+    border-top: 2px solid ${({ theme }) => theme.colors.white};
+    border-left: 2px solid ${({ theme }) => theme.colors.white};
+    transform: translateX(20%) rotate(-45deg);
   }
 `;
 
@@ -130,15 +160,8 @@ export const UpdateMainScoreButton = styled.button`
   }
 `;
 
-export const RepsButtonsWrapper = styled.div`
-  width: 100%;
-  padding: 15px 0;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
-  border-radius: 20px;
-  gap: 10px;
-  flex-wrap: wrap;
-  display: flex;
-  justify-content: space-evenly;
+export const RepsButtonBoxName = styled.div`
+  max-width: 100%;
   position: relative;
   margin-top: 20px;
 
@@ -154,9 +177,32 @@ export const RepsButtonsWrapper = styled.div`
   }
 `;
 
+export const RepsButtonsWrapper = styled.div`
+  max-width: 100%;
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border-radius: 20px;
+  display: flex;
+  gap: 15px;
+  flex-shrink: 0;
+  /* gap: 15px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: auto; */
+  padding: 15px;
+  align-items: center;
+
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scroll-snap-align: start;
+  scroll-padding-inline: 14px;
+`;
+
 export const RepsButton = styled.button<{ isActive: boolean }>`
   width: 65px;
   height: 65px;
+  flex-shrink: 0;
   border-radius: 15px;
   padding: ${({ isActive }) => (isActive ? "2px" : "0")};
   border: ${({ isActive }) => (isActive ? `none` : "2px solid transparent")};
@@ -170,6 +216,8 @@ export const RepsButton = styled.button<{ isActive: boolean }>`
   font-weight: 600;
   box-shadow: ${({ theme }) => theme.boxShadow.inputShadow};
   transition: all 0.2s ease-in-out;
+
+  scroll-snap-align: start;
 
   &:active {
     transform: scale(0.9);

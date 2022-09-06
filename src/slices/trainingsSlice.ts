@@ -10,11 +10,18 @@ import {
   DefaultValuesToUpdatePayload,
   DeleteLocationPayload,
   AddNewTrainingDayPayload,
-  UpdateDayNamePayload
+  UpdateDayNamePayload,
+  TrainingBodyToAdd
 } from "models/trainingsModel";
 
 const initialState: Trainings = {
   trainings: null,
+};
+
+type NoteType = {
+  date: number;
+  message: string;
+  id: string;
 };
 
 const trainingsSlice = createSlice({
@@ -27,9 +34,18 @@ const trainingsSlice = createSlice({
     ) => {
       let arrayOfTrainingDays: TrainingDays[] = [];
       let arrayOfTrainingExercises: TrainingBodyPayload[] = [];
+      let notesArray: NoteType[] = [];
       payload.map((training) => {
         for (let id in training.trainingDays) {
           for (let idd in training.trainingDays[id].exercises) {
+            for (let iddd in training.trainingDays[id].exercises[idd].notes) {
+              notesArray.push(
+                training.trainingDays[id].exercises[idd].notes[iddd]
+              );
+            }
+
+            training.trainingDays[id].exercises[idd].notes = notesArray;
+            notesArray = [];
             arrayOfTrainingExercises.push(
               training.trainingDays[id].exercises[idd]
             );
@@ -105,7 +121,7 @@ const trainingActions = {
   setTrainingDaysNameFailure: createAction(
     "trainings/setTrainingDaysNameFailure"
   ),
-  setTrainingBody: createAction<TrainingBodyPayload>(
+  setTrainingBody: createAction<TrainingBodyToAdd>(
     "trainings/setTrainingBody"
   ),
   setTrainingBodySuccess: createAction("trainings/setTrainingBodySuccess"),

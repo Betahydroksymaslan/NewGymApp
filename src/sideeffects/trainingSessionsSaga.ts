@@ -1,4 +1,4 @@
-import { call, put, takeEvery, select } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
 import { trainingSessionsActions } from "slices/trainingSessionSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { toggleSpinner } from "slices/apiCallSlice";
@@ -7,7 +7,8 @@ import { getErrorMessage } from "helpers/getErrorMessageWithTryCatch";
 import {
   TrainingSessionPayload,
   TrainingSessions,
-  UpdateSessionPayload
+  UpdateSessionPayload,
+  AddNotePayload,
 } from "models/trainingSessionsModel";
 import {
   setDatabase,
@@ -50,12 +51,10 @@ export function* addNewSession(action: PayloadAction<TrainingSessionPayload>) {
   }
 }
 
-export function* updateSession(
-  action: PayloadAction<UpdateSessionPayload>
-) {
+export function* updateSession(action: PayloadAction<UpdateSessionPayload>) {
   try {
     yield put(toggleSpinner(true));
-    yield call(updateDatabase, {...action.payload} );
+    yield call(updateDatabase, { ...action.payload });
     yield put(trainingSessionsActions.updateSessionSuccess());
   } catch (error) {
     yield put(trainingSessionsActions.updateSessionFailure());
@@ -65,11 +64,28 @@ export function* updateSession(
   }
 }
 
+export function* addNote(action: PayloadAction<AddNotePayload>) {
+  try {
+    yield put(toggleSpinner(true));
+    const user: User = yield select((store) => store.user.user);
+    const ref = `users/${user.uid}/${action.payload.path}`;
+    yield call(setDatabase, ref, action.payload.message);
+    yield put(trainingSessionsActions.addNoteSuccess());
+    yield toast.success("Pomyślnie dodano notatkę!");
+  } catch (error) {
+    yield toast.error(getErrorMessage(error));
+    yield put(trainingSessionsActions.addNoteFailure());
+  } finally {
+    yield put(toggleSpinner(false));
+  }
+}
+
 export default function* trainingSessionsSaga() {
-  yield takeEvery(
+  yield takeLatest(
     trainingSessionsActions.addNewTrainingSession.type,
     addNewSession
   );
-  yield takeEvery(trainingSessionsActions.getSessions.type, getSessions);
-  yield takeEvery(trainingSessionsActions.updateSession.type, updateSession)
+  yield takeLatest(trainingSessionsActions.getSessions.type, getSessions);
+  yield takeLatest(trainingSessionsActions.updateSession.type, updateSession);
+  yield takeLatest(trainingSessionsActions.addNote.type, addNote);
 }

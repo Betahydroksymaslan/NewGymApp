@@ -7,6 +7,7 @@ type ButtonTypes = {
   short?: boolean;
   control?: ControlDayNamesType;
   suffix?: string;
+  textarea?: boolean;
 };
 
 export const InputWrapper = styled.div<{ suffix?: string }>`
@@ -24,6 +25,7 @@ export const InputWrapper = styled.div<{ suffix?: string }>`
 
 export const StyledInput = styled.input<ButtonTypes>`
   width: ${({ short }) => (short ? "70px" : "100%")};
+  height: ${({textarea}) => textarea && '120px'};
   text-align: ${({ short }) => short && "center"};
   font-size: ${({ theme: { fontSize }, variant }) => {
     if (variant === "primary") return fontSize.m;
@@ -35,6 +37,8 @@ export const StyledInput = styled.input<ButtonTypes>`
     if (variant === "primary") return "15px 30px 15px 15px";
     return "10px 30px 10px 15px";
   }};
+  resize: none;
+  overflow: hidden;
   outline: ${({ theme: { colors }, isError, variant }) => {
     if (variant === "secondary") return "none";
     if (isError) return `2px solid ${colors.error}`;

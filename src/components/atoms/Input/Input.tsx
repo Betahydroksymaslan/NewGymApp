@@ -11,8 +11,10 @@ export interface InputTypes {
   name?: string;
   control?: ControlDayNamesType;
   short?: boolean;
+  step?: string;
   ref?: ForwardedRef<HTMLInputElement>;
   suffix?: string;
+  textarea?: boolean;
 };
 
 const Input = forwardRef<HTMLInputElement, InputTypes>(
@@ -22,11 +24,13 @@ const Input = forwardRef<HTMLInputElement, InputTypes>(
       placeholder,
       short,
       control,
+      step,
       isError = false,
       id,
       variant = "primary",
       name,
       suffix,
+      textarea,
       ...rest
     },
     ref
@@ -41,8 +45,10 @@ const Input = forwardRef<HTMLInputElement, InputTypes>(
           short={short}
           variant={variant}
           type={type}
+          step={step}
           placeholder={placeholder}
           isError={isError}
+          textarea={textarea}
           {...rest}
         />
         {isError && !short && <ErrorSymbol>!</ErrorSymbol>}

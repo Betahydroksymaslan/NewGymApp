@@ -13,6 +13,24 @@ export type TrainingBodyPayload = {
   planDay: string;
   dayId: string;
   order: number;
+  notes: {message: string, date: number, id: string}[]
+};
+
+export type TrainingBodyToAdd = {
+  defaultProgress: number;
+  exerciseName: string;
+  numberOfSeries: number;
+  repsOrWeight: "weight" | "reps";
+  repsQuantityFrom: number;
+  repsQuantityTo: number;
+  startWeightOrReps: number;
+  actualRep: number;
+  trainingId: string;
+  virtualProgress: number;
+  planName: string | undefined;
+  planDay: string;
+  dayId: string;
+  order: number;
 };
 
 export interface TrainingDays {
