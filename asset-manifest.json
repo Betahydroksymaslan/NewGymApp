@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/NewGymApp/static/css/main.83216d16.css",
-    "main.js": "/NewGymApp/static/js/main.174e5a0e.js",
+    "main.js": "/NewGymApp/static/js/main.2e9247bd.js",
     "static/js/787.0f90566d.chunk.js": "/NewGymApp/static/js/787.0f90566d.chunk.js",
     "static/media/womanRideBike.svg": "/NewGymApp/static/media/womanRideBike.4a78f89173242b4bde342bf67b249308.svg",
     "service-worker.js": "/NewGymApp/service-worker.js",
@@ -12,13 +12,18 @@
     "static/media/manDoingOHP.svg": "/NewGymApp/static/media/manDoingOHP.ea3ef1a84efdea5897bf6658661cb09b.svg",
     "static/media/endTrainingImage.svg": "/NewGymApp/static/media/endTrainingImage.51ab52a3c17bd4ce24753ef70b43cdb9.svg",
     "static/media/manDoingPullUp.svg": "/NewGymApp/static/media/manDoingPullUp.8ad5b0b1caac9614e24eb8ec73192923.svg",
+    "static/media/homeImage_1.svg": "/NewGymApp/static/media/homeImage_1.07ed88b34e7c5e733265ac55544676e3.svg",
+    "static/media/homeImage_4.svg": "/NewGymApp/static/media/homeImage_4.23bf1638ac238a5ff2344587ae2416a3.svg",
     "static/media/womanDoingExercise.svg": "/NewGymApp/static/media/womanDoingExercise.46852956dca20fdd8c54564bcb0130dc.svg",
+    "static/media/homeImage_3.svg": "/NewGymApp/static/media/homeImage_3.2cb34163d512c9dcc5490c8b56cac00c.svg",
     "static/media/manRunning2.svg": "/NewGymApp/static/media/manRunning2.1d2e87fa46c37e8b3ed3ce679f446231.svg",
     "static/media/moonSleeping.svg": "/NewGymApp/static/media/moonSleeping.3f824f43df5ddaee7d42db4f3733307f.svg",
+    "static/media/homeImage_2.svg": "/NewGymApp/static/media/homeImage_2.4673a7f1c41ead231fbc5ce006763c6d.svg",
     "static/media/maleAvatarIcon.svg": "/NewGymApp/static/media/maleAvatarIcon.25909e54619b95b05ff94cc4a4ab8539.svg",
     "static/media/femaleAvatarIcon.svg": "/NewGymApp/static/media/femaleAvatarIcon.b143e4b74db6ccfb9b3b7470624ba451.svg",
     "static/media/manDoingExercise.svg": "/NewGymApp/static/media/manDoingExercise.530ae8ef63ee08e06b9ccdb69abf0b2e.svg",
     "static/media/alarmIcon.svg": "/NewGymApp/static/media/alarmIcon.121e339b95202d8bae60889f0024186f.svg",
+    "static/media/homeImage_5.svg": "/NewGymApp/static/media/homeImage_5.0438255b07e5c6f33219d665a9745207.svg",
     "static/media/repsImage.svg": "/NewGymApp/static/media/repsImage.bfc1c743433fa77c7a7a3ae07728cb69.svg",
     "static/media/weightImage.svg": "/NewGymApp/static/media/weightImage.415f8e7ceaea2b82b40fc399955c73dd.svg",
     "static/media/exerciseIcon.svg": "/NewGymApp/static/media/exerciseIcon.de799888e8bdc3f500e06e0b46c7cbcd.svg",
@@ -36,11 +41,11 @@
     "static/media/statsIcon.svg": "/NewGymApp/static/media/statsIcon.adc5e1d4c9a9e799617c29033db7f0fe.svg",
     "static/media/XIcon.svg": "/NewGymApp/static/media/XIcon.b1df8c89c0516ad5624426987ed533ad.svg",
     "main.83216d16.css.map": "/NewGymApp/static/css/main.83216d16.css.map",
-    "main.174e5a0e.js.map": "/NewGymApp/static/js/main.174e5a0e.js.map",
+    "main.2e9247bd.js.map": "/NewGymApp/static/js/main.2e9247bd.js.map",
     "787.0f90566d.chunk.js.map": "/NewGymApp/static/js/787.0f90566d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83216d16.css",
-    "static/js/main.174e5a0e.js"
+    "static/js/main.2e9247bd.js"
   ]
 }
