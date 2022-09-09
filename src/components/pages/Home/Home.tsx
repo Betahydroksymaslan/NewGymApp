@@ -6,7 +6,9 @@ import {
   MainContentWrapper,
   SideBox,
   Tittle,
-  Text
+  Text,
+  SideTittle,
+  SideText
 } from "./Home.style";
 import MainPageTemplate from "components/templates/MainPageTemplate/MainPageTemplate";
 import Button from "components/atoms/Button/Button";
@@ -15,6 +17,7 @@ import { useLocalStorage } from "hooks/useLocalStorage";
 import StyledLink from "components/atoms/StyledLink/StyledLink";
 import { checkGender } from "helpers/checkGender";
 import { getUser } from "slices/authSlice";
+import { getTrainingSessions } from "slices/trainingSessionSlice";
 import { useAppSelector } from "store/hooks";
 import { ReactComponent as HomeImageOne } from "assets/images/homeImage_1.svg";
 import { ReactComponent as HomeImageTwoo } from "assets/images/homeImage_2.svg";
@@ -24,7 +27,11 @@ import { ReactComponent as HomeImageFive } from "assets/images/homeImage_5.svg";
 
 const Home = () => {
   const user = useAppSelector(getUser);
-  const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {lastSession: "nieznany", planName: " "})
+  const sessions = useAppSelector(getTrainingSessions)?.filter(item => item.endTrainingDate);
+  const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {
+    lastSession: "-",
+    planName: "-",
+  });
   const [isSessionActive, setIsSessionActive] = useLocalStorage(
     "activeTrainingSession",
     {
@@ -34,7 +41,7 @@ const Home = () => {
       trainingName: "",
     }
   );
-
+console.log(sessions)
   return (
     <MainPageTemplate padding="40px 5% 100px">
       {isSessionActive.isActive && (
@@ -56,13 +63,14 @@ const Home = () => {
 
       <MainContentWrapper>
         <MainBox>
-          
           <HomeImageOne />
           <Tittle>Ostatni trening:</Tittle>
           <Text>{`${lastSession.lastSession} (${lastSession.planName})`}</Text>
         </MainBox>
 
         <SideBox>
+          <SideTittle>Wszystkie treningi</SideTittle>
+          <SideText>{sessions?.length}</SideText>
           <HomeImageTwoo />
         </SideBox>
 
@@ -77,7 +85,6 @@ const Home = () => {
         <SideBox>
           <HomeImageFour />
         </SideBox>
-
       </MainContentWrapper>
     </MainPageTemplate>
   );

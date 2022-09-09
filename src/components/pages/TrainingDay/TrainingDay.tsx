@@ -7,12 +7,13 @@ import {
   Exercise,
   ListName,
   ListOrder,
-  ListTime,
   AddNewTrainingButton,
   Wrapper,
   BikeWrapper,
   StartTrainingWrapper,
   StartTrainingButton,
+  ExerciseDetalis,
+  StyledSpan,
 } from "./TrainingDay.style";
 import { trainingActions } from "slices/trainingsSlice";
 import { ReactComponent as WomanRideBike } from "assets/images/womanRideBike.svg";
@@ -41,12 +42,14 @@ import { TrainingSessionPayload } from "models/trainingSessionsModel";
 import { getTime } from "date-fns";
 import { useLocalStorage } from "hooks/useLocalStorage";
 import { calcAverageTime } from "helpers/calcTimeLength";
+import Button from "components/atoms/Button/Button";
 
 type ModalsNames =
   | "isAddingNewExerciseVisible"
   | "confirmDeleteExercise"
   | "confirmStartTraining"
-  | "isSessionActive";
+  | "isSessionActive"
+  | "exerciseDetalis";
 
 const TrainingDay = () => {
   const [isSessionActive, setIsSessionActive] = useLocalStorage(
@@ -56,7 +59,10 @@ const TrainingDay = () => {
       path: "none",
     }
   );
-  const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {lastSession: "", planName: ""})
+  const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {
+    lastSession: "",
+    planName: "",
+  });
   const navigate = useNavigate();
   const { trainingDay, trainingName } = useParams();
   const dispatch = useAppDispatch();
@@ -84,6 +90,7 @@ const TrainingDay = () => {
     confirmDeleteExercise: false,
     confirmStartTraining: false,
     isSessionActive: false,
+    exerciseDetalis: false,
   });
   const openModal = (modal: ModalsNames) =>
     setModals({ ...modals, [modal]: true });
@@ -104,16 +111,23 @@ const TrainingDay = () => {
       order: item.order,
       trainingId: item.trainingId,
       dayId: item.dayId,
+      actualRep: item.actualRep,
     };
 
     return (
       <Exercise key={item.trainingId}>
         <ListOrder>{item.order < 10 ? `0${item.order}` : item.order}</ListOrder>
-        {/* <ListTime>15 min</ListTime> */}
         <ListName>{item.exerciseName}</ListName>
         <OptionsList
           options={[
-            { icon: <TbListDetails />, text: "Szczegóły", callback: () => {} },
+            {
+              icon: <TbListDetails />,
+              text: "Szczegóły",
+              callback: () => {
+                setDefaultValuesToUpdate(defaultValuesData);
+                openModal("exerciseDetalis");
+              },
+            },
             {
               icon: <FiEdit />,
               text: "Edytuj",
@@ -180,7 +194,10 @@ const TrainingDay = () => {
 
     dispatch(trainingSessionsActions.addNewTrainingSession(data));
     setIsSessionActive(localStorageData);
-    setLastSession({lastSession: trainingDay as string, planName: trainingName as string})
+    setLastSession({
+      lastSession: trainingDay as string,
+      planName: trainingName as string,
+    });
     navigate(`${TRAININGS}/${trainingName}/${trainingDay}/${sessionId}`);
   };
 
@@ -229,6 +246,32 @@ const TrainingDay = () => {
       </StartTrainingWrapper>
 
       {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MODALS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+
+      <Modal
+        isOpen={modals.exerciseDetalis}
+        handleClose={() => closeModal("exerciseDetalis")}
+      >
+        <ExerciseDetalis>
+          <h1>{defaultValuesToUpdate?.exerciseName}</h1>
+          <StyledSpan size="s">Planowo</StyledSpan>
+          <StyledSpan suffix="s">
+            {defaultValuesToUpdate?.numberOfSeries}
+          </StyledSpan>
+          <StyledSpan suffix="p">{`${defaultValuesToUpdate?.repsQuantityFrom} - ${defaultValuesToUpdate?.repsQuantityTo}`}</StyledSpan>
+          <StyledSpan size="s">Aktualny wynik</StyledSpan>
+          <StyledSpan
+            suffix={
+              defaultValuesToUpdate?.repsOrWeight === "weight" ? "kg" : "p"
+            }
+          >
+            {defaultValuesToUpdate?.startWeightOrReps}
+          </StyledSpan>
+          <StyledSpan suffix="p">{defaultValuesToUpdate?.actualRep}</StyledSpan>
+          <Button size="m" wide callback={() => closeModal("exerciseDetalis")}>
+            Wróć
+          </Button>
+        </ExerciseDetalis>
+      </Modal>
 
       <Modal
         isOpen={modals.isAddingNewExerciseVisible}

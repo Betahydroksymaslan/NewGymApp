@@ -167,12 +167,48 @@ export const StartTrainingButton = styled.button`
   color: ${({ theme }) => theme.colors.white};
   font-weight: 600;
   transition: transform 0.2s ease-in-out;
-  
+
   &:disabled {
     opacity: 0.4;
   }
 
   &:active {
     transform: scale(0.95);
+  }
+`;
+
+export const ExerciseDetalis = styled.div`
+  background-color: ${({ theme }) => theme.colors.white};
+  width: 90vw;
+  padding: 20px;
+  border-radius: 15px;
+  display: grid;
+  grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+  row-gap: 10px;
+
+  & > h1 {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: ${({ theme }) => theme.fontSize.l};
+    text-align: center;
+  }
+
+  & > button {
+    grid-row: 4;
+    grid-column: 1 / -1;
+    align-self: end;
+  }
+`;
+
+export const StyledSpan = styled.span<{ suffix?: "p" | "kg" | "s"; size?: "s" }>`
+  font-size: ${({ theme, size }) =>
+    size ? theme.fontSize.m : theme.fontSize.xl};
+  text-align: center;
+  align-self: center;
+
+  &::after {
+    content: "${({ suffix }) => suffix || ""}";
+    margin-left: 2px;
+    font-size: ${({ theme }) => theme.fontSize.m};
   }
 `;

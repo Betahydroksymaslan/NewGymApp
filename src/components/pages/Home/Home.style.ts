@@ -80,6 +80,7 @@ export const SideBox = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 15px;
+  position: relative;
 
   & > svg {
     width: 100px;
@@ -122,4 +123,22 @@ export const Text = styled.span`
   margin: 0;
   font-size: ${({theme}) => theme.fontSize.m};
   color: ${({theme}) => theme.colors.white};
+`
+
+export const SideTittle = styled.h2`
+text-align: center;
+padding: 7px 12px 0;
+  margin: 0;
+  font-size: ${({theme}) => theme.fontSize.m};
+  color: ${({theme}) => theme.colors.white};
+`
+
+export const SideText = styled.span`
+  margin: 0;
+  font-size: 40px;
+  color: ${({theme}) => theme.colors.white};
+  font-weight: 600;
+  position: absolute;
+  right: 30px;
+  top: 100px;
 `

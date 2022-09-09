@@ -79,6 +79,7 @@ export interface DefaultValuesToUpdate {
   order: number;
   trainingId: string;
   dayId: string;
+  actualRep?: number;
 }
 
 export interface DefaultValuesToUpdatePayload {
