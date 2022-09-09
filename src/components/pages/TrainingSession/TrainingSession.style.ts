@@ -56,10 +56,11 @@ export const MainImageWrapper = styled.div`
   grid-row: 2 / 5;
   grid-column: 1;
   z-index: 1;
-  position: relative;
+  width: 75%;
+  justify-self: center;
 
-  & > svg {
-    width: 100%;
+  & > svg  {
+    width:100%;
     min-height: 130%;
   }
 `;
