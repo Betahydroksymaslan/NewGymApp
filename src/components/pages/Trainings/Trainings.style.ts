@@ -85,6 +85,7 @@ export const TrainingPlanButton = styled.div`
     grid-column: 2 / -1;
     grid-row: 2;
     justify-self: center;
+    text-align: center;
   }
 `;
 

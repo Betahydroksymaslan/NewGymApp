@@ -56,6 +56,7 @@ const TrainingDay = () => {
       path: "none",
     }
   );
+  const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {lastSession: "", planName: ""})
   const navigate = useNavigate();
   const { trainingDay, trainingName } = useParams();
   const dispatch = useAppDispatch();
@@ -108,7 +109,7 @@ const TrainingDay = () => {
     return (
       <Exercise key={item.trainingId}>
         <ListOrder>{item.order < 10 ? `0${item.order}` : item.order}</ListOrder>
-        <ListTime>15 min</ListTime>
+        {/* <ListTime>15 min</ListTime> */}
         <ListName>{item.exerciseName}</ListName>
         <OptionsList
           options={[
@@ -179,6 +180,7 @@ const TrainingDay = () => {
 
     dispatch(trainingSessionsActions.addNewTrainingSession(data));
     setIsSessionActive(localStorageData);
+    setLastSession({lastSession: trainingDay as string, planName: trainingName as string})
     navigate(`${TRAININGS}/${trainingName}/${trainingDay}/${sessionId}`);
   };
 
@@ -249,55 +251,35 @@ const TrainingDay = () => {
         />
       </Modal>
 
-      <Modal
+      <ConfirmationDialog
         isOpen={modals.confirmDeleteExercise}
         handleClose={() =>
           closeModal("confirmDeleteExercise", () =>
             setDefaultValuesToUpdate(undefined)
           )
         }
-      >
-        <ConfirmationDialog
-          handleClose={() =>
-            closeModal("confirmDeleteExercise", () =>
-              setDefaultValuesToUpdate(undefined)
-            )
-          }
-          callback={removeExercise}
-          body={`Ćwiczenie ${defaultValuesToUpdate?.exerciseName} zostanie trwale usunięte, nie będzie możliwości cofnięcia tej akcji`}
-        />
-      </Modal>
+        callback={removeExercise}
+        body={`Ćwiczenie ${defaultValuesToUpdate?.exerciseName} zostanie trwale usunięte, nie będzie możliwości cofnięcia tej akcji`}
+      />
 
-      <Modal
+      <ConfirmationDialog
         isOpen={modals.confirmStartTraining}
         handleClose={() =>
           closeModal("confirmStartTraining", () =>
             setDefaultValuesToUpdate(undefined)
           )
         }
-      >
-        <ConfirmationDialog
-          handleClose={() =>
-            closeModal("confirmStartTraining", () =>
-              setDefaultValuesToUpdate(undefined)
-            )
-          }
-          callback={startTrainingSession}
-          body="Rozpoczynając trening zostaje też naliczany czas. Jeśli chcesz tylko zapoznać się ze ze szczegółami treningu wybierz opcję - szczegóły"
-        />
-      </Modal>
+        callback={startTrainingSession}
+        body="Rozpoczynając trening zostaje też naliczany czas. Jeśli chcesz tylko zapoznać się ze ze szczegółami treningu wybierz opcję - szczegóły"
+      />
 
-      <Modal
+      <ConfirmationDialog
         isOpen={modals.isSessionActive}
+        header="Masz już trwający trening"
+        body="Został już rozpoczęty trening, czy chcesz go kontynuować?"
         handleClose={() => closeModal("isSessionActive")}
-      >
-        <ConfirmationDialog
-          header="Masz już trwający trening"
-          body="Został już rozpoczęty trening, czy chcesz go kontynuować?"
-          handleClose={() => closeModal("isSessionActive")}
-          callback={() => navigate(isSessionActive.path)}
-        />
-      </Modal>
+        callback={() => navigate(isSessionActive.path)}
+      />
     </Wrapper>
   );
 };

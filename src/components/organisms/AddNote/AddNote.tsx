@@ -49,6 +49,7 @@ const AddNote = ({
     defaultValues: {
       checkbox: checkbox?.isChecked,
     },
+    shouldUnregister: true,
   });
 
   const watchCheckbox = watch("checkbox");

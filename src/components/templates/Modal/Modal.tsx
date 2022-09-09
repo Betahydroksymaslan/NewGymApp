@@ -23,7 +23,7 @@ const Modal = ({
       } /* Clases for transitions available in GlobalStyled */
       style={{
         overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
+          backgroundColor: "rgba(37, 0, 85, 0.3)",
           backdropFilter: "blur(3px)",
         },
       }}

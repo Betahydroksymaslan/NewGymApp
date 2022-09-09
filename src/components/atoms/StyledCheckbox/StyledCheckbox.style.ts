@@ -7,15 +7,15 @@ interface CheckboxType {
 export const Label = styled.label<CheckboxType>`
   position: relative;
   font-size: ${({ theme }) => theme.fontSize.m};
-  padding-left: 40px;
+  padding-left: 35px;
   line-height: 1;
 
   &::before {
     content: '${({ isChecked }) => (isChecked ? '\\2714' : '')}';
     font-size: 22px;
     padding: 2px;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     transition: all 0.2s ease-in-out;
     background: ${({ isChecked, theme: { colors } }) =>
       isChecked ? colors.successDark : colors.white};

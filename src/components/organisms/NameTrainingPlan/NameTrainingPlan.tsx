@@ -14,7 +14,7 @@ type NameTrainingPlanTypes = {
   closeModal: (val: ModalsNamesTypes) => void;
 };
 
-export type InputsTypes = { planName: string };
+export type InputsTypes = { planName: string; shortDescription: string };
 
 const NameTrainingPlan = ({ closeModal }: NameTrainingPlanTypes) => {
   const dispatch = useAppDispatch();
@@ -39,6 +39,7 @@ const NameTrainingPlan = ({ closeModal }: NameTrainingPlanTypes) => {
       trainingActions.setPlanName({
         planName: data.planName,
         step: 1,
+        shortDescription: data.shortDescription,
         planId: uuid(),
       })
     );
@@ -51,13 +52,38 @@ const NameTrainingPlan = ({ closeModal }: NameTrainingPlanTypes) => {
       <FormField
         id="planName"
         variant="secondary"
-        {...register("planName", { required: "To pole jest wymagane" })}
+        label="Nazwa treningu"
+        {...register("planName", {
+          required: "To pole jest wymagane",
+          pattern: {
+            value: /^[A-Za-z0-9 ]+$/,
+            message: "Wartość nie może zawierać znaków specjalnych",
+          },
+        })}
         isError={!!errors.planName || checkIsPlanNameExists}
         errorMessage={
           checkIsPlanNameExists
             ? "Taka nazwa już istnieje"
             : errors?.planName?.message
         }
+      />
+
+      <FormField
+        label="Krótki opis treningu"
+        id="shortDescription"
+        {...register("shortDescription", {
+          required: "pole jest wymagane",
+          maxLength: {
+            value: 45,
+            message: "Opis może zawierać maksymalnie 45 znaków",
+          },
+          pattern: {
+            value: /^[A-Za-z0-9 ]+$/,
+            message: "Wartość nie może zawierać znaków specjalnych",
+          },
+        })}
+        isError={!!errors.shortDescription}
+        errorMessage={errors.shortDescription?.message}
       />
 
       <InlineWrapper>

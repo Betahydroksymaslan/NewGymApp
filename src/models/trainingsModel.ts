@@ -43,6 +43,7 @@ export interface TrainingPlan {
   planName: string;
   step: number;
   planId: string;
+  shortDescription: string;
   trainingDays: TrainingDays[];
 }
 
@@ -64,6 +65,7 @@ export type TrainingPlanNamePayload = {
   planName: string;
   step: number;
   planId: string;
+  shortDescription: string;
 };
 
 export interface DefaultValuesToUpdate {
@@ -96,6 +98,8 @@ export interface DefaultValuesToUpdatePayload {
 
 export type DeleteLocationPayload = {
   path: string;
+  message?: string;
+  isFullPath?: boolean;
 };
 
 export type AddNewTrainingDayPayload = {

@@ -9,30 +9,15 @@ export const Form = styled(StyledForm)`
   padding: 20px;
   height: 100vh;
   border-radius: 0;
+  gap: 30px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.white};
 
   & > div {
     margin: 0;
-  }
-
-  & > div:last-child {
-    margin-top: auto;
-  }
-
-  & > div:nth-child(8) {
-    margin-bottom: 30px;
-  }
-
-  & > div:nth-child(10) {
-    margin-bottom: 30px;
-  }
-
-  & > div:nth-child(13) {
-    margin-bottom: 30px;
   }
 `;
 
@@ -41,10 +26,13 @@ export const TrainingDaysWrapper = styled.div`
   flex-direction: column;
   gap: 20px;
 `;
-export const StyledHeader = styled(Header)``;
+export const StyledHeader = styled(Header)`
+  margin: 0;
+`;
 
 export const Tittle = styled.span`
   font-weight: 600;
   text-align: center;
-  margin: 30px 0 20px;
+  margin: 0;
+  width: max-content;
 `;

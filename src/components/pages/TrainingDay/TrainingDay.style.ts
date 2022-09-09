@@ -103,7 +103,8 @@ export const ListOrder = styled.span`
 
 export const ListName = styled.span`
   font-weight: 600;
-  grid-row: 2;
+  grid-row: 1 / -1;
+  align-self: center;
   grid-column: 2;
 `;
 

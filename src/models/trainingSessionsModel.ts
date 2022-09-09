@@ -55,7 +55,7 @@ export type TrainingSessionPayload = {
 
 export type SessionPayloadArrived = { [key: string]: any };
 
-export type UpdateSessionPayload = { [x: string]: number | object };
+export type UpdateSessionPayload = { [x: string]: number | object | string };
 
 export type AddNotePayload = {
   path: string;

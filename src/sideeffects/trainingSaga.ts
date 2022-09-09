@@ -9,7 +9,7 @@ import {
   DeleteLocationPayload,
   AddNewTrainingDayPayload,
   UpdateDayNamePayload,
-  TrainingBodyToAdd
+  TrainingBodyToAdd,
 } from "models/trainingsModel";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { toggleSpinner } from "slices/apiCallSlice";
@@ -124,10 +124,12 @@ export function* deleteLocation(action: PayloadAction<DeleteLocationPayload>) {
   try {
     yield put(toggleSpinner(true));
     const user: User = yield select((store) => store.user.user);
-    const exerciseRef = `users/${user.uid}/trainingPlans/${action.payload.path}`;
+    const exerciseRef = action.payload.isFullPath
+      ? action.payload.path
+      : `users/${user.uid}/trainingPlans/${action.payload.path}`;
     yield call(removeLocation, exerciseRef);
     yield put(trainingActions.deleteLocationSuccess());
-    yield toast.success("Usunięto ćwiczenie!");
+    yield toast.success(action.payload.message || "Usunięto ćwiczenie!");
   } catch (error) {
     yield put(trainingActions.deleteLocationFailure());
     yield toast.error(getErrorMessage(error));
@@ -157,9 +159,7 @@ export function* addNewTrainingDay(
   }
 }
 
-export function* updateDayName(
-  action: PayloadAction<UpdateDayNamePayload>
-) {
+export function* updateDayName(action: PayloadAction<UpdateDayNamePayload>) {
   try {
     yield put(toggleSpinner(true));
     const user: User = yield select((store) => store.user.user);

@@ -10,21 +10,25 @@ import {
   StyledForm,
   EditDayNameButton,
 } from "./ChooseTrainingDay.style";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { getTrainings } from "slices/trainingsSlice";
 import StyledLink from "components/atoms/StyledLink/StyledLink";
 import GoBack from "components/atoms/GoBack/GoBack";
 import { ReactComponent as ClockIcon } from "assets/icons/clockIcon.svg";
 import { ReactComponent as ExerciseIcon } from "assets/icons/exerciseIcon.svg";
-import { TRAININGS } from "constants/routes";
+import { HOME, TRAININGS } from "constants/routes";
 import { motion } from "framer-motion";
 import { slidePageAnimation } from "assets/animations/pageAnimation";
 import OptionsList from "components/molecules/OptionsList/OptionsList";
 import { FiEdit } from "react-icons/fi";
 import Button from "components/atoms/Button/Button";
 import { AnimatePresence } from "framer-motion";
-import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
+import {
+  AiTwotoneDelete,
+  AiTwotoneEdit,
+  AiOutlineDelete,
+} from "react-icons/ai";
 import { trainingActions } from "slices/trainingsSlice";
 import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
 import Modal from "components/templates/Modal/Modal";
@@ -39,7 +43,8 @@ type ModalsType =
   | "isEdit"
   | "addNewDayModal"
   | "editDayName"
-  | "deleteTrainingDay";
+  | "deleteTrainingDay"
+  | "deleteTrainingPlan";
 
 type InputsTypes = {
   dayName: string;
@@ -48,6 +53,7 @@ type InputsTypes = {
 type InputDayNameType = { updatedDayName: string };
 
 const ChooseTrainingDay = () => {
+  const navigate = useNavigate();
   let { trainingName } = useParams();
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
@@ -72,6 +78,7 @@ const ChooseTrainingDay = () => {
     formState: { errors: errorsDayName },
   } = useForm<InputDayNameType>({
     defaultValues: { updatedDayName: choosenDay?.dayName },
+    shouldUnregister: true,
   });
 
   const [modals, setModals] = useState({
@@ -79,6 +86,7 @@ const ChooseTrainingDay = () => {
     addNewDayModal: false,
     editDayName: false,
     deleteTrainingDay: false,
+    deleteTrainingPlan: false,
   });
 
   const openModal = (name: ModalsType) =>
@@ -150,6 +158,15 @@ const ChooseTrainingDay = () => {
     );
   });
 
+  const deleteTrainingPlan = () => {
+    const payload = {
+      path: `${trainingName}`,
+    };
+    dispatch(trainingActions.deleteLocation(payload));
+    closeModal("deleteTrainingPlan");
+    navigate(HOME);
+  };
+
   const deleteTrainingDay = () => {
     const payload = {
       path: `${trainingName}/trainingDays/${choosenDay?.dayId}`,
@@ -192,6 +209,11 @@ const ChooseTrainingDay = () => {
             text: "Edytuj",
             icon: <FiEdit />,
             callback: () => openModal("isEdit"),
+          },
+          {
+            text: "Usuń plan",
+            icon: <AiOutlineDelete />,
+            callback: () => openModal("deleteTrainingPlan"),
           },
         ]}
         customPosition={{ top: 15, right: 15 }}
@@ -245,16 +267,19 @@ const ChooseTrainingDay = () => {
 
       {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MODALS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
 
-      <Modal
+      <ConfirmationDialog
+        isOpen={modals.deleteTrainingPlan}
+        handleClose={() => closeModal("deleteTrainingPlan")}
+        body="Spowoduje to usunięcie całego planu treningowego"
+        callback={deleteTrainingPlan}
+      />
+
+      <ConfirmationDialog
         isOpen={modals.deleteTrainingDay}
         handleClose={() => closeModal("deleteTrainingDay")}
-      >
-        <ConfirmationDialog
-          handleClose={() => closeModal("deleteTrainingDay")}
-          body={`Jesteś pewien, że chcesz usunąć ${choosenDay?.dayName}?`}
-          callback={deleteTrainingDay}
-        />
-      </Modal>
+        body={`Jesteś pewien, że chcesz usunąć ${choosenDay?.dayName}?`}
+        callback={deleteTrainingDay}
+      />
 
       <Modal
         isOpen={modals.addNewDayModal}
@@ -267,12 +292,9 @@ const ChooseTrainingDay = () => {
             id="dayName"
             {...register("dayName", {
               required: "to pole jest wymgane",
-              validate: (value) => {
-                return (
-                  [/[a-z]/, /[A-Z]/, /[0-9]/].every((pattern) =>
-                    pattern.test(value)
-                  ) || "nazwa może zawierać duże, małe litery i liczby"
-                );
+              pattern: {
+                value: /^[A-Za-z0-9 ]+$/,
+                message: "Wartość nie może zawierać znaków specjalnych",
               },
             })}
             isError={!!errors.dayName}
@@ -306,12 +328,9 @@ const ChooseTrainingDay = () => {
             id="dayName"
             {...registerDayName("updatedDayName", {
               required: "to pole jest wymgane",
-              validate: (value) => {
-                return (
-                  [/[a-z]/, /[A-Z]/, /[0-9]/].every((pattern) =>
-                    pattern.test(value)
-                  ) || "nazwa może zawierać duże, małe litery i liczby"
-                );
+              pattern: {
+                value: /^[A-Za-z0-9 ]+$/,
+                message: "Wartość nie może zawierać znaków specjalnych",
               },
             })}
             isError={!!errorsDayName.updatedDayName}

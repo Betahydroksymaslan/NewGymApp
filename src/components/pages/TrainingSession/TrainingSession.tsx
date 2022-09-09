@@ -27,7 +27,9 @@ import { slidePageAnimation } from "assets/animations/pageAnimation";
 import { ReactComponent as ManJumping } from "assets/images/manJumping.svg";
 import { ReactComponent as WomanDoingSquats } from "assets/images/womanDoingSquats.svg";
 import { ReactComponent as ManDoingPullUp } from "assets/images/manDoingPullUp.svg";
+import { ReactComponent as ManDoingOHP } from "assets/images/manDoingOHP.svg";
 import { ReactComponent as ManRunning } from "assets/images/manRunning.svg";
+import { ReactComponent as ManRunningTwoo } from "assets/images/manRunning2.svg";
 import { ReactComponent as EndOfTrainingImage } from "assets/images/endTrainingImage.svg";
 import OptionsList from "components/molecules/OptionsList/OptionsList";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +43,7 @@ import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
 import IncreaseDecreaseDialog from "components/organisms/IncreaseDecreaseDialog/IncreaseDecreaseDialog";
 import { AiOutlineComment } from "react-icons/ai";
 import AddNote from "components/organisms/AddNote/AddNote";
+import Note from "components/molecules/Notes/Notes";
 
 type ModalsTypes =
   | "confirmEndSession"
@@ -90,7 +93,13 @@ const TrainingSession = () => {
     });
   };
 
-  const mainImages = [<ManJumping />, <ManRunning />, <ManDoingPullUp />];
+  const mainImages = [
+    <ManJumping />,
+    <ManRunning />,
+    <ManDoingPullUp />,
+    <ManDoingOHP />,
+    <ManRunningTwoo />,
+  ];
   const getRandom = useMemo(
     () => Math.floor(Math.random() * (0 + mainImages.length) + 0),
     [value]
@@ -322,6 +331,13 @@ const TrainingSession = () => {
             {training?.exercises[value].startWeightOrReps}
           </ActualScore>
 
+          {training?.exercises[value].notes && (
+            <Note
+              pathSuffix={`trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}/notes`}
+              notes={training?.exercises[value].notes}
+            />
+          )}
+
           <InlineWrapper>
             <UpdateMainScoreButton onClick={updateMainScoreByDefaultValue}>
               +{training?.exercises[value].defaultProgress}
@@ -361,16 +377,12 @@ const TrainingSession = () => {
         handleClose={() => closeModal("addNote")}
       />
 
-      <Modal
+      <ConfirmationDialog
         isOpen={modals.confirmEndSession}
+        body="Jesteś pewien, że chcesz zakończyć obecnie trwającą sesję treningową?"
         handleClose={() => closeModal("confirmEndSession")}
-      >
-        <ConfirmationDialog
-          body="Jesteś pewien, że chcesz zakończyć obecnie trwającą sesję treningową?"
-          handleClose={() => closeModal("confirmEndSession")}
-          callback={goToCloseSessionBoard}
-        />
-      </Modal>
+        callback={goToCloseSessionBoard}
+      />
 
       <Modal
         isOpen={modals.updateMainScoreByCustomValue}

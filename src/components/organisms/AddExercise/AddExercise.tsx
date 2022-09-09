@@ -21,6 +21,7 @@ import RadioButton from "components/atoms/RadioButton/RadioButton";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { trainingActions, getTrainings } from "slices/trainingsSlice";
 import { v4 as uuid } from "uuid";
+import Tooltip from "components/atoms/Tooltip/Tooltip";
 
 type InputsTypes = {
   exerciseName: string;
@@ -72,8 +73,9 @@ const AddExercise = ({
 
   const currentTraining = trainings
     ?.find((item) => item.planName === planName)
-    ?.trainingDays.find((item) => item.dayName === isTrainingDayChoosen?.dayName)
-    ?.exercises?.length;
+    ?.trainingDays.find(
+      (item) => item.dayName === isTrainingDayChoosen?.dayName
+    )?.exercises?.length;
 
   const {
     register,
@@ -171,6 +173,10 @@ const AddExercise = ({
         label="Nazwa ćwiczenia"
         {...register("exerciseName", {
           required: "To pole jest wymagane",
+          pattern: {
+            value: /^[A-Za-z0-9 ]+$/,
+            message: "Wartość nie może zawierać znaków specjalnych",
+          },
         })}
         isError={!!errors?.exerciseName}
         errorMessage={errors?.exerciseName?.message}
@@ -202,7 +208,9 @@ const AddExercise = ({
 
       {/* !!!!!!!!!!!!!!!!!!!!!!!!!! TYPE REPS QUANTITY !!!!!!!!!!!!!!!!!!!!!!!!!! */}
 
-      <Tittle>Dobierz ilość serii i zakres powtórzeń</Tittle>
+      <Tooltip message="Ustal w ilu seriach będziesz wykonywać ćwiczenie oraz w jakim zakresie powtórzeń będzie wykonywana każda seria">
+        <Tittle>Dobierz ilość serii i zakres powtórzeń</Tittle>
+      </Tooltip>
       <InlineWrapper>
         <FormField
           {...register("numberOfSeries", {
@@ -247,11 +255,13 @@ const AddExercise = ({
 
       {/* !!!!!!!!!!!!!!!!!!!!!!!!!! DEFAULT PROGRESS !!!!!!!!!!!!!!!!!!!!!!!!!! */}
 
-      <Tittle>
-        {isWeightProgress === "weight"
-          ? "Wybierz wartość domyślnej progresji (kg)"
-          : "Wybierz wartość domyślnej progresji w powtórzeniach"}
-      </Tittle>
+      <Tooltip message="Wybierz o ile będziesz się starać progresować ćwiczenie">
+        <Tittle>
+          {isWeightProgress === "weight"
+            ? "Wybierz wartość domyślnej progresji (kg)"
+            : "Wybierz wartość domyślnej progresji w powtórzeniach"}
+        </Tittle>
+      </Tooltip>
       {customProgressValue ? (
         <InlineWrapper>
           <FormField

@@ -12,7 +12,7 @@ export const CardWrapper = styled.div<ProgressCardType>`
     state === "complete" ? theme.colors.lightGreen : theme.colors.white};
   border: 3px solid
     ${({ state, theme }) => {
-      if (state === "complete") return theme.colors.success;
+      if (state === "complete") return theme.colors.successDark;
       if (state === "locked") return "transparent";
       if (state === "start") return theme.colors.darkBlue;
     }};
@@ -36,17 +36,17 @@ export const Indicator = styled.span<ProgressCardType>`
   transition: all 0.3s ease-in-out;
   border-radius: 100%;
   background-color: ${({ state, theme }) => {
-    if (state === "complete") return theme.colors.success;
+    if (state === "complete") return theme.colors.successDark;
     return theme.colors.white;
   }};
   border: 3px solid ${({ state, theme }) => {
-    if (state === "complete") return theme.colors.success;
+    if (state === "complete") return theme.colors.successDark;
     if (state === "locked") return "#e6eaee";
     if (state === "start") return theme.colors.darkBlue;
   }};
   font-size: ${({ theme }) => theme.fontSize.l};
   color: ${({ state, theme }) => {
-    if (state === "complete") return theme.colors.success;
+    if (state === "complete") return theme.colors.successDark;
     if (state === "locked") return "#e6eaee";
     if (state === "start") return theme.colors.darkBlue;
   }};
@@ -56,7 +56,7 @@ export const Indicator = styled.span<ProgressCardType>`
     if (state === "locked") return "#e6eaee";
     if (state === "start") return theme.colors.darkBlue;
   }};
-  position; relative;
+  
 
   &::after {
     content: '';
@@ -79,7 +79,7 @@ export const Tittle = styled.span<ProgressCardType>`
   transition: all 0.3s ease-in-out;
   font-size: ${({ theme }) => theme.fontSize.m};
   color: ${({ state, theme }) => {
-    if (state === "complete") return theme.colors.success;
+    if (state === "complete") return theme.colors.successDark;
   }};
 `;
 
@@ -89,7 +89,7 @@ export const Text = styled.span<ProgressCardType>`
   line-height: 1.5em;
   transition: all 0.3s ease-in-out;
   color: ${({ state, theme }) => {
-    if (state === "complete") return theme.colors.success;
+    if (state === "complete") return theme.colors.successDark;
     return theme.colors.fontGray;
   }};
 `;
@@ -108,7 +108,7 @@ export const ProgressIndicator = styled.div<ProgressCardType>`
   & > span {
     transition: all 0.3s ease-in-out;
     color: ${({ state, theme }) => {
-      if (state === "complete") return theme.colors.success;
+      if (state === "complete") return theme.colors.successDark;
       return theme.colors.darkBlue;
     }};
     font-weight: 600;

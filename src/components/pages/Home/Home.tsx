@@ -4,7 +4,9 @@ import {
   StyledSpan,
   MainBox,
   MainContentWrapper,
-  SideBox
+  SideBox,
+  Tittle,
+  Text
 } from "./Home.style";
 import MainPageTemplate from "components/templates/MainPageTemplate/MainPageTemplate";
 import Button from "components/atoms/Button/Button";
@@ -14,9 +16,15 @@ import StyledLink from "components/atoms/StyledLink/StyledLink";
 import { checkGender } from "helpers/checkGender";
 import { getUser } from "slices/authSlice";
 import { useAppSelector } from "store/hooks";
+import { ReactComponent as HomeImageOne } from "assets/images/homeImage_1.svg";
+import { ReactComponent as HomeImageTwoo } from "assets/images/homeImage_2.svg";
+import { ReactComponent as HomeImageThree } from "assets/images/homeImage_3.svg";
+import { ReactComponent as HomeImageFour } from "assets/images/homeImage_4.svg";
+import { ReactComponent as HomeImageFive } from "assets/images/homeImage_5.svg";
 
 const Home = () => {
   const user = useAppSelector(getUser);
+  const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {lastSession: "nieznany", planName: " "})
   const [isSessionActive, setIsSessionActive] = useLocalStorage(
     "activeTrainingSession",
     {
@@ -47,11 +55,29 @@ const Home = () => {
       )}
 
       <MainContentWrapper>
-        <MainBox />
-        <SideBox />
-        <SideBox />
-        <SideBox />
-        <SideBox />
+        <MainBox>
+          
+          <HomeImageOne />
+          <Tittle>Ostatni trening:</Tittle>
+          <Text>{`${lastSession.lastSession} (${lastSession.planName})`}</Text>
+        </MainBox>
+
+        <SideBox>
+          <HomeImageTwoo />
+        </SideBox>
+
+        <SideBox>
+          <HomeImageThree />
+        </SideBox>
+
+        <SideBox>
+          <HomeImageFive />
+        </SideBox>
+
+        <SideBox>
+          <HomeImageFour />
+        </SideBox>
+
       </MainContentWrapper>
     </MainPageTemplate>
   );

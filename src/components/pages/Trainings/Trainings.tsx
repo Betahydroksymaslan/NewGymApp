@@ -92,7 +92,7 @@ const Trainings = () => {
             <WomanDoingWorkout />
           )}
           <h1>{item.planName}</h1>
-          <span>coś tam coś tam</span>
+          <span>{item.shortDescription}</span>
         </TrainingPlanButton>
       </StyledLink>
     ));

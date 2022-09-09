@@ -53,6 +53,7 @@ const NameTrainingDays = ({ closeModal, planName }: NameTrainingDaysTypes) => {
         };
       }),
     ];
+    console.log(data)
     dispatch(
       trainingActions.setTrainingDaysName({
         daysData,
@@ -73,6 +74,10 @@ const NameTrainingDays = ({ closeModal, planName }: NameTrainingDaysTypes) => {
       id={`dayName${index}`}
       {...register(`days.${index}.dayName` as const, {
         required: "To pole jest wymagane",
+        pattern: {
+          value: /^[A-Za-z0-9 ]+$/,
+          message: "Wartość nie może zawierać znaków specjalnych",
+        },
       })}
       isError={!!errors?.days?.[index]?.dayName}
       errorMessage={errors.days && errors?.days?.[index]?.dayName?.message}

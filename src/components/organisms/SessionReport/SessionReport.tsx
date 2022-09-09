@@ -11,6 +11,7 @@ import {
 import Button from "components/atoms/Button/Button";
 import { TrainingSessionsHistory } from "models/trainingSessionsModel";
 import { lightFormat } from "date-fns";
+import Notes from "components/molecules/Notes/Notes";
 
 type SessionReportTypes = {
   handleClose: () => void;
@@ -87,6 +88,13 @@ const SessionReport = ({ handleClose, choosenSession }: SessionReportTypes) => {
               </>
             )}
         </StyledParagraph>
+
+        {item.notes && (
+          <Notes
+            notes={item.notes}
+            pathSuffix={`trainingSessions/${choosenSession.trainingSessionId}/exercises/${item.exerciseId}/notes`}
+          />
+        )}
       </Exercise>
     );
   });
