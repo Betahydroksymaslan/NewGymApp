@@ -11,9 +11,9 @@ Project is created with:
 ## Demo
 Demo version: https://betahydroksymaslan.github.io/NewGymApp/
 <p float="left">
-  <img src="https://i.ibb.co/7CmRy16/305628848-472893477855745-462399675252538323-n.png" width="270" height="500">
-  <img src="https://i.ibb.co/x7mvmFf/305477325-893769104942944-8887037415246486124-n.png" width="270" height="500">
-  <img src="https://i.ibb.co/qjFXX9v/305402400-1014237045913993-9011211727283526785-n.png" width="270" height="500">
+  <img src="https://i.ibb.co/7CmRy16/305628848-472893477855745-462399675252538323-n.png" width="240" height="450">
+  <img src="https://i.ibb.co/x7mvmFf/305477325-893769104942944-8887037415246486124-n.png" width="240" height="450">
+  <img src="https://i.ibb.co/qjFXX9v/305402400-1014237045913993-9011211727283526785-n.png" width="240" height="450">
 </p>
 
 ## Setup
