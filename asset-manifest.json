@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/NewGymApp/static/css/main.83216d16.css",
-    "main.js": "/NewGymApp/static/js/main.d78751d4.js",
+    "main.js": "/NewGymApp/static/js/main.43f6fab3.js",
     "static/js/787.0f90566d.chunk.js": "/NewGymApp/static/js/787.0f90566d.chunk.js",
     "static/media/womanRideBike.svg": "/NewGymApp/static/media/womanRideBike.a32331fdaf8b50f1640620061c0a903a.svg",
     "service-worker.js": "/NewGymApp/service-worker.js",
@@ -14,14 +14,10 @@
     "static/media/homeImage_1.svg": "/NewGymApp/static/media/homeImage_1.6285a49d9f6725e798b8156405f72763.svg",
     "static/media/endTrainingImage.svg": "/NewGymApp/static/media/endTrainingImage.5a9d2d7fbbad8d2aa168e2e2f8ab4ec7.svg",
     "static/media/womanDoingExercise.svg": "/NewGymApp/static/media/womanDoingExercise.37f9b49a7605ff10c45e48905ec5140e.svg",
-    "static/media/homeImage_4.svg": "/NewGymApp/static/media/homeImage_4.b5f4f30094f297240fb98dffcc4e3e81.svg",
     "static/media/manRunning2.svg": "/NewGymApp/static/media/manRunning2.1d2e87fa46c37e8b3ed3ce679f446231.svg",
-    "static/media/homeImage_3.svg": "/NewGymApp/static/media/homeImage_3.8fdf4aac11db32290b5c66d3649dc09c.svg",
-    "static/media/homeImage_2.svg": "/NewGymApp/static/media/homeImage_2.f180e84ba6c8c46456f565f6170e6ca9.svg",
     "static/media/maleAvatarIcon.svg": "/NewGymApp/static/media/maleAvatarIcon.c38a4cd44db2e3f5683ceecd8418bea8.svg",
     "static/media/manDoingExercise.svg": "/NewGymApp/static/media/manDoingExercise.a94a0e3233620f1bb306f06590bacf98.svg",
     "static/media/femaleAvatarIcon.svg": "/NewGymApp/static/media/femaleAvatarIcon.11d43d6d120de502354ba2a5e8298602.svg",
-    "static/media/homeImage_5.svg": "/NewGymApp/static/media/homeImage_5.aff1d1490929eae66155d0fe67665120.svg",
     "static/media/moonSleeping.svg": "/NewGymApp/static/media/moonSleeping.dff707018d47c32437b344fa75e4dbec.svg",
     "static/media/repsImage.svg": "/NewGymApp/static/media/repsImage.737131685723b5b6fd272ffdf408cdf7.svg",
     "static/media/weightImage.svg": "/NewGymApp/static/media/weightImage.809b61f464a4d7a9183fe1dfbc3b82f3.svg",
@@ -41,11 +37,11 @@
     "static/media/statsIcon.svg": "/NewGymApp/static/media/statsIcon.da0727a6672151dc29d436103e29a686.svg",
     "static/media/XIcon.svg": "/NewGymApp/static/media/XIcon.b614d671c2a4c6e1774652618076cc90.svg",
     "main.83216d16.css.map": "/NewGymApp/static/css/main.83216d16.css.map",
-    "main.d78751d4.js.map": "/NewGymApp/static/js/main.d78751d4.js.map",
+    "main.43f6fab3.js.map": "/NewGymApp/static/js/main.43f6fab3.js.map",
     "787.0f90566d.chunk.js.map": "/NewGymApp/static/js/787.0f90566d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83216d16.css",
-    "static/js/main.d78751d4.js"
+    "static/js/main.43f6fab3.js"
   ]
 }
