@@ -4,11 +4,8 @@ import {
   StyledSpan,
   MainBox,
   MainContentWrapper,
-  SideBox,
   Tittle,
   Text,
-  SideTittle,
-  SideText
 } from "./Home.style";
 import MainPageTemplate from "components/templates/MainPageTemplate/MainPageTemplate";
 import Button from "components/atoms/Button/Button";
@@ -20,10 +17,10 @@ import { getUser } from "slices/authSlice";
 import { getTrainingSessions } from "slices/trainingSessionSlice";
 import { useAppSelector } from "store/hooks";
 import { ReactComponent as HomeImageOne } from "assets/images/homeImage_1.svg";
-import { ReactComponent as HomeImageTwoo } from "assets/images/homeImage_2.svg";
+/* import { ReactComponent as HomeImageTwoo } from "assets/images/homeImage_2.svg";
 import { ReactComponent as HomeImageThree } from "assets/images/homeImage_3.svg";
 import { ReactComponent as HomeImageFour } from "assets/images/homeImage_4.svg";
-import { ReactComponent as HomeImageFive } from "assets/images/homeImage_5.svg";
+import { ReactComponent as HomeImageFive } from "assets/images/homeImage_5.svg"; */
 
 const Home = () => {
   const user = useAppSelector(getUser);
@@ -68,23 +65,6 @@ console.log(sessions)
           <Text>{`${lastSession.lastSession} (${lastSession.planName})`}</Text>
         </MainBox>
 
-        <SideBox>
-          <SideTittle>Wszystkie treningi</SideTittle>
-          <SideText>{sessions?.length}</SideText>
-          <HomeImageTwoo />
-        </SideBox>
-
-        <SideBox>
-          <HomeImageThree />
-        </SideBox>
-
-        <SideBox>
-          <HomeImageFive />
-        </SideBox>
-
-        <SideBox>
-          <HomeImageFour />
-        </SideBox>
       </MainContentWrapper>
     </MainPageTemplate>
   );

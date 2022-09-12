@@ -74,45 +74,6 @@ export const MainBox = styled.div`
   }
 `;
 
-export const SideBox = styled.div`
-  border-radius: 30px;
-  box-shadow: ${({theme}) => theme.boxShadow.inputShadow};
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 15px;
-  position: relative;
-
-  & > svg {
-    width: 100px;
-    height: 120px;
-    margin-top: auto;
-  }
-
-  &:nth-child(2) {
-    background-color: #ff9374;
-  }
-  &:nth-child(3) {
-    background-color: #6adbc9;
-  }
-  &:nth-child(4) {
-    background-color: #ff79a1;
-    padding-bottom: 0;
-
-    & > svg {
-      margin-left: 10px;
-      translate: 0 5px;
-    }
-  }
-  &:nth-child(5) {
-    background-color: #ffdd7b;
-   padding-bottom: 5px;
-
-    & > svg {
-      margin-left: 10px;
-    }
-  }
-`
-
 export const Tittle = styled.h1`
   margin: 0;
   font-size: ${({theme}) => theme.fontSize.m};
@@ -123,22 +84,4 @@ export const Text = styled.span`
   margin: 0;
   font-size: ${({theme}) => theme.fontSize.m};
   color: ${({theme}) => theme.colors.white};
-`
-
-export const SideTittle = styled.h2`
-text-align: center;
-padding: 7px 12px 0;
-  margin: 0;
-  font-size: ${({theme}) => theme.fontSize.m};
-  color: ${({theme}) => theme.colors.white};
-`
-
-export const SideText = styled.span`
-  margin: 0;
-  font-size: 40px;
-  color: ${({theme}) => theme.colors.white};
-  font-weight: 600;
-  position: absolute;
-  right: 30px;
-  top: 100px;
 `
