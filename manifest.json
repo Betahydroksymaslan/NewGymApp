@@ -1,5 +1,5 @@
 {
-  "short_name": "Gym app 2.0",
+  "short_name": "Gym app",
   "name": "Manage training app",
   "icons": [
     {
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logoGymApp192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "logoGymApp512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
