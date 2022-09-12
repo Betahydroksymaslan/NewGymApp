@@ -59,10 +59,7 @@ const TrainingDay = () => {
       path: "none",
     }
   );
-  const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {
-    lastSession: "",
-    planName: "",
-  });
+  
   const navigate = useNavigate();
   const { trainingDay, trainingName } = useParams();
   const dispatch = useAppDispatch();
@@ -194,10 +191,6 @@ const TrainingDay = () => {
 
     dispatch(trainingSessionsActions.addNewTrainingSession(data));
     setIsSessionActive(localStorageData);
-    setLastSession({
-      lastSession: trainingDay as string,
-      planName: trainingName as string,
-    });
     navigate(`${TRAININGS}/${trainingName}/${trainingDay}/${sessionId}`);
   };
 

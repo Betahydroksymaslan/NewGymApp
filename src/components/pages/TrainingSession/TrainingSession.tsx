@@ -53,6 +53,10 @@ type ModalsTypes =
 
 const TrainingSession = () => {
   const { trainingDay, trainingName, sessionId } = useParams();
+  const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {
+    lastSession: "",
+    planName: "",
+  });
   const dispatch = useAppDispatch();
   const user = useAppSelector(getUser);
   const trainings = useAppSelector(getTrainings);
@@ -241,6 +245,10 @@ const TrainingSession = () => {
   };
 
   const closeSessionBoard = () => {
+    setLastSession({
+      lastSession: trainingDay as string,
+      planName: trainingName as string,
+    });
     closeModal("endOfTrainingBoard");
     navigate(HOME);
   };

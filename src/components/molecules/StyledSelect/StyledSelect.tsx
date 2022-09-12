@@ -2,7 +2,7 @@ import Select from "react-select";
 import { forwardRef } from "react";
 
 type SelectTypes = {
-  options: { label: string; value: string }[];
+  options: { label: string; value: string | number }[];
   onChange: (...event: any[]) => void
   value: any;
 };
