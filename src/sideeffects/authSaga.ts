@@ -45,7 +45,13 @@ export function* loginWithGoogle(action: PayloadAction<CallbackPayload>) {
   try {
     yield put(toggleSpinner(true));
     const { user } = yield call(googleLogin);
-    console.log(user);
+    const ref = `users/${user.uid}/userData`
+    const dbUserData = {
+      uid: user.uid as string,
+      name: user.displayName as string,
+      email: user.email as string,
+    }
+    yield setDatabase(ref, dbUserData)
     yield put(authActions.loginSuccess(user));
     yield action.payload.callback(HOME);
     yield toast.success("Pomyślnie zalogowano!");
@@ -61,6 +67,13 @@ export function* loginWithFacebook(action: PayloadAction<CallbackPayload>) {
   try {
     yield put(toggleSpinner(true));
     const { user } = yield call(facebookLogin);
+    const ref = `users/${user.uid}/userData`
+    const dbUserData = {
+      uid: user.uid as string,
+      name: user.displayName as string,
+      email: user.email as string,
+    }
+    yield setDatabase(ref, dbUserData)
     yield put(authActions.loginSuccess(user));
     yield action.payload.callback(HOME);
     yield toast.success("Pomyślnie zalogowano!");

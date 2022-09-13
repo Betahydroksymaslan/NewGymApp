@@ -23,10 +23,12 @@ import { pl } from "date-fns/locale";
 import { isThisWeek, isThisMonth, format } from "date-fns";
 import { ReactComponent as HomeImageTwoo } from "assets/images/homeImage_2.svg";
 /* import { ReactComponent as HomeImageThree } from "assets/images/homeImage_3.svg"; */
+import Chart from "components/organisms/Chart/Chart";
+import { TrainingSessionsHistory } from "models/trainingSessionsModel";
 
 const Home = () => {
   const user = useAppSelector(getUser);
-  const userName = (user?.displayName as string).split(" ")[0]
+  const userName = (user?.displayName as string).split(" ")[0];
   const sessions = useAppSelector(getTrainingSessions)?.filter(
     (item) => item.endTrainingDate
   );
@@ -36,7 +38,7 @@ const Home = () => {
   const sessionsThisMonth = sessions?.filter((item) =>
     isThisMonth(item.startTrainingDate)
   ).length;
-  const nameOfThisMonth = format(new Date(), "LLLL", {locale: pl})
+  const nameOfThisMonth = format(new Date(), "LLLL", { locale: pl });
   const [lastSession, setLastSession] = useLocalStorage("lastTrainingSession", {
     lastSession: "-",
     planName: "-",
@@ -50,7 +52,7 @@ const Home = () => {
       trainingName: "",
     }
   );
-  console.log(sessions);
+
   return (
     <MainPageTemplate padding="40px 5% 100px">
       {isSessionActive.isActive && (
@@ -96,6 +98,8 @@ const Home = () => {
           <span>{sessions?.length}</span>
         </StatsTile>
       </StatsGrid>
+
+      <Chart dataSessions={sessions as TrainingSessionsHistory[]} />
     </MainPageTemplate>
   );
 };
