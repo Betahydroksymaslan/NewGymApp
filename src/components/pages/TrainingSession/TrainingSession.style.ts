@@ -57,8 +57,8 @@ export const MainImageWrapper = styled.div`
   grid-column: 1;
   z-index: 1;
 
-  & > svg  {
-    width:100%;
+  & > svg {
+    width: 100%;
     min-height: 130%;
   }
 `;
@@ -75,8 +75,6 @@ export const ExerciseWrapper = styled.section`
   gap: 20px;
   background-color: ${({ theme }) => theme.colors.white};
   grid-row: 5 / -1;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
   z-index: 2;
   overflow-x: hidden;
   overflow-y: scroll;

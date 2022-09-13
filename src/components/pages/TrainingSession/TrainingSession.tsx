@@ -304,6 +304,7 @@ const TrainingSession = () => {
           as={motion.section}
           key={training?.exercises[value].exerciseName}
           initial={{ y: "120%" }}
+          style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40 }}
           animate={{
             y: 0,
             transition: {
