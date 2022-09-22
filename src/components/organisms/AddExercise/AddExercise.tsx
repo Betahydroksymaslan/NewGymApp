@@ -22,6 +22,7 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { trainingActions, getTrainings } from "slices/trainingsSlice";
 import { v4 as uuid } from "uuid";
 import Tooltip from "components/atoms/Tooltip/Tooltip";
+import { withLatinCharsRegex } from "constants/regex";
 
 type InputsTypes = {
   exerciseName: string;
@@ -174,7 +175,7 @@ const AddExercise = ({
         {...register("exerciseName", {
           required: "To pole jest wymagane",
           pattern: {
-            value: /^[A-Za-z0-9 ]+$/,
+            value: withLatinCharsRegex,
             message: "Wartość nie może zawierać znaków specjalnych",
           },
         })}

@@ -1,24 +1,15 @@
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import {
-  format,
-  subMonths,
-  isSameMonth,
-} from "date-fns";
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { format, subMonths, isSameMonth } from "date-fns";
 import { pl } from "date-fns/locale";
-/* import { mocekedSessionsHistory } from "assets/mocks/mockedSessionsHistory"; */
+import { mocekedSessionsHistory } from "assets/mocks/mockedSessionsHistory";
 import { TrainingSessionsHistory } from "models/trainingSessionsModel";
+import CustomTooltip from 'components/organisms/Chart/CustomTooltip';
 
 type ChartTypes = {
-    dataSessions: TrainingSessionsHistory[]
-}
+  dataSessions: TrainingSessionsHistory[];
+};
 
-const Chart = ({dataSessions}: ChartTypes) => {
+const Chart = ({ dataSessions }: ChartTypes) => {
   const isThisSameMonth = (monthNumber: number) =>
   dataSessions?.filter((item) =>
       isSameMonth(
@@ -41,10 +32,10 @@ const Chart = ({dataSessions}: ChartTypes) => {
   console.log(data);
 
   return (
-    <ResponsiveContainer width="80%" height={220}>
+    <ResponsiveContainer width="75%" height={200}>
       <BarChart data={data}>
         <XAxis dataKey="name" tickLine={false} axisLine={false} />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip payload={data} />} />
 
         <defs>
           <linearGradient
@@ -59,7 +50,12 @@ const Chart = ({dataSessions}: ChartTypes) => {
             <stop offset="1" stopColor="#9DCEFF" />
           </linearGradient>
         </defs>
-        <Bar barSize={20} dataKey="treningi" fill="url(#treningiFill)" />
+        <Bar
+          barSize={15}
+          dataKey="treningi"
+          fill="url(#treningiFill)"
+          radius={[15, 15, 15, 15]}
+        />
       </BarChart>
     </ResponsiveContainer>
   );

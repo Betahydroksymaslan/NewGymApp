@@ -8,6 +8,7 @@ import {
   StyledSubHeader,
   StatsGrid,
   LastTrainingBox,
+  StyledSubSubHeader,
 } from "./Home.style";
 import MainPageTemplate from "components/templates/MainPageTemplate/MainPageTemplate";
 import Button from "components/atoms/Button/Button";
@@ -99,6 +100,7 @@ const Home = () => {
         </StatsTile>
       </StatsGrid>
 
+      <StyledSubSubHeader>Statystyki miesięczne:</StyledSubSubHeader>
       <Chart dataSessions={sessions as TrainingSessionsHistory[]} />
     </MainPageTemplate>
   );

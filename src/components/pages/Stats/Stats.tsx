@@ -47,7 +47,7 @@ const Stats = () => {
     const today = new Date();
     const dayInPast = subDays(today, time);
     const isThisDate = isAfter(date, dayInPast);
-    return isThisDate;
+    return time ? isThisDate : true;
   };
 
   const sessions = useAppSelector(getTrainingSessions)

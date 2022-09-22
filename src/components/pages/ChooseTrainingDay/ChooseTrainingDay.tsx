@@ -293,7 +293,7 @@ const ChooseTrainingDay = () => {
             {...register("dayName", {
               required: "to pole jest wymgane",
               pattern: {
-                value: /^[A-Za-z0-9 ]+$/,
+                value: /^[A-Za-z0-9-ąśćżźęóń]+$/,
                 message: "Wartość nie może zawierać znaków specjalnych",
               },
             })}
@@ -329,7 +329,7 @@ const ChooseTrainingDay = () => {
             {...registerDayName("updatedDayName", {
               required: "to pole jest wymgane",
               pattern: {
-                value: /^[A-Za-z0-9 ]+$/,
+                value: /^[A-Za-z0-9-ąśćżźęóń]+$/,
                 message: "Wartość nie może zawierać znaków specjalnych",
               },
             })}

@@ -1,0 +1,1 @@
+export const withLatinCharsRegex = /^[A-Za-z0-9-ąśćżźęóń ]+$/;

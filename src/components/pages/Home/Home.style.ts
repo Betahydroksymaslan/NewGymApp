@@ -83,12 +83,19 @@ export const StyledSubHeader = styled.h2`
   margin: 40px 0 30px;
 `;
 
+export const StyledSubSubHeader = styled.h3`
+  font-size: ${({ theme }) => theme.fontSize.m};
+  margin: 0;
+  align-self: flex-start;
+`;
+
 export const StatsGrid = styled.div`
   width: 100%;
   display: grid;
   grid-template: 100px 120px / repeat(3, 1fr);
   row-gap: 15px;
   column-gap: 5%;
+  margin-bottom: 20px;
 `;
 
 export const LastTrainingBox = styled.div`

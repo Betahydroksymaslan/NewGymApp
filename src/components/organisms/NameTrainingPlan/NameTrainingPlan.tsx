@@ -9,6 +9,7 @@ import FormField from "components/molecules/FormField/FormField";
 import { useWatchDatabase } from "hooks/useWatchDatabase";
 import { getUser } from "slices/authSlice";
 import { v4 as uuid } from "uuid";
+import { withLatinCharsRegex } from "constants/regex";
 
 type NameTrainingPlanTypes = {
   closeModal: (val: ModalsNamesTypes) => void;
@@ -56,7 +57,7 @@ const NameTrainingPlan = ({ closeModal }: NameTrainingPlanTypes) => {
         {...register("planName", {
           required: "To pole jest wymagane",
           pattern: {
-            value: /^[A-Za-z0-9 ]+$/,
+            value: withLatinCharsRegex,
             message: "Wartość nie może zawierać znaków specjalnych",
           },
         })}
@@ -78,7 +79,7 @@ const NameTrainingPlan = ({ closeModal }: NameTrainingPlanTypes) => {
             message: "Opis może zawierać maksymalnie 45 znaków",
           },
           pattern: {
-            value: /^[A-Za-z0-9 ]+$/,
+            value: withLatinCharsRegex,
             message: "Wartość nie może zawierać znaków specjalnych",
           },
         })}

@@ -12,6 +12,7 @@ import {
 } from "react-hook-form";
 import { trainingActions } from "slices/trainingsSlice";
 import { v4 as uuid } from "uuid";
+import { withLatinCharsRegex } from "constants/regex";
 
 type InputsTypes = {
   days: { dayName: string }[];
@@ -75,7 +76,7 @@ const NameTrainingDays = ({ closeModal, planName }: NameTrainingDaysTypes) => {
       {...register(`days.${index}.dayName` as const, {
         required: "To pole jest wymagane",
         pattern: {
-          value: /^[A-Za-z0-9 ]+$/,
+          value: withLatinCharsRegex,
           message: "Wartość nie może zawierać znaków specjalnych",
         },
       })}
