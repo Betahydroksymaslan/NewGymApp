@@ -7,6 +7,8 @@ import {
   TrainingItemsWrapper,
   StatsHeader,
   AlarmIconWrapper,
+  ExercisesProgressWrapper,
+  ExerciseProgressItem
 } from "./Stats.style";
 import Button from "components/atoms/Button/Button";
 import { calcTimeLength } from "helpers/calcTimeLength";
@@ -34,6 +36,17 @@ const Stats = () => {
     useState<TrainingSessionsHistory>(null);
   const chooseSession = (session: TrainingSessionsHistory) =>
     setChoosenSession(session);
+
+  const checkProgress = (
+    weightFrom: number,
+    weightTo: number,
+    repsFrom: number,
+    repsTo: number
+  ) => {
+    if (weightFrom === weightTo && repsFrom === repsTo) return "info";
+    if (weightTo > weightFrom || repsTo > repsFrom) return "success";
+    return "error";
+  };
 
   const { control, watch } = useForm<InputTypes>({
     defaultValues: {
@@ -95,6 +108,18 @@ const Stats = () => {
           <AlarmIcon />
           <span>{trainingLength}</span>
         </AlarmIconWrapper>
+        <ExercisesProgressWrapper>
+          {item.exercises.map((item) => {
+            const progressType = checkProgress(
+              item.weightFrom,
+              item.weightTo as number,
+              item.repsFrom,
+              item.repsTo as number
+            );
+            return (
+            <ExerciseProgressItem progressType={progressType} />
+          )})}
+        </ExercisesProgressWrapper>
       </TrainingItem>
     );
   });
@@ -123,6 +148,7 @@ const Stats = () => {
 
       <Modal isOpen={isSessionReportOpen} handleClose={closeModal}>
         <SessionReport
+          checkProgress={checkProgress}
           choosenSession={choosenSession}
           handleClose={closeModal}
         />

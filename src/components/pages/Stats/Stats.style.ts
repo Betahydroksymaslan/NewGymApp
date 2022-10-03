@@ -52,16 +52,14 @@ export const TrainingItem = styled.div`
 
 export const AlarmIconWrapper = styled.div`
   grid-column: 2;
-  grid-row: 1/-1;
+  grid-row: 1/3;
   display: flex;
-  flex-direction: column;
   gap: 10px;
   align-items: center;
   align-self: center;
-  justify-self: center;
 
   svg {
-    width: 50px;
+    width: 40px;
   }
   span {
     font-size: ${({ theme }) => theme.fontSize.l};
@@ -72,4 +70,28 @@ export const AlarmIconWrapper = styled.div`
       margin-left: 3px;
     }
   }
+`;
+
+export const ExercisesProgressWrapper = styled.div`
+  grid-column: 2;
+  grid-row: 3/ -1;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 10px;
+  align-self: center;
+  justify-content: center;
+`;
+
+export const ExerciseProgressItem = styled.div<{
+  progressType: "success" | "error" | "info";
+}>`
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background-color: ${({ theme: { colors }, progressType }) => {
+    if (progressType === "success") return colors.successDark;
+    if (progressType === "error") return colors.error;
+    return colors.infoDark;
+  }};
 `;

@@ -16,21 +16,20 @@ import Notes from "components/molecules/Notes/Notes";
 type SessionReportTypes = {
   handleClose: () => void;
   choosenSession: TrainingSessionsHistory;
-};
-
-const SessionReport = ({ handleClose, choosenSession }: SessionReportTypes) => {
-  console.log(choosenSession);
-
-  const checkProgress = (
+  checkProgress: (
     weightFrom: number,
     weightTo: number,
     repsFrom: number,
     repsTo: number
-  ) => {
-    if (weightFrom === weightTo && repsFrom === repsTo) return "info";
-    if (weightTo > weightFrom || repsTo > repsFrom) return "success";
-    return "error";
-  };
+  ) => "info" | "success" | "error";
+};
+
+const SessionReport = ({
+  handleClose,
+  choosenSession,
+  checkProgress,
+}: SessionReportTypes) => {
+  console.log(choosenSession);
 
   const checkProgressByValues = (x: number, y: number) => {
     if (x === y) return "info";
