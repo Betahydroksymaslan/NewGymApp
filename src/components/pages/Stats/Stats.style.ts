@@ -59,16 +59,17 @@ export const AlarmIconWrapper = styled.div`
   align-self: center;
 
   svg {
-    width: 40px;
+    width: 30px;
   }
-  span {
-    font-size: ${({ theme }) => theme.fontSize.l};
+`;
 
-    &::after {
-      content: "min";
-      font-size: ${({ theme }) => theme.fontSize.s};
-      margin-left: 3px;
-    }
+export const StyledTimeSpan = styled.span<{ suffix: "min" | "g" }>`
+  font-size: ${({ theme }) => theme.fontSize.l};
+
+  &::after {
+    content: "${({ suffix }) => suffix}";
+    font-size: ${({ theme }) => theme.fontSize.s};
+    margin-left: 3px;
   }
 `;
 

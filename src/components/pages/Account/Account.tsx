@@ -49,7 +49,7 @@ const Account = () => {
       <StyledPageArea>
         <MinMaxSessionTimeWrapper>
           <Tooltip message="Ustal, które z sesji mają nie być brane pod uwagę w raportach potreningowych. Odrzucane mogą być treningi zbyt któtkie, bądź te trwające zbyt długo">
-            <p>Filtruj sesje</p>
+            <p>Filtruj statystyki sesji</p>
           </Tooltip>
           <Button
             size="s"

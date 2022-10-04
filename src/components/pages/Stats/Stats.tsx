@@ -9,9 +9,10 @@ import {
   AlarmIconWrapper,
   ExercisesProgressWrapper,
   ExerciseProgressItem,
+  StyledTimeSpan,
 } from "./Stats.style";
 import Button from "components/atoms/Button/Button";
-import { calcTimeLength } from "helpers/calcTimeLength";
+import { calcTimeLength, calcHoursAndMinutes } from "helpers/calcTimeLength";
 import InlineWrapper from "components/templates/InlineWrapper/InlineWrapper";
 import StyledSelect from "components/molecules/StyledSelect/StyledSelect";
 import { useForm, Controller } from "react-hook-form";
@@ -72,12 +73,12 @@ const Stats = () => {
     const isThisDate = isAfter(date, dayInPast);
 
     const sessionTime = calcTimeLength(startSession, endSession);
-console.log(sessionTime)
+
     return time
       ? isThisDate &&
           sessionTime <= minMaxVal.maxVal &&
           sessionTime >= minMaxVal.minVal
-      : true;
+      : sessionTime <= minMaxVal.maxVal && sessionTime >= minMaxVal.minVal;
   };
 
   const sessions = useAppSelector(getTrainingSessions)
@@ -101,9 +102,9 @@ console.log(sessionTime)
   ];
 
   const renderTrainings = sessions?.map((item) => {
-    const trainingLength = item.endTrainingDate
-      ? calcTimeLength(item.startTrainingDate, item.endTrainingDate)
-      : "0";
+    const sessionLength = calcHoursAndMinutes(
+      calcTimeLength(item.startTrainingDate, item.endTrainingDate as number)
+    );
 
     const pickSession = () => {
       chooseSession(item);
@@ -128,7 +129,14 @@ console.log(sessionTime)
         </Button>
         <AlarmIconWrapper>
           <AlarmIcon />
-          <span>{trainingLength}</span>
+          {sessionLength.hours > 0 && (
+            <StyledTimeSpan suffix="g">{sessionLength.hours}</StyledTimeSpan>
+          )}
+          {sessionLength.minutes > 0 && (
+            <StyledTimeSpan suffix="min">
+              {sessionLength.minutes}
+            </StyledTimeSpan>
+          )}
         </AlarmIconWrapper>
         <ExercisesProgressWrapper>
           {item.exercises.map((item) => {
