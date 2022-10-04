@@ -8,7 +8,7 @@ import {
   StatsHeader,
   AlarmIconWrapper,
   ExercisesProgressWrapper,
-  ExerciseProgressItem
+  ExerciseProgressItem,
 } from "./Stats.style";
 import Button from "components/atoms/Button/Button";
 import { calcTimeLength } from "helpers/calcTimeLength";
@@ -21,6 +21,7 @@ import { ReactComponent as AlarmIcon } from "assets/icons/alarmIcon.svg";
 import Modal from "components/templates/Modal/Modal";
 import SessionReport from "components/organisms/SessionReport/SessionReport";
 import { TrainingSessionsHistory } from "models/trainingSessionsModel";
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 type TimesType = 0 | 7 | 31 | 365;
 type InputTypes = {
@@ -28,6 +29,10 @@ type InputTypes = {
 };
 
 const Stats = () => {
+  const [minMaxVal, setMinMaxVal] = useLocalStorage("minMaxVal", {
+    minVal: 20,
+    maxVal: 180,
+  });
   const [isSessionReportOpen, setIsSessionReportOpen] = useState(false);
   const openModal = () => setIsSessionReportOpen(true);
   const closeModal = () => setIsSessionReportOpen(false);
@@ -56,18 +61,35 @@ const Stats = () => {
 
   const selectValue = watch("selectTime");
 
-  const filterSessions = (time: TimesType, date: Date) => {
+  const filterSessions = (
+    time: TimesType,
+    date: Date,
+    startSession: number,
+    endSession: number
+  ) => {
     const today = new Date();
     const dayInPast = subDays(today, time);
     const isThisDate = isAfter(date, dayInPast);
-    return time ? isThisDate : true;
+
+    const sessionTime = calcTimeLength(startSession, endSession);
+console.log(sessionTime)
+    return time
+      ? isThisDate &&
+          sessionTime <= minMaxVal.maxVal &&
+          sessionTime >= minMaxVal.minVal
+      : true;
   };
 
   const sessions = useAppSelector(getTrainingSessions)
     ?.filter(
       (item) =>
         item.endTrainingDate &&
-        filterSessions(selectValue, new Date(item.startTrainingDate))
+        filterSessions(
+          selectValue,
+          new Date(item.startTrainingDate),
+          item.startTrainingDate,
+          item.endTrainingDate
+        )
     )
     .sort((a, b) => b.startTrainingDate - a.startTrainingDate);
 
@@ -116,9 +138,8 @@ const Stats = () => {
               item.repsFrom,
               item.repsTo as number
             );
-            return (
-            <ExerciseProgressItem progressType={progressType} />
-          )})}
+            return <ExerciseProgressItem progressType={progressType} />;
+          })}
         </ExercisesProgressWrapper>
       </TrainingItem>
     );

@@ -23,7 +23,7 @@ const IsAuthLoaded: AuthIsLoadedType = ({ children }) => {
   useEffect(() => {
     if (isUserLoggedIn) return;
 
-    let unsubscribe = onAuthStateChanged(auth, (user) => {
+    let unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         dispatch(authActions.loginSuccess(user));
 

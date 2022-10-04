@@ -9,7 +9,7 @@ export const StyledPageArea = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-  
+  z-index: 1;
 
   svg {
     width: 100px;
@@ -26,3 +26,15 @@ export const StyledPageArea = styled.div`
     margin-bottom: 20px;
   }
 `;
+
+export const MinMaxSessionTimeWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & p {
+    margin: 0;
+    font-size: ${({theme}) => theme.fontSize.m};
+  }
+`

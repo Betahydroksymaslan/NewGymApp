@@ -24,8 +24,9 @@ export const TooltipMessage = styled.div`
   padding: 8px;
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
-  bottom: 160%;
-  right: 0;
+  width: 90vw;
+  bottom: 200%;
+  right:-275%;
   border-radius: 6px;
 
   & > p {
