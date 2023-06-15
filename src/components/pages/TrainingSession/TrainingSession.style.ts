@@ -141,6 +141,22 @@ export const ActualScore = styled.span<{
   }
 `;
 
+export const SeriesWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: -1.25rem 0 -2.25rem;
+
+  & > svg {
+    width: 80px;
+    margin-inline: -0.75rem;
+  }
+
+  & strong {
+    font-size: 25px;
+  }
+`
+
 export const UpdateMainScoreButton = styled.button`
   background-color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fontSize.xl};

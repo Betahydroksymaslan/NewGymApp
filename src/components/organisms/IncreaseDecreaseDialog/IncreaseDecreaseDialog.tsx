@@ -14,7 +14,7 @@ import { trainingSessionsActions } from "slices/trainingSessionSlice";
 type IncreaseDecreasTypes = {
   handleClose: () => void;
   refPath: string;
-  repsQuantityFrom: number | undefined
+  repsQuantityFrom: number
 };
 
 type InputsTypes = {

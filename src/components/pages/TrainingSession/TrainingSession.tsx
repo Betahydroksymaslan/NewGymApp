@@ -15,6 +15,7 @@ import {
   NextPrevBtton,
   InlineGridWrapper,
   RepsButtonBoxName,
+  SeriesWrapper,
 } from "./TrainingSession.style";
 import { useParams } from "react-router-dom";
 import { increment } from "firebase/database";
@@ -31,6 +32,7 @@ import { ReactComponent as ManDoingOHP } from "assets/images/manDoingOHP.svg";
 import { ReactComponent as ManRunning } from "assets/images/manRunning.svg";
 import { ReactComponent as ManRunningTwoo } from "assets/images/manRunning2.svg";
 import { ReactComponent as EndOfTrainingImage } from "assets/images/endTrainingImage.svg";
+import { ReactComponent as SeriesIcon } from "assets/icons/series_icon.svg";
 import OptionsList from "components/molecules/OptionsList/OptionsList";
 import { useNavigate } from "react-router-dom";
 import Button from "components/atoms/Button/Button";
@@ -102,7 +104,7 @@ const TrainingSession = () => {
     <ManRunning />,
     <ManDoingPullUp />,
     <ManDoingOHP />,
-    <ManRunningTwoo />,
+    <ManRunningTwoo />
   ];
   const getRandom = useMemo(
     () => Math.floor(Math.random() * (0 + mainImages.length) + 0),
@@ -252,9 +254,9 @@ const TrainingSession = () => {
     closeModal("endOfTrainingBoard");
     navigate(HOME);
   };
-
+  if (!training) return null
   return (
-    <PageWrapper
+   <PageWrapper
       as={motion.section}
       variants={slidePageAnimation}
       initial="hidden"
@@ -336,11 +338,16 @@ const TrainingSession = () => {
             </NextPrevBtton>
           </InlineGridWrapper>
 
+          <SeriesWrapper>
+            <SeriesIcon />
+            <span>Serie: <strong>{training?.exercises[value].numberOfSeries}</strong></span>
+          </SeriesWrapper>
+
           <ActualScore suffix={training?.exercises[value].repsOrWeight}>
             {training?.exercises[value].startWeightOrReps}
           </ActualScore>
 
-          {training?.exercises[value].notes && (
+          {training.exercises[value].notes && (
             <Note
               pathSuffix={`trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}/notes`}
               notes={training?.exercises[value].notes}
@@ -400,7 +407,7 @@ const TrainingSession = () => {
         <IncreaseDecreaseDialog
           refPath={`users/${user?.uid}/trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}`}
           handleClose={() => closeModal("updateMainScoreByCustomValue")}
-          repsQuantityFrom={training?.exercises[value].repsQuantityFrom}
+          repsQuantityFrom={training.exercises[value].repsQuantityFrom}
         />
       </Modal>
 
