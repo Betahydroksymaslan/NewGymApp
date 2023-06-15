@@ -14,6 +14,7 @@ import { trainingSessionsActions } from "slices/trainingSessionSlice";
 type IncreaseDecreasTypes = {
   handleClose: () => void;
   refPath: string;
+  repsQuantityFrom: number | undefined
 };
 
 type InputsTypes = {
@@ -24,6 +25,7 @@ type InputsTypes = {
 const IncreaseDecreaseDialog = ({
   handleClose,
   refPath,
+  repsQuantityFrom
 }: IncreaseDecreasTypes) => {
   const dispatch = useAppDispatch();
 
@@ -39,14 +41,15 @@ const IncreaseDecreaseDialog = ({
   const valueType = watch("increaseOrDecrease");
 
   const onSubmit: SubmitHandler<InputsTypes> = (data) => {
-    if (!refPath) return;
+    if (!refPath || !repsQuantityFrom || data.custommValueToChange === 0) return;
 
     const updates = {
-      [refPath]: increment(
+      [`${refPath}/startWeightOrReps`]: increment(
         valueType === "add"
           ? data.custommValueToChange
           : -data.custommValueToChange
       ),
+      [`${refPath}/actualRep`]: repsQuantityFrom,
     };
 
     dispatch(trainingSessionsActions.updateSession(updates));

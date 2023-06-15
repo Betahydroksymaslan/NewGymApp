@@ -398,8 +398,9 @@ const TrainingSession = () => {
         handleClose={() => closeModal("updateMainScoreByCustomValue")}
       >
         <IncreaseDecreaseDialog
-          refPath={`users/${user?.uid}/trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}/startWeightOrReps`}
+          refPath={`users/${user?.uid}/trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}`}
           handleClose={() => closeModal("updateMainScoreByCustomValue")}
+          repsQuantityFrom={training?.exercises[value].repsQuantityFrom}
         />
       </Modal>
 
