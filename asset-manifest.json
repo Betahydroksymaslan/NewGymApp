@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/NewGymApp/static/css/main.83216d16.css",
-    "main.js": "/NewGymApp/static/js/main.419fa37f.js",
+    "main.js": "/NewGymApp/static/js/main.f76f998b.js",
     "static/js/787.0f90566d.chunk.js": "/NewGymApp/static/js/787.0f90566d.chunk.js",
     "static/media/womanRideBike.svg": "/NewGymApp/static/media/womanRideBike.a32331fdaf8b50f1640620061c0a903a.svg",
     "service-worker.js": "/NewGymApp/service-worker.js",
@@ -25,6 +25,7 @@
     "static/media/alarmIcon.svg": "/NewGymApp/static/media/alarmIcon.8eab13f1c9e7f272ce342ec2d41ec89e.svg",
     "static/media/exerciseIcon.svg": "/NewGymApp/static/media/exerciseIcon.5a63d76c01427e1545a5ee711c201970.svg",
     "static/media/bgc_big_2.svg": "/NewGymApp/static/media/bgc_big_2.9104d44e079f1ce1ba2fe932ca51c623.svg",
+    "static/media/series_icon.svg": "/NewGymApp/static/media/series_icon.3dfb53301c5afd8e6c897cf6f788211e.svg",
     "static/media/menuIcon.svg": "/NewGymApp/static/media/menuIcon.d5b6a59740fe8f63aa590927733b0ab7.svg",
     "static/media/clockIcon.svg": "/NewGymApp/static/media/clockIcon.1722ee52a40a3259866d78cad19e8487.svg",
     "static/media/bgc_1.svg": "/NewGymApp/static/media/bgc_1.bd59820d107d49d049d4574b1c75aa73.svg",
@@ -38,11 +39,11 @@
     "static/media/statsIcon.svg": "/NewGymApp/static/media/statsIcon.da0727a6672151dc29d436103e29a686.svg",
     "static/media/XIcon.svg": "/NewGymApp/static/media/XIcon.b614d671c2a4c6e1774652618076cc90.svg",
     "main.83216d16.css.map": "/NewGymApp/static/css/main.83216d16.css.map",
-    "main.419fa37f.js.map": "/NewGymApp/static/js/main.419fa37f.js.map",
+    "main.f76f998b.js.map": "/NewGymApp/static/js/main.f76f998b.js.map",
     "787.0f90566d.chunk.js.map": "/NewGymApp/static/js/787.0f90566d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83216d16.css",
-    "static/js/main.419fa37f.js"
+    "static/js/main.f76f998b.js"
   ]
 }
