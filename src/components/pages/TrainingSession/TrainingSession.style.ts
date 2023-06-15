@@ -181,7 +181,7 @@ export const RepsButtonBoxName = styled.div`
   &::after {
     height: 20px;
     padding: 0 5px;
-    content: "powtórznia";
+    content: "powtórzenia";
     background-color: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.primary};
     position: absolute;

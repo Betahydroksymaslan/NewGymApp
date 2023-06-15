@@ -347,7 +347,7 @@ const TrainingSession = () => {
             {training?.exercises[value].startWeightOrReps}
           </ActualScore>
 
-          {training.exercises[value].notes && (
+          {training.exercises[value].notes.length > 0 && (
             <Note
               pathSuffix={`trainingPlans/${trainingName}/trainingDays/${training?.dayId}/exercises/${training?.exercises[value].trainingId}/notes`}
               notes={training?.exercises[value].notes}
