@@ -6,21 +6,22 @@ export interface TrainingSessionsExercise {
   repsFrom: number;
   repsTo?: number;
   weightOrReps: "weight" | "reps";
-  notes?: {message: string, date: number, id: string}[]
+  notes?: { message: string; date: number; id: string }[];
 }
 
+export type TrainingSession = {
+  trainingSessionId: string;
+  dayId: string;
+  dayName: string;
+  trainingName: string;
+  startTrainingDate: number;
+  endTrainingDate?: number;
+  exercises: TrainingSessionsExercise[];
+};
+
 export type TrainingSessions = {
-  trainingSessions:
-    | {
-        trainingSessionId: string;
-        dayId: string;
-        dayName: string;
-        trainingName: string;
-        startTrainingDate: number;
-        endTrainingDate?: number;
-        exercises: TrainingSessionsExercise[];
-      }[]
-    | null;
+  trainingSessions: TrainingSession[] | null;
+  trainingSession: TrainingSession | null;
 };
 
 export type TrainingSessionsHistory = {
@@ -64,4 +65,4 @@ export type AddNotePayload = {
     date: number;
     id: string;
   };
-}
+};

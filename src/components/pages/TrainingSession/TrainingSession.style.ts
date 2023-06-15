@@ -237,23 +237,3 @@ export const RepsButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
-/* !!!!!!!!!!!!!!!!!!!!!!!!!!!! END SESSION BOARD !!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-
-export const EndSessionBoard = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: ${({ theme }) => theme.colors.white};
-  padding: 70px 20px 35px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
-  & > h2 {
-    margin-top: 40px;
-  }
-
-  & > button {
-    margin-top: auto;
-  }
-`;

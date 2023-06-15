@@ -9,6 +9,7 @@ import {
   TrainingSessions,
   UpdateSessionPayload,
   AddNotePayload,
+  TrainingSession
 } from "models/trainingSessionsModel";
 import {
   setDatabase,
@@ -25,6 +26,18 @@ export function* getSessions(action: PayloadAction<TrainingSessions>) {
   } catch (error) {
     yield toast.error(getErrorMessage(error));
     yield put(trainingSessionsActions.getSessionsFailure());
+  } finally {
+    yield put(toggleSpinner(false));
+  }
+}
+
+export function* getSession(action: PayloadAction<TrainingSession>) {
+  try {
+    yield put(toggleSpinner(true));
+    yield put(trainingSessionsActions.getSessionSuccess(action.payload));
+  } catch (error) {
+    yield toast.error(getErrorMessage(error));
+    yield put(trainingSessionsActions.getSessionFailure());
   } finally {
     yield put(toggleSpinner(false));
   }
@@ -86,6 +99,7 @@ export default function* trainingSessionsSaga() {
     addNewSession
   );
   yield takeLatest(trainingSessionsActions.getSessions.type, getSessions);
+  yield takeLatest(trainingSessionsActions.getSession.type, getSession);
   yield takeLatest(trainingSessionsActions.updateSession.type, updateSession);
   yield takeLatest(trainingSessionsActions.addNote.type, addNote);
 }

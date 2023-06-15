@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import {
   ExerciseWrapper,
   PageWrapper,
@@ -9,7 +9,6 @@ import {
   ActualScore,
   RepsButton,
   RepsButtonsWrapper,
-  EndSessionBoard,
   UpdateMainScoreButton,
   TrainingName,
   NextPrevBtton,
@@ -31,7 +30,6 @@ import { ReactComponent as ManDoingPullUp } from "assets/images/manDoingPullUp.s
 import { ReactComponent as ManDoingOHP } from "assets/images/manDoingOHP.svg";
 import { ReactComponent as ManRunning } from "assets/images/manRunning.svg";
 import { ReactComponent as ManRunningTwoo } from "assets/images/manRunning2.svg";
-import { ReactComponent as EndOfTrainingImage } from "assets/images/endTrainingImage.svg";
 import { ReactComponent as SeriesIcon } from "assets/icons/series_icon.svg";
 import OptionsList from "components/molecules/OptionsList/OptionsList";
 import { useNavigate } from "react-router-dom";
@@ -46,6 +44,8 @@ import IncreaseDecreaseDialog from "components/organisms/IncreaseDecreaseDialog/
 import { AiOutlineComment } from "react-icons/ai";
 import AddNote from "components/organisms/AddNote/AddNote";
 import Note from "components/molecules/Notes/Notes";
+import { db, ref, onValue } from "assets/firebase/firebase";
+import EndOfTrainingBoard from "components/organisms/EndOfTrainingBoard/EndOfTrainingBoard";
 
 type ModalsTypes =
   | "confirmEndSession"
@@ -68,6 +68,19 @@ const TrainingSession = () => {
 
   let navigate = useNavigate();
   const goPreviousPage = () => navigate(-1);
+
+  /* !!!!!!!!!!!!!!!! GET ACTUAL TREINING SESSION !!!!!!!!!!!!!!!!!!!!!!!!*/
+
+  useEffect(() => {
+    if (!user) return
+    const sessionRef = `users/${user.uid}/trainingSessions/${sessionId}`;
+    const referenceSession = ref(db, sessionRef);
+    onValue(referenceSession, (snapshot) => {
+      const data = snapshot.val();
+      dispatch(trainingSessionsActions.getSession(data));
+    });
+    
+  }, []);
 
   const [isSessionActive, setIsSessionActive] = useLocalStorage(
     "activeTrainingSession",
@@ -104,7 +117,7 @@ const TrainingSession = () => {
     <ManRunning />,
     <ManDoingPullUp />,
     <ManDoingOHP />,
-    <ManRunningTwoo />
+    <ManRunningTwoo />,
   ];
   const getRandom = useMemo(
     () => Math.floor(Math.random() * (0 + mainImages.length) + 0),
@@ -254,9 +267,9 @@ const TrainingSession = () => {
     closeModal("endOfTrainingBoard");
     navigate(HOME);
   };
-  if (!training) return null
+  if (!training) return null;
   return (
-   <PageWrapper
+    <PageWrapper
       as={motion.section}
       variants={slidePageAnimation}
       initial="hidden"
@@ -340,7 +353,10 @@ const TrainingSession = () => {
 
           <SeriesWrapper>
             <SeriesIcon />
-            <span>Serie: <strong>{training?.exercises[value].numberOfSeries}</strong></span>
+            <span>
+              Serie:{" "}
+              <strong>{training?.exercises[value].numberOfSeries}</strong>
+            </span>
           </SeriesWrapper>
 
           <ActualScore suffix={training?.exercises[value].repsOrWeight}>
@@ -415,13 +431,7 @@ const TrainingSession = () => {
         isOpen={modals.endOfTrainingBoard}
         handleClose={() => closeModal("endOfTrainingBoard")}
       >
-        <EndSessionBoard>
-          <EndOfTrainingImage />
-          <h2>Gratulacje! Ukończyłeś swój trening :)</h2>
-          <Button size="l" rounded wide callback={closeSessionBoard}>
-            Wróć do menu
-          </Button>
-        </EndSessionBoard>
+       <EndOfTrainingBoard closeSessionBoard={closeSessionBoard} />
       </Modal>
     </PageWrapper>
   );

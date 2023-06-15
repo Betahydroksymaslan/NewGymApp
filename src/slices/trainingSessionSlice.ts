@@ -6,10 +6,12 @@ import {
   SessionPayloadArrived,
   UpdateSessionPayload,
   AddNotePayload,
+  TrainingSession
 } from "models/trainingSessionsModel";
 
 const initialState: TrainingSessions = {
   trainingSessions: null,
+  trainingSession: null,
 };
 
 const trainingSessionSlice = createSlice({
@@ -42,6 +44,15 @@ const trainingSessionSlice = createSlice({
     getSessionsFailure: () => {
       console.log("Someting went wrong");
     },
+    getSessionFailure: () => {
+      console.log("Someting went wrong");
+    },
+    getSessionSuccess: (
+      state,
+      { payload }: PayloadAction<TrainingSession>
+    ) => {
+      state.trainingSession = payload
+    },
     addNewTrainingSessionSuccess: () => {
       console.log("good");
     },
@@ -65,6 +76,8 @@ const trainingSessionSlice = createSlice({
 
 export const getTrainingSessions = (store: RootState) =>
   store.trainingSessions.trainingSessions;
+export const getTrainingSession = (store: RootState) =>
+  store.trainingSessions.trainingSession;
 
 const trainingSessionsActions = {
   getSessions: createAction<TrainingSessions>("trainingSessions/getSessions"),
@@ -72,6 +85,13 @@ const trainingSessionsActions = {
     "trainingSessions/getSessionsSuccess"
   ),
   getSessionsFailure: createAction("trainingSessions/getSessionsFailure"),
+
+  getSession: createAction<TrainingSession>("trainingSessions/getSession"),
+  getSessionSuccess: createAction<TrainingSession>(
+    "trainingSessions/getSessionSuccess"
+  ),
+  getSessionFailure: createAction("trainingSessions/getSessionFailure"),
+
   addNewTrainingSession: createAction<TrainingSessionPayload>(
     "trainingSessions/addNewTrainingSession"
   ),
