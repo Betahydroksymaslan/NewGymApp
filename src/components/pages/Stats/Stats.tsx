@@ -56,7 +56,7 @@ const Stats = () => {
 
   const { control, watch } = useForm<InputTypes>({
     defaultValues: {
-      selectTime: 7,
+      selectTime: 31,
     },
   });
 
