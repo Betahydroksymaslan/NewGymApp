@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/NewGymApp/static/css/main.83216d16.css",
-    "main.js": "/NewGymApp/static/js/main.57d62848.js",
+    "main.js": "/NewGymApp/static/js/main.80532b8e.js",
     "static/js/787.0f90566d.chunk.js": "/NewGymApp/static/js/787.0f90566d.chunk.js",
     "static/media/womanRideBike.svg": "/NewGymApp/static/media/womanRideBike.a32331fdaf8b50f1640620061c0a903a.svg",
     "service-worker.js": "/NewGymApp/service-worker.js",
@@ -39,11 +39,11 @@
     "static/media/statsIcon.svg": "/NewGymApp/static/media/statsIcon.da0727a6672151dc29d436103e29a686.svg",
     "static/media/XIcon.svg": "/NewGymApp/static/media/XIcon.b614d671c2a4c6e1774652618076cc90.svg",
     "main.83216d16.css.map": "/NewGymApp/static/css/main.83216d16.css.map",
-    "main.57d62848.js.map": "/NewGymApp/static/js/main.57d62848.js.map",
+    "main.80532b8e.js.map": "/NewGymApp/static/js/main.80532b8e.js.map",
     "787.0f90566d.chunk.js.map": "/NewGymApp/static/js/787.0f90566d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.83216d16.css",
-    "static/js/main.57d62848.js"
+    "static/js/main.80532b8e.js"
   ]
 }
