@@ -36,6 +36,7 @@ export const theme: DefaultTheme = {
     l: "22px",
     m: "18px",
     s: "14px",
+    xs: "12px",
   },
   boxShadow: {
     mainShadow: "0 4px 5px 0 rgba(0,0,0,0.25)",

@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import bgc_1 from "assets/images/bgc_big_1.svg";
 
+type TimeType = {
+  suffix: "g" | "min";
+};
+
 export const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -132,5 +136,15 @@ export const StyledForm = styled.form`
 
   & > div:nth-child(3) {
     margin-top: 30px;
+  }
+`;
+
+export const TimeSpan = styled.span<TimeType>`
+  font-size: ${({ theme }) => theme.fontSize.m};
+  
+  &::after {
+    content: "${({ suffix }) => suffix}";
+    font-size: ${({ theme }) => theme.fontSize.xs};
+    margin-left: 1px;
   }
 `;

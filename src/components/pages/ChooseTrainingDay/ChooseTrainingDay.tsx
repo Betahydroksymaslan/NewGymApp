@@ -9,6 +9,7 @@ import {
   DeleteButton,
   StyledForm,
   EditDayNameButton,
+  TimeSpan,
 } from "./ChooseTrainingDay.style";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "store/hooks";
@@ -38,6 +39,8 @@ import { getTrainingSessions } from "slices/trainingSessionSlice";
 import { v4 as uuid } from "uuid";
 import { calcAverageTime } from "helpers/calcTimeLength";
 import ConfirmationDialog from "components/organisms/ConfirmationDialog/ConfirmationDialog";
+import { useLocalStorage } from "hooks/useLocalStorage";
+import { calcTimeLength, calcHoursAndMinutes } from "helpers/calcTimeLength";
 
 type ModalsType =
   | "isEdit"
@@ -61,6 +64,17 @@ const ChooseTrainingDay = () => {
   const currentTraining = trainings?.find(
     (item) => item.planName === trainingName
   );
+
+  const [minMaxVal, setMinMaxVal] = useLocalStorage("minMaxVal", {
+    minVal: 20,
+    maxVal: 180,
+  });
+
+  const filterSessions = (startSession: number, endSession: number) => {
+    const sessionTime = calcTimeLength(startSession, endSession);
+
+    return sessionTime <= minMaxVal.maxVal && sessionTime >= minMaxVal.minVal;
+  };
 
   const [choosenDay, setChoosenDay] = useState<
     undefined | { dayId: string; dayName: string }
@@ -96,13 +110,17 @@ const ChooseTrainingDay = () => {
 
   const renderTrainingDays = currentTraining?.trainingDays.map((item) => {
     const filteredSessions = sessions?.filter(
-      (session) => session.endTrainingDate && session.dayName === item.dayName
+      (session) =>
+        session.endTrainingDate &&
+        session.dayName === item.dayName &&
+        filterSessions(session.startTrainingDate, session.endTrainingDate)
     );
     const averageData = filteredSessions?.map((item) => ({
       timeFrom: item.startTrainingDate,
       timeTo: item.endTrainingDate,
     }));
     const averageTrainingTime = calcAverageTime(averageData);
+    const averageTimeConverted = calcHoursAndMinutes(averageTrainingTime);
 
     return (
       <StyledLink
@@ -116,7 +134,11 @@ const ChooseTrainingDay = () => {
           <h2>{item.dayName}</h2>
           <DetailsWrapper>
             <ExerciseIcon /> <span>{item.exercises.length} ćwiczeń</span>
-            <ClockIcon /> <span>{`${averageTrainingTime} min`}</span>
+            <ClockIcon />{" "}
+            <div>
+              <TimeSpan suffix="g">{averageTimeConverted.hours}</TimeSpan>{" "}
+              <TimeSpan suffix="min">{averageTimeConverted.minutes}</TimeSpan>
+            </div>
           </DetailsWrapper>
           {modals.isEdit && (
             <EditWrapper>
