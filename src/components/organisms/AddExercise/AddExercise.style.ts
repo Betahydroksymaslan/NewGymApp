@@ -30,9 +30,9 @@ export const StyledHeader = styled(Header)`
   margin: 0;
 `;
 
-export const Tittle = styled.span`
+export const Tittle = styled.p`
   font-weight: 600;
   text-align: center;
   margin: 0;
-  width: max-content;
+  width: fit-content;
 `;

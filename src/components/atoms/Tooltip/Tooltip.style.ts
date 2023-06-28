@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const TooltipWrapper = styled.div`
   position: relative;
-  width: max-content;
 `;
 
 export const TooltipSymbol = styled.div`
@@ -21,13 +20,14 @@ export const TooltipSymbol = styled.div`
 `;
 
 export const TooltipMessage = styled.div`
+  min-width: 300px;
   padding: 8px;
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
-  width: 90vw;
-  bottom: 200%;
-  right:-275%;
+  top: 0;
+  left: 0;
   border-radius: 6px;
+  z-index: 1000;
 
   & > p {
     margin: 0;
