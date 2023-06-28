@@ -9,7 +9,7 @@ export const StyledPageArea = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-  z-index: 1;
+ 
 
   svg {
     width: 100px;
