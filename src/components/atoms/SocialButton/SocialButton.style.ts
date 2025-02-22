@@ -11,7 +11,9 @@ export const ButtonIconWrapper = styled.div`
   display: grid;
   place-items: center;
 
-  
+  img {
+    max-width: 30px;
+  }
 `;
 
 export const StyledSocialButton = styled.button<SocialButtonTypes>`

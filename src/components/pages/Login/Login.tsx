@@ -69,7 +69,7 @@ const Login = () => {
         <SocialButton
           isGoogle={true}
           onClick={() => dispatch(authActions.loginWithGoogle({callback: navigate}))}
-          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+          src="https://img.icons8.com/?size=512&id=17949&format=png"
           alt="google icon"
         >
           Google
