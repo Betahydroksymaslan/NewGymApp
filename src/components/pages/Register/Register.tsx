@@ -86,7 +86,7 @@ const Login = () => {
         <SocialButton>Facebook</SocialButton>
       </InlineWrapper>
       <StyledSpan>
-        Masz już konto? <StyledLink to={SIGNIN}>Zaloguj się</StyledLink>
+        Masz już konto? <StyledLink to={SIGNIN}>Zaloguj się!</StyledLink>
       </StyledSpan>
     </Wrapper>
   );
